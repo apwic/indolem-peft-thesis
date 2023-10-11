@@ -1,0 +1,9 @@
+\subsection{\textit{Tiny Attention Adapter}}
+
+\textit{Tiny-Attention Adapter} merupakan salah satu solusi yang dirancang untuk mengatasi komputasi. Sebagai gantinya dari menambahkan lapisan adaptasi berukuran besar atau melatih ulang seluruh model, teknik ini memperkenalkan konsep "tiny-attention" \parencite{tinyattention}. Mekanisme ini, meskipun sederhana, memungkinkan setiap posisi dalam sekuens untuk memperhatikan dan memodifikasi keadaan tersembunyinya berdasarkan informasi dari semua posisi lain dalam sekuens. Dengan kata lain, setiap elemen dalam sekuens memiliki kemampuan untuk "berkomunikasi" dan "berkoordinasi" dengan elemen lain untuk membentuk representasi yang lebih kaya dan kontekstual.
+
+Salah satu kelebihan dari pendekatan ini adalah fleksibilitas dan dinamikanya. Karena setiap posisi dapat memperhatikan semua posisi lain, model memiliki kapasitas untuk memahami hubungan antar kata dengan lebih baik, terutama hubungan yang bersifat jarak jauh atau kontekstual yang kompleks. Ini memungkinkan model untuk menangkap nuansa dan makna yang mungkin terlewatkan oleh teknik adaptasi lainnya.
+
+Meskipun pendekatan ini terfokus pada efisiensi parameter, \textit{Tiny-Attention Adapter} tidak mengorbankan kinerja. Sebaliknya, berkat mekanisme "tiny-attention", teknik ini seringkali mampu mencapai kinerja yang sebanding atau bahkan melampaui metode adaptasi tradisional, meskipun hanya dengan sebagian kecil dari parameter tambahan.
+
+Dengan demikian, \textit{Tiny-Attention Adapter} menawarkan pendekatan yang menjanjikan untuk mengadaptasi model pra-latih dengan cara yang lebih efisien, tanpa mengorbankan kualitas atau kinerja.

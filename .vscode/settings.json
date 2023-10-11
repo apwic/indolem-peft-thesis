@@ -1,0 +1,6 @@
+{
+    "[tex]": {
+        "editor.wordWrap": "on"
+    },
+    "notebook.output.wordWrap": false
+}
