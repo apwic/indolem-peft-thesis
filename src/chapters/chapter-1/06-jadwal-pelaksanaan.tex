@@ -1,15 +1,32 @@
 \section{Jadwal Pelaksanaan}
-
 Jadwal pelaksanaan Tugas Akhir per minggunya dirincikan sebagai berikut:
-\begin{enumerate}
-    \item 18 - 22 September: Membuat usulan topik dan rancangan dari usulan topik
-    tersebut
-    \item 25 - 29 September: Mengeksplorasi riset-riset sebelumnya yang
-    berhubungan dengan topik Tugas Akhir
-    \item 2 - 6 Oktober: Eksplorasi metode \textit{transfer learning}, penyusunan bab 2 Tugas
-    Akhir
-    \item 9 - 13 Oktober: Ujian Tengah Semester
-    \item 16 - 20 Oktober: Membuat prototipe untuk \textit{fine-tuning} terhadap \textit{task} NER
-    \item 23 - 27 Oktober: Membuat prototipe untuk LoRA terhadap \textit{task} NER, Eksplorasi mengenai \textit{dataset} yang akan digunakan, 
-    \item 30 Oktober - 3 November: Penyusunan bab 1 Tugas Akhir, Membuat prototipe untuk \textit{prefix-tuning} terhadap \textit{task} NER
-\end{enumerate}
+
+\begin{landscape}
+\begin{table}
+\centering
+\begin{ganttchart}[
+    hgrid,
+    vgrid={*{6}{draw=none}, dotted}, % Vertical lines only for weeks
+    y unit title=0.5cm,
+    y unit chart=0.7cm,
+    x unit=5mm, % Adjust the horizontal scale
+    time slot format=isodate,
+    title height=1,
+    title label font=\scriptsize, % Small font for titles
+    bar/.append style={fill=blue!50},
+    bar height=0.7,
+    bar label font=\scriptsize, % Small font for bar labels
+    inline % Place labels inline with bars
+    ]{2023-09-18}{2023-11-03}
+    \gantttitlecalendar{month=name, week} \\
+    \ganttbar[inline=false]{Usulan Topik}{2023-09-18}{2023-09-22}\\
+    \ganttbar[inline=false]{Eksplorasi Riset}{2023-09-25}{2023-09-29}\\
+    \ganttbar[inline=false]{Metode \& Bab 2}{2023-10-02}{2023-10-06}\\
+    \ganttbar[inline=false]{Prototipe Fine-Tuning}{2023-10-16}{2023-10-20}\\
+    \ganttbar[inline=false]{Prototipe LoRA \& Dataset}{2023-10-23}{2023-10-27}\\
+    \ganttbar[inline=false]{Bab 1 \& Prefix-Tuning}{2023-10-30}{2023-11-03}
+\end{ganttchart}
+\caption{Jadwal Pelaksanaan Tugas Akhir}
+\label{ganttchartlabel}
+\end{table}
+\end{landscape}
