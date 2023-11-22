@@ -1,0 +1,28 @@
+\section{Analisis dan Rancangan Solusi}
+
+Berdasarkan analisis masalah, terdapat beberapa solusi yang dapat langsung menjawab permasalahan yang diuraikan pada Bab \ref{sec:analisis-persoalan}. Pemetaan analisis dan rancangan solusi terhadap analisis masalah terdapat dalam tabel berikut.
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{|m{0.45\linewidth}|m{0.45\linewidth}|}
+    \hline
+    \textbf{Analisis Masalah} & \textbf{Analisis dan Rancangan Solusi} \\ \hline
+    (1) Pemilihan \textit{dataset} yang sesuai untuk setiap tugas NLP.& (1) Analisis kebutuhan data spesifik untuk setiap tugas NLP dan pemilihan dataset yang paling relevan dengan kebutuhan tersebut\\ \hline
+    (2) Pemilihan konfigurasi terbaik untuk setiap metode PETL. & (2) Eksperimen terhadap berbagai konfigurasi metode PETL \\ \hline
+    (3) Pemilihan kombinasi \textit{hyperparameter} terbaik pada proses \textit{training}. & (3) Penelusuran kombinasi \textit{hyperparameter} terbaik\\ \hline
+    (4) Pemilihan metode evaluasi & (4) Penelusuran metode evaluasi yang relevan \\ \hline
+    \end{tabular}
+\caption{Pemetaan analisis dan rancangan solusi terhadap analisis masalah}
+\label{table:pemetaan-masalah-solusi}
+\end{table}
+
+Berdasarkan analisis solusi terhadap setiap analisis masalah yang terdapat pada tabel \ref{table:pemetaan-masalah-solusi}, dibangun sebuah rancangan solusi berupa skenario pengujian yang dilakukan dalam penelitian tugas akhir, yang dapat dilihat pada Gambar \ref{fig:rancangan-solusi}.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.8\textwidth]{chapter-3/rancangan_solusi.jpeg}
+    \caption{Rancangan Solusi}
+    \label{fig:rancangan-solusi}
+\end{figure}
+
+Dataset yang diperlukan akan diambil dari \cite{nusacatalogue}. Teknik PETL yang digunakan adalah LoRA (\textit{Low-Rank Adaptation}), \textit{Prefix-Tuning}, dan \textit{Tiny-Attention Adapter}. Hasil pengujian berupa kinerja dari teknik PETL serta penggunaan sumber daya dari setiap eksperimen.

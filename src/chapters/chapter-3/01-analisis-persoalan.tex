@@ -1,0 +1,32 @@
+\section{Analisis Persoalan}
+\label{sec:analisis-persoalan}
+
+Berdasarkan latar belakang yang telah diuraikan pada subbab \ref{sec:latar-belakang}, peningkatan kinerja model IndoBERT dilakukan dengan menggunkan metode \textit{parameter-efficient transfer learning} (PETL). Peningkatan kinerja model dengan metode PETL ini melibatkan penambahan konfigurasi ataupun \textit{layer} tambahan terhadap model tergantung dengan karateristik dari metode PETL masing-masing. Untuk setiap metode PETL dibutuhkan \textit{dataset} tersendiri agar model dapat dilakukan \textit{transfer learning}. Selain itu, analisis komprehensif dibutuhkan untuk membandingkan metode PETL yang dapat memberikan hasil terbaik. Untuk membuat analisis yang komprehensif dibutuhkan metode evaluasi terhadap kinerja model. Secara keseluruhan, penelitian yang dilakukan pada tugas akhir ini akan mencakup tiga tahap sebagai berikut.
+
+\begin{enumerate}
+    \item Pengembangan dan konfigurasi pada setiap metode PETL.
+    \item Integrasi model dengan \textit{dataset} yang dipilih.
+    \item Eksperimen dan evaluasi kinerja model.
+\end{enumerate}
+
+Berdasarkan tahapan-tahapan penelitian yang diuraikan tersebut, terdapat empat persoalan utama dengan rincian sebagai berikut.
+
+\begin{enumerate}
+    \item Pemilihan \textit{dataset} yang sesuai untuk setiap tugas NLP.
+    
+    Berdasarkan tahap penelitian nomor 2 yaitu integrasi model dengan \textit{dataset} yang dipilih, diperlukan pencarian \textit{dataset} terlebih dahulu. Metode \textit{transfer learning} membutuhkan data yang relevan dengan tugas yang ingin dilatih. Diperlukan penilaian terhadap konten \textit{dataset} untuk memastikan kesesuaiannya dengan tugas NLP yang ditargetkan. Selain itu, kualitas \textit{dataset}, termasuk keakuratan label dan kebersihan data, serta ukurannya, harus cukup untuk memungkinkan model belajar secara efektif. Sehingga, pemilihan \textit{dataset} penting dilakukan untuk mendapatkan kinerja yang baik.
+
+    \item Pemilihan konfigurasi terbaik untuk setiap metode PETL.
+    
+    Setiap metode PETL mempunyai karakteristik yang berbeda dalam penggunaannya, sehingga konfigurasi untuk setiap metode perlu diperhatikan. Proses ini melibatkan penyesuaian \textit{layer} dan parameter yang spesifik untuk setiap metode. Penting untuk mengeksplorasi berbagai konfigurasi untuk menemukan kombinasi yang paling efektif. Hal ini mencakup penyesuaian ukuran \textit{layer}, jumlah parameter, dan aspek teknis lainnya yang dapat mempengaruhi kinerja model. Selain itu, metode PETL juga memerlukan penambahan \textit{adapet} seperti pada teknik \textit{tiny-attention adapter}. Bahkan, menggabungkan beberapa metode PETL juga memungkinkan, sehingga diperlukan pembuatan konfigurasi yang spesifik untuk setiap metode.
+
+
+    \item Pemilihan kombinasi \textit{hyperparameter} terbaik pada proses \textit{training}.
+    
+    Berdasarkan tahap penelitian nomor 3 yaitu eksperimen dan evaluasi kinerja model, proses \textit{transfer learning} melibatkan proses \textit{training}. Pada proses tersebut perlu pemilihan kombinasi \textit{hyperparameter} yang optimal. \textit{Hyperparameter} seperti \textit{learning rate}, \textit{batch size}, dan jumlah \textit{epoch} berperan penting dalam menentukan kinerja model. Proses ini melibatkan eksperimen dengan berbagai kombinasi untuk menemukan setelan yang memberikan hasil terbaik. 
+    
+    \item Pemilihan metode evaluasi
+    
+    Untuk dapat melakukan analisis terhadap model diperlukan adanya metode evaluasi yang memang relevan dengan tugas NLP-nya. Metode evaluasi yang digunakan pada proses \textit{training} berupa metrik seperti akurasi, \textit{presisi}, \textit{recall}, dan F1-\textit{score}. Sedangkan, untuk analisis komprehensif yang dilakukan terakhir akan digunakan IndoLEM sebagai \textit{NLP Task Benchmarking}
+
+\end{enumerate}
