@@ -1,32 +1,64 @@
 \section{Jadwal Pelaksanaan}
-Jadwal pelaksanaan Tugas Akhir per minggunya dirincikan sebagai berikut:
+Jadwal pelaksanaan Tugas Akhir per bulannya dirincikan sebagai berikut:
 
-\begin{landscape}
-\begin{table}
-\centering
-\begin{ganttchart}[
-    hgrid,
-    vgrid={*{6}{draw=none}, dotted}, % Vertical lines only for weeks
-    y unit title=0.5cm,
-    y unit chart=0.7cm,
-    x unit=5mm, % Adjust the horizontal scale
-    time slot format=isodate,
-    title height=1,
-    title label font=\scriptsize, % Small font for titles
-    bar/.append style={fill=blue!50},
-    bar height=0.7,
-    bar label font=\scriptsize, % Small font for bar labels
-    inline % Place labels inline with bars
-    ]{2023-09-18}{2023-11-03}
-    \gantttitlecalendar{month=name, week} \\
-    \ganttbar[inline=false]{Usulan Topik}{2023-09-18}{2023-09-22}\\
-    \ganttbar[inline=false]{Eksplorasi Riset}{2023-09-25}{2023-09-29}\\
-    \ganttbar[inline=false]{Metode \& Bab 2}{2023-10-02}{2023-10-06}\\
-    \ganttbar[inline=false]{Prototipe Fine-Tuning}{2023-10-16}{2023-10-20}\\
-    \ganttbar[inline=false]{Prototipe LoRA \& Dataset}{2023-10-23}{2023-10-27}\\
-    \ganttbar[inline=false]{Bab 1 \& Prefix-Tuning}{2023-10-30}{2023-11-03}
-\end{ganttchart}
-\caption{Jadwal Pelaksanaan Tugas Akhir}
-\label{ganttchartlabel}
+\begin{table}[ht]
+\caption{Jadwal Kegiatan Bulan ke-1 sampai ke-3}
+\begin{tabular}{|m{4cm}|*{12}{m{0.4cm}|}}
+\hline
+\rowcolor{lightgray} % Coloring the header row
+\textbf{Kegiatan} & \multicolumn{4}{c|}{\textbf{Oktober 2023}} & \multicolumn{4}{c|}{\textbf{November 2023}} & \multicolumn{4}{c|}{\textbf{Desember 2023}} \\
+\cline{2-13}
+\cellcolor{lightgray} & 1 & 2 & 3 & 4 & 1 & 2 & 3 & 4 & 1 & 2 & 3 & 4 \\
+\hline
+Kajian teori dan penyusunan studi literatur & \cellcolor{blue!25} & \cellcolor{blue!25} & \cellcolor{blue!25} & & & & & & & & & \\
+\hline
+Pembuatan latar belakang, rumusan masalah, dan tujuan & & & & \cellcolor{blue!25} & \cellcolor{blue!25} & \cellcolor{blue!25} & \cellcolor{blue!25} & & & & & \\
+\hline
+Pemilihan metodologi dan perancangan solusi & & & & & & & & \cellcolor{blue!25} & \cellcolor{blue!25} & \cellcolor{blue!25} & & \\
+\hline
+Seminar proposal & & & & & & & & & & & \cellcolor{blue!25} & \cellcolor{blue!25} \\
+\hline
+\end{tabular}
 \end{table}
-\end{landscape}
+
+\begin{table}[ht]
+\caption{Jadwal Kegiatan Bulan ke-4 sampai ke-6}
+\begin{tabular}{|m{4.5cm}|*{12}{m{0.4cm}|}}
+\hline
+\rowcolor{lightgray} % Coloring the header row
+\textbf{Kegiatan} & \multicolumn{4}{c|}{\textbf{Januari 2024}} & \multicolumn{4}{c|}{\textbf{Februari 2024}} & \multicolumn{4}{c|}{\textbf{Maret 2024}} \\
+\cline{2-13}
+\cellcolor{lightgray} & 1 & 2 & 3 & 4 & 1 & 2 & 3 & 4 & 1 & 2 & 3 & 4 \\
+\hline
+Persiapan \textit{dataset} & \cellcolor{blue!25} & \cellcolor{blue!25} & & & & & & & & & & \\
+\hline
+Persiapan konfigurasi eksperimen & & & \cellcolor{blue!25} & \cellcolor{blue!25} & & & & & & & & \\
+\hline
+Implementasi dan eksperimen & & & & & \cellcolor{blue!25} &\cellcolor{blue!25}  & \cellcolor{blue!25}& \cellcolor{blue!25} & \cellcolor{blue!25} & & & \\
+\hline
+Analisis hasil & & & & & & & & & & \cellcolor{blue!25} & \cellcolor{blue!25} & \cellcolor{blue!25} \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[ht]
+\caption{Jadwal Kegiatan Bulan ke-7 sampai ke-8}
+\begin{tabular}{|m{4cm}|*{12}{m{0.4cm}|}}
+\hline
+\rowcolor{lightgray} % Coloring the header row
+\textbf{Kegiatan} & \multicolumn{4}{c|}{\textbf{April 2024}} & \multicolumn{4}{c|}{\textbf{Mei 2024}} & \multicolumn{4}{c|}{\textbf{Juni 2024}} \\
+\cline{2-13}
+\cellcolor{lightgray} & 1 & 2 & 3 & 4 & 1 & 2 & 3 & 4 & 1 & 2 & 3 & 4 \\
+\hline
+Penyusunan laporan tugas akhir & \cellcolor{blue!25} & \cellcolor{blue!25} & \cellcolor{blue!25} & & & & & & & & & \\
+\hline
+Seminar hasil & & & & \cellcolor{blue!25} & \cellcolor{blue!25} & & & & & & & \\
+\hline
+Persiapan sidang & & & & & &  \cellcolor{blue!25} &  \cellcolor{blue!25} & & & & & \\
+\hline
+Sidang tugas akhir & & & & & & & & \cellcolor{blue!25} & \cellcolor{blue!25}& & & \\
+\hline
+Revisi dan pengumpulan buku tugas akhir & & & & & & & & & & \cellcolor{blue!25} &  \cellcolor{blue!25} &  \cellcolor{blue!25} \\
+\hline
+\end{tabular}
+\end{table}
