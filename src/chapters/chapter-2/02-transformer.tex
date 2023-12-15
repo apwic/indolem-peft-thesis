@@ -1,6 +1,6 @@
 \section{\textit{Transformer}}
 
-\textit{Transformer} telah mengubah lanskap pemrosesan bahasa alami (NLP) dengan cara yang signifikan. Dalam makalah mereka, penulis memperkenalkan konsep baru yang disebut mekanisme \textit{self-attention} \parencite{transformers}. Mekanisme ini memungkinkan setiap kata dalam input untuk memfokuskan pada kata-kata lain dalam sekuens yang sama, memberikan model kemampuan untuk memahami konteks dengan lebih baik. Ini berbeda dari pendekatan sebelumnya yang biasanya mengandalkan informasi lokal atau posisi tetap dalam sekuens.
+\textit{Transformer} telah mengubah lanskap pemrosesan bahasa alami (NLP) dengan cara yang signifikan. Dalam penelitian mereka, penulis memperkenalkan konsep baru yang disebut mekanisme \textit{self-attention} \parencite{transformers}. Mekanisme ini memungkinkan setiap kata dalam input untuk memfokuskan pada kata-kata lain dalam sekuens yang sama, memberikan model kemampuan untuk memahami konteks dengan lebih baik. Ini berbeda dari pendekatan yang biasanya mengandalkan informasi lokal atau posisi tetap dalam sekuens.
 
 \begin{figure}[ht]
     \centering
@@ -9,8 +9,6 @@
     \label{fig:transformer}
 \end{figure}
 
-Salah satu keunggulan utama dari mekanisme \textit{self-attention} adalah kemampuannya untuk menangani sekuens dengan panjang yang berbeda dan memahami hubungan antar kata tanpa mempertimbangkan jarak antara mereka. Ini memungkinkan Transformer untuk memahami ketergantungan jarak jauh dalam teks, sesuatu yang sulit dicapai oleh arsitektur sebelumnya seperti RNN dan LSTM.
+Arsitektur dari \textit{transformer} dapat dilihat pada Gambar \ref{fig:transformer}. Salah satu keunggulan utama dari mekanisme \textit{self-attention} adalah kemampuannya untuk menangani sekuens dengan panjang yang berbeda dan memahami hubungan antar kata tanpa mempertimbangkan jarak antara mereka. Ini memungkinkan \textit{transformer} untuk memahami ketergantungan jarak jauh dalam teks, sesuatu yang sulit dicapai oleh arsitektur sebelumnya seperti RNN dan LSTM.
 
-Selain itu, Transformer dirancang untuk paralelisasi, yang memungkinkannya dilatih dengan cepat pada perangkat keras modern. Ini mempercepat penelitian dan pengembangan dalam NLP dan memungkinkan \textit{training} model skala besar seperti BERT dan GPT yang sekarang mendominasi bidang ini.
-
-Sejak diperkenalkannya Transformer, banyak variasi dan peningkatan telah dikembangkan. Namun, prinsip dasar \textit{self-attention} dan paralelisasi yang diperkenalkan oleh Transformer tetap menjadi inti dari banyak inovasi dalam NLP kontemporer.
+Selain itu, \textit{transformer} dirancang untuk paralelisasi, yang memungkinkannya dilatih dengan cepat pada perangkat keras modern. Ini mempercepat penelitian dan pengembangan dalam NLP dan memungkinkan \textit{training} model skala besar seperti BERT dan GPT. Sejak diperkenalkannya \textit{transformer}, banyak variasi dan peningkatan telah dikembangkan. Namun, prinsip dasar \textit{self-attention} dan paralelisasi yang diperkenalkan oleh \textit{transformer} tetap menjadi inti dari banyak inovasi dalam NLP.
