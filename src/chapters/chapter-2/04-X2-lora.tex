@@ -9,7 +9,7 @@ Konsep dasar di balik LoRA adalah ide bahwa adaptasi model untuk tugas baru tida
     \label{fig:lora}
 \end{figure}
 
-Salah satu kelebihan utama dari pendekatan ini adalah kemampuannya untuk mengurangi \textit{overhead} komputasi. Dalam praktiknya, ini berarti bahwa waktu \textit{training} dan sumber daya yang diperlukan untuk adaptasi model menjadi jauh lebih sedikit dibandingkan dengan metode lain yang mungkin melibatkan \textit{training} ulang model dari awal atau menambahkan sejumlah besar parameter tambahan. Arsitektur dari LoRA dapat dilihat pada Gambar \ref{fig:lora}
+Salah satu kelebihan utama dari pendekatan ini adalah kemampuannya untuk mengurangi \textit{overhead} komputasi. Dalam praktiknya, ini berarti waktu \textit{training} dan sumber daya yang diperlukan untuk adaptasi model menjadi jauh lebih sedikit dibandingkan dengan metode lain yang mungkin melibatkan \textit{training} ulang model dari awal atau menambahkan sejumlah besar parameter tambahan. Arsitektur dari LoRA dapat dilihat pada Gambar \ref{fig:lora}.
 
 Pendekatan LoRA menjadi sangat relevan, terutama saat berhadapan dengan model-model berukuran besar. Model-model seperti ini memiliki jumlah parameter yang sangat besar, sehingga \textit{training} ulang atau menambahkan parameter tambahan bisa menjadi sangat mahal dari segi komputasi. Dengan LoRA, adaptasi model-model besar menjadi lebih praktis dan dapat dilakukan dengan efisiensi yang jauh lebih tinggi, tanpa mengorbankan kinerja.
 Dengan demikian, LoRA menawarkan pendekatan yang menjanjikan untuk mengadaptasi \textit{pre-trained model} dengan cara yang lebih efisien.
