@@ -9,26 +9,17 @@ Terdapat metodologi yang digunakan untuk melaksanakan tugas akhir ini, berikut a
 
     \item Perancangan solusi permasalahan
     
-    Setelah permasalahan teridentifikasi, langkah selanjutnya adalah merancang solusi untuk meningkatkan kinerja IndoBERT. Solusi yang ditelusuri berkaitan dengan penerapan berbagai teknik \textit{parameter-efficient transfer learning} yaitu LoRA, \textit{Prefix-Tuning}, dan \textit{Tiny-Attention Adapter}.
+    Dari masalah yang telah diidentifikasi, pada tahap ini dilakukan perancangan solusi permasalahan. Solusi yang ditelusuri merupakan penggunaan metode \PETL pada IndoBERT.
 
-    \item Persiapan eksperimen
+    \item Implementasi setiap metode PEFT
     
-    Persiapan eksperimen meliputi dua aspek utama, yaitu persiapan \textit{dataset} dan konfigurasi eksperimen.
+    Pada tahap ini dilakukan implementasi dari setiap metode \PETL pada kakas IndoLEM untuk bisa dilakukan eksperimen.
 
-    \item Persiapan \textit{dataset}
+    \item Eksperimen dengan setiap metode PEFT
     
-    Proses persiapan dataset melibatkan pengumpulan dan pemrosesan data yang akan digunakan dalam eksperimen. Data ini akan digunakan sebagai data \textit{training} dan data pengujian untuk model IndoBERT yang telah ditingkatkan.
+    Pada tahap ini dilakukan eksperimen pada kakas IndoLEM yang sudah menggunakan metode \PETL. Eksperimen akan dijalankan dengan \textit{fine-tuning} tradisional dan \PETL dengan 
 
-    \item Implementasi dan eksperimen
-    
-    Tahap ini mencakup implementasi solusi yang telah dirancang dalam lingkungan eksperimen. Implementasi melibatkan praproses dataset, konfigurasi model, serta pengujian model yang telah ditingkatkan dengan berbagai teknik \textit{paramater-efficient transfer learning}.
-
-    \item Analisis Hasil
-    
-    Setelah eksperimen selesai, hasil yang diperoleh akan dianalisis. Analisis meliputi perbandingan kinerja model terhadap berbagai tugas pemrosesan bahasa alami. Selain itu, analisis eror pada hasil prediksi juga akan dilakukan.
-
-    \item Penarikan kesimpulan
-    
-    Kesimpulan dari penelitian ini akan menjawab rumusan masalah yang telah diajukan. Hasil penelitian akan menentukan apakah penerapan teknik \textit{paramater-efficient transfer learning} berhasil meningkatkan kinerja model IndoBERT dalam berbagai tugas pemrosesan bahasa alami.
+    \item Evaluasi dan penarikan kesimpulan
+    Pada tahap ini, dilakukan evaluasi dengan membandingkan hasil \textit{fine-tuning} tradisional dengan \PETL. Hasil evaluasi ini kemudian akan menjadi tolak ukur terselesaikannya permasalahan pada tugas akhir ini.
 
 \end{enumerate}
