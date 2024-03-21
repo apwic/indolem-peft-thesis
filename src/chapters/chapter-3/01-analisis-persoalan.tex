@@ -3,15 +3,21 @@
 
 Berdasarkan latar belakang yang telah diuraikan pada subbab \ref{sec:latar-belakang}, peningkatan kinerja model IndoBERT dilakukan dengan menggunkan metode \PETL (PETL). Peningkatan kinerja model dengan metode PETL ini melibatkan penambahan konfigurasi ataupun \textit{layer} tambahan terhadap model tergantung dengan karateristik dari metode PETL masing-masing. Selain itu, analisis komprehensif dibutuhkan untuk membandingkan metode PETL yang dapat memberikan hasil terbaik. Untuk membuat analisis yang komprehensif dibutuhkan metode evaluasi terhadap kinerja model. Secara keseluruhan, penelitian yang dilakukan pada tugas akhir ini akan mencakup tiga tahap sebagai berikut.
 
+% TODO: tambahin persoalan kalo eksperimen sebelumnya susah untuk direplicate,
+% jadi better buat baru aja, tapi sebisa mungkin confignya samain kaya sebelumnya
 \begin{enumerate}
     \item Pengembangan setiap metode PETL.
     \item Konfigurasi setiap metode PETL.
     \item Eksperimen dan evaluasi kinerja model.
 \end{enumerate}
 
-Berdasarkan tahapan-tahapan penelitian yang diuraikan tersebut, terdapat empat persoalan utama dengan rincian sebagai berikut.
+Berdasarkan tahapan-tahapan penelitian yang diuraikan tersebut, terdapat lima persoalan utama dengan rincian sebagai berikut.
 
 \begin{enumerate}
+    \item Kakas IndoLEM yang \textit{outdated}.
+    
+    Berdasarkan tahap penelitian nomor 1, eksperimen yang dilakukan pada kakas IndoLEM menggunakan versi Python yang lama. Selain itu, kakas yang digunakan seperti Torch, Transformers, dan Seqeval yang digunakan mempunyai versi yang lama juga. Sehingga, untuk mengembangkan metode PETL pada kakas IndoLEM harus menggunakan versi yang sesuai dengan IndoLEM-nya. Selain itu, setiap eksperimen pada setiap tugas NLP mempunyai proses pemanggilan \textit{script} yang berbeda antara satu dengan yang lain pada kakas IndoLEM. Padahal, beberapa prosesnya dapat disamakan sehingga akan mempermudah untuk dilakukan pengembangan. Jadi, perlu dilakukan refaktorisasi pada kakas IndoLEM untuk memperbarui versi dan juga mempermudah proses pengembangan. 
+
     \item Pengembangan metode PETL pada kakas IndoLEM.
     
     IndoLEM merupakan kakas untuk melakukan training pada model IndoBERT. Berdasarkan tahap penelitian nomor 1, diperlukan pengembangan setiap metode pada kakas IndoLEM. Pengembangan ini mencakup penambahan dan perubahan kode pada kakas tersebut. Setiap metode PETL mempunyai cara implementasi yang berbeda, sehinga perlu dikembangkan untuk setiap metode yang akan digunakan, yaitu LoRA, \textit{Prefix-Tuning}, dan \textit{Tiny-Attention Adapter}.
@@ -24,7 +30,7 @@ Berdasarkan tahapan-tahapan penelitian yang diuraikan tersebut, terdapat empat p
     
     Berdasarkan tahap penelitian nomor 3 yaitu eksperimen dan evaluasi kinerja model, proses \textit{transfer learning} melibatkan proses \textit{training}. Pada proses tersebut perlu pemilihan kombinasi \textit{hyperparameter} yang optimal. \textit{Hyperparameter} seperti \textit{learning rate}, \textit{batch size}, dan jumlah \textit{epoch} berperan penting dalam menentukan kinerja model. Proses ini melibatkan eksperimen dengan berbagai kombinasi untuk menemukan setelan yang memberikan hasil terbaik. 
     
-    \item Pemilihan metode evaluasi
+    \item Pemilihan metode evaluasi.
     
     Untuk dapat melakukan analisis terhadap model diperlukan adanya metode evaluasi yang memang relevan dengan tugas NLP-nya. Metode evaluasi yang digunakan pada proses \textit{training} berupa metrik seperti akurasi, \textit{presisi}, \textit{recall}, dan F1-\textit{score}. Sedangkan, untuk analisis komprehensif yang dilakukan terakhir akan digunakan IndoLEM sebagai \textit{NLP Task Benchmarking}.
 
