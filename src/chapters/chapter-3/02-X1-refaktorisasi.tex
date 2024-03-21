@@ -1,2 +1,9 @@
 \subsection{Refaktorisasi Kakas IndoLEM}
 
+Refaktorisasi ini diperlukan untuk memperbarui dan memperbaiki infrastuktur dari kakas IndoLEM. Selain itu, proses ini juga diperlukan untuk mengembangkan metode PETL karena metode tersebut banyak memerlukan versi yang lebih baru dari pustaka yang digunakan. Untuk melakukan faktorisasi teradapat beberapa langkah yaitu memperbarui versi dari perangkat lunak, penyederhanaan dan standardisasi proses, dan dokumentasi.
+
+Peningkatan versi Python ke versi terbaru yang kompatibel dengan pustaka yang digunakan beserta dependensinya, salah satunya adalah Torch dan Transformers. Versi pustaka yang digunakan pada IndoLEM banyak yang tidak bisa digunakan pada versi Python yang lebih baru, sehingga eksperimen sulit untuk dibuat ulang pada perangkat yang berbeda. 
+
+\textit{Script} yang disediakan dari IndoLEM juga berbeda untuk setiap tugas NLP, cenderung rumit dan tidak seragam, yang mengakibatkan kesulitan dalam pengembangan lebih lanjut. Oleh karena itu, pemanggilan \textit{script} bisa disederhanakan dan distandardisasi. Pada pemanggilan \textit{script} sebelumnya, dari proses \textit{training}, evaluasi, dan \textit{predict} itu mirip yang berbeda hanya pada \textit{dataset} dan \textit{hyperparameter}-nya. Proses yang mirip antara setiap tugas dapat dijadikan suatu pustaka sehingga hanya perlu dipanggil untuk keperluan \textit{script} pada tugas tertentu saja sehingga menjadi modular.
+
+Dokumentasi pada kakas IndoLEM saat ini cukup terbatas, terutama pada \textit{requirement} untuk versi Python dan pustaka yang digunakannya, sehingga sulit untuk menajalankan eksperimennya. Perlu dilakukan dokumentasi yang lengkap terutama pada versi dari semua kakas yang digunakan pada eksperimen.

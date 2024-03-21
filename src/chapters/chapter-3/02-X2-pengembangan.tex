@@ -1,1 +1,10 @@
 \subsection{Pengembangan Metode PETL pada Kakas IndoLEM}
+
+Proses pengemabangan ini bertujuan untuk mengintegrasikan metode PETL yaitu \methodPETL pada arsitektur IndoBERT. Implementasi metode PETL ini memungkinkan peningkatan kinerja model dengan menambahkan atau memodifikasi konfigurasi dan layer model sesuai dengan karakteristik masing-masing metode PETL. Terdapat beberapa alternatif dalam melakukan integrasi metode, seperti menggunakan pustaka OpenDelta dan Adapters. Tetapi, tidak tersedia semua metodenya.
+
+LoRA adalah teknik yang memodifikasi bobot dari PLM  dengan menambahkan adapatasi berbasis \textit{rank} rendah pada bobot tersebut. Pada arsitektur IndoBERT, LoRA diintegrasikan dengan menambahkan adaptasi LoRA pada layer tertentu dari model IndoBERT. Sehingga, layer adaptasi ini berfungsi untuk mengatur interaksi antara bobot asli modle dengan adapatasi LoRA, dengan tujuan untuk memertahankan jumlah parameter yang efisien sambil meningkatkan model.
+
+\textit{Prefix-Tuning} merupakan metode yang menambahkan sejumlah kecil parameter yang dapat dipelajari yaitu \textit{prefixes} ke dalam model. Pada implementasi dari \textit{Prefix-Tuning} ini akan ditambahkan \textit{prefixes} ke dalam \textit{input} dari model. Teknik ini memungkinkan model untuk menyesuaikan prediksinya berdasarkan konteks yang diberikan oleh \textit{prefixes}, dengan menambahkan parameter yang minimal. 
+
+\textit{Tiny-Attention Adapter} adalah teknik yang mengintegrasikan adapter kecil ke dalam arsitektur \textit{attention} dari model untuk menyesuaikan output dari \textit{attention layers}. \textit{Adapter} memungkinkan penyesuaian pada aspek tertentu dari proses \textit{attention} tanpa perlu mengubah arsitektur model secara keseluruhan.
+
