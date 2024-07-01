@@ -1,11 +1,11 @@
 \section{Analisis Persoalan}
 \label{sec:analisis-persoalan}
 
-Berdasarkan latar belakang yang telah diuraikan pada subbab \ref{sec:latar-belakang}, peningkatan kinerja model IndoBERT dilakukan dengan menggunkan metode \PETL (PETL). Peningkatan kinerja model dengan metode PETL ini melibatkan penambahan konfigurasi ataupun \textit{layer} tambahan terhadap model tergantung dengan karateristik dari metode PETL masing-masing. Selain itu, analisis komprehensif dibutuhkan untuk membandingkan metode PETL yang dapat memberikan hasil terbaik. Untuk membuat analisis yang komprehensif dibutuhkan metode evaluasi terhadap kinerja model. Secara keseluruhan, penelitian yang dilakukan pada tugas akhir ini akan mencakup tiga tahap sebagai berikut.
+Berdasarkan latar belakang yang telah diuraikan pada subbab \ref{sec:latar-belakang}, peningkatan kinerja model IndoBERT dilakukan dengan menggunkan metode \PEFT (PEFT). Peningkatan kinerja model dengan metode PEFT ini melibatkan penambahan konfigurasi ataupun \textit{layer} tambahan terhadap model tergantung dengan karateristik dari metode PEFT masing-masing. Selain itu, analisis komprehensif dibutuhkan untuk membandingkan metode PEFT yang dapat memberikan hasil terbaik. Untuk membuat analisis yang komprehensif dibutuhkan metode evaluasi terhadap kinerja model. Secara keseluruhan, penelitian yang dilakukan pada tugas akhir ini akan mencakup tiga tahap sebagai berikut.
 
 \begin{enumerate}
-    \item Pengembangan setiap metode PETL.
-    \item Konfigurasi setiap metode PETL.
+    \item Pengembangan setiap metode PEFT.
+    \item Konfigurasi setiap metode PEFT.
     \item Eksperimen dan evaluasi kinerja model.
 \end{enumerate}
 
@@ -14,15 +14,15 @@ Berdasarkan tahapan-tahapan penelitian yang diuraikan tersebut, terdapat lima pe
 \begin{enumerate}
     \item Kakas IndoLEM yang \textit{outdated}.
     
-    Berdasarkan tahap penelitian nomor 1, eksperimen yang dilakukan pada kakas IndoLEM menggunakan versi Python yang lama. Selain itu, pustaka yang digunakan seperti Torch, Transformers, dan Seqeval yang digunakan mempunyai versi yang lama juga. Sehingga, untuk mengembangkan metode PETL pada kakas IndoLEM harus menggunakan versi yang sesuai dengan IndoLEM-nya. Selain itu, setiap eksperimen pada setiap tugas NLP mempunyai proses pemanggilan \textit{script} yang berbeda antara satu dengan yang lain pada kakas IndoLEM. Padahal, beberapa prosesnya dapat disamakan sehingga akan mempermudah untuk dilakukan pengembangan. Jadi, perlu dilakukan refaktorisasi pada kakas IndoLEM untuk memperbarui versi dan juga mempermudah proses pengembangan. 
+    Berdasarkan tahap penelitian nomor 1, eksperimen yang dilakukan pada kakas IndoLEM menggunakan versi Python yang lama. Selain itu, pustaka yang digunakan seperti Torch, Transformers, dan Seqeval yang digunakan mempunyai versi yang lama juga. Sehingga, untuk mengembangkan metode PEFT pada kakas IndoLEM harus menggunakan versi yang sesuai dengan IndoLEM-nya. Selain itu, setiap eksperimen pada setiap tugas NLP mempunyai proses pemanggilan \textit{script} yang berbeda antara satu dengan yang lain pada kakas IndoLEM. Padahal, beberapa prosesnya dapat disamakan sehingga akan mempermudah untuk dilakukan pengembangan. Jadi, perlu dilakukan refaktorisasi pada kakas IndoLEM untuk memperbarui versi dan juga mempermudah proses pengembangan. 
 
-    \item Pengembangan metode PETL pada kakas IndoLEM.
+    \item Pengembangan metode PEFT pada kakas IndoLEM.
     
-    IndoLEM merupakan kakas untuk melakukan training pada model IndoBERT. Berdasarkan tahap penelitian nomor 1, diperlukan pengembangan setiap metode pada kakas IndoLEM. Pengembangan ini mencakup penambahan dan perubahan kode pada kakas tersebut. Setiap metode PETL mempunyai cara implementasi yang berbeda, sehingga perlu dikembangkan untuk setiap metode yang akan digunakan, yaitu \methodPETL.
+    IndoLEM merupakan kakas untuk melakukan training pada model IndoBERT. Berdasarkan tahap penelitian nomor 1, diperlukan pengembangan setiap metode pada kakas IndoLEM. Pengembangan ini mencakup penambahan dan perubahan kode pada kakas tersebut. Setiap metode PEFT mempunyai cara implementasi yang berbeda, sehingga perlu dikembangkan untuk setiap metode yang akan digunakan, yaitu \methodPEFT.
 
-    \item Pemilihan konfigurasi terbaik untuk setiap metode PETL.
+    \item Pemilihan konfigurasi terbaik untuk setiap metode PEFT.
     
-    Setiap metode PETL mempunyai karakteristik yang berbeda dalam penggunaannya, sehingga konfigurasi untuk setiap metode perlu diperhatikan. Proses ini melibatkan penyesuaian \textit{layer} dan parameter yang spesifik untuk setiap metode. Penting untuk mengeksplorasi berbagai konfigurasi untuk menemukan kombinasi yang paling efektif. Hal ini mencakup penyesuaian ukuran \textit{layer}, jumlah parameter, dan aspek teknis lainnya yang dapat mempengaruhi kinerja model. Selain itu, metode PETL juga memerlukan penambahan \textit{adapter} seperti pada teknik \textit{Bottleneck Adapter}. Bahkan, menggabungkan beberapa metode PETL juga memungkinkan, sehingga diperlukan pembuatan konfigurasi yang spesifik untuk setiap metode.
+    Setiap metode PEFT mempunyai karakteristik yang berbeda dalam penggunaannya, sehingga konfigurasi untuk setiap metode perlu diperhatikan. Proses ini melibatkan penyesuaian \textit{layer} dan parameter yang spesifik untuk setiap metode. Penting untuk mengeksplorasi berbagai konfigurasi untuk menemukan kombinasi yang paling efektif. Hal ini mencakup penyesuaian ukuran \textit{layer}, jumlah parameter, dan aspek teknis lainnya yang dapat mempengaruhi kinerja model. Selain itu, metode PEFT juga memerlukan penambahan \textit{adapter} seperti pada teknik \textit{Bottleneck Adapter}. Bahkan, menggabungkan beberapa metode PEFT juga memungkinkan, sehingga diperlukan pembuatan konfigurasi yang spesifik untuk setiap metode.
 
     \item Pemilihan kombinasi \textit{hyperparameter} terbaik pada proses \textit{training}.
     

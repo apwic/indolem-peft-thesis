@@ -1,6 +1,6 @@
-\subsection{Integrasi Metode PETL pada Kakas IndoLEM}
+\subsection{Integrasi Metode PEFT pada Kakas IndoLEM}
 
-Proses ini bertujuan untuk mengintegrasikan metode PETL yaitu \methodPETL pada arsitektur IndoBERT. Implementasi metode PETL ini memungkinkan peningkatan kinerja model dengan menambahkan atau memodifikasi konfigurasi dan layer model sesuai dengan karakteristik masing-masing metode PETL. Terdapat beberapa alternatif dalam melakukan integrasi metode, seperti menggunakan pustaka OpenDelta dan Adapters. Tetapi, tidak tersedia semua metodenya.
+Proses ini bertujuan untuk mengintegrasikan metode PEFT yaitu \methodPEFT pada arsitektur IndoBERT. Implementasi metode PEFT ini memungkinkan peningkatan kinerja model dengan menambahkan atau memodifikasi konfigurasi dan layer model sesuai dengan karakteristik masing-masing metode PEFT. Terdapat beberapa alternatif dalam melakukan integrasi metode, seperti menggunakan pustaka OpenDelta dan Adapters. Tetapi, tidak tersedia semua metodenya.
 
 LoRA adalah teknik yang memodifikasi bobot dari PLM  dengan menambahkan adapatasi berbasis \textit{rank} rendah pada bobot tersebut. Pada arsitektur IndoBERT, LoRA diintegrasikan dengan menambahkan adaptasi LoRA pada layer tertentu dari model IndoBERT. Sehingga, layer adaptasi ini berfungsi untuk mengatur interaksi antara bobot asli modle dengan adapatasi LoRA, dengan tujuan untuk memertahankan jumlah parameter yang efisien sambil meningkatkan model.
 
