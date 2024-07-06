@@ -1,35 +1,34 @@
 \section{Analisis Persoalan}
 \label{sec:analisis-persoalan}
 
+Berdasarkan latar belakang yang telah diuraikan pada subbab \ref{sec:latar-belakang}, diperlukan implementasi metode \PEFT (PEFT) pada kakas IndoLEM. Untuk melakukan implementasi tersebut serta menjawab tujuan yang telah disebutkan pada subbab \ref{sec:tujuan}. Terdapat beberapa persoalan yang perlu dijawab.
+
+\subsection{Kakas IndoLEM yang \textit{Outdated}}
+
+Penelitian IndoLEM sudah diterbitkan semenjak 4 tahun yang lalu, tentunya banyak kakas yang sudah berkembang semenjak saat itu. Pada \textit{source code}-nya, terdapat \textit{script} untuk menjalankan pelatihan dan melakukan evaluasi. Tetapi, untuk menjalankannya membutuhkan konfigurasi dari Python, serta pustaka yang lain. Ini merupakan salah satu kelemahan dari kakas IndoLEM, yaitu kurangnya dokumentasi pada versi yang digunakan. Sebagai contoh, dari 7 tugas evaluasi, hanya terdapat 1 tugas evaluasi yang memberikan \textit{requirements} untuk menjalankan \textit{script} tersebut. Sehingga, banyak kesulitan yang muncul saat mencoba menjalankan proses pelatihan dan evaluasinya.
+
+Selain itu, banyak pustaka yang digunakan seperti Torch, Transformers, dan Seqeval mempunyai versi yang lama. Sedangkan, untuk mengimplementasikan metode PEFT pada kakas IndoLEM memerlukan versi yang sesuai. Terdapat beberapa fungsi yang digunakan pada kakas IndoLEM sudah \textit{deprecated} karena sudah ada versi yang lebih baru dari fungsi tersebut.
+
+Setiap tugas evaluasi pada IndoLEM mempunyai implementasi cara pelatihan dan evaluasi yang berbeda antara satu sama lain. Padahal, dengan menggunakan pustaka terbaru, sebagai contoh dengan menggunakan Trainer dari pustaka Huggingface, proses pelatihan dapat diimplementasikan secara konsisten. Sehingga, implementasi pada setiap task tidak perlu dibuat secara berbeda. Dari banyak alasan tersebut, perlu adanya refaktorisasi pada kakas IndoLEM.
+
+\subsection{Implementasi Metode PEFT pada Kakas IndoLEM}
+
+Kakas IndoLEM saat ini menggunakan metode \textit{fine-tuning} dalam proses pelatihan dan evaluasinya. Sedangkan, tujuan dari tugas akhir ini adalah untuk memanfaatkan metode PEFT pada kakas IndoLEM. Sehingga, perlu dilakukan implementasi dari setiap metode PEFT yang ingin digunakan agar bisa dimanfaatkan pada kakas IndoLEM.
+
+Implementasi dari metode PETL sudah dijelaskan pada penelitian dari metode PETL tersebut. Terdapat beberapa kakas yang mengimplementasikan metode PETL tersebut, sehingga bisa diintegrasikan pada proses pelatihan dan evaluasinya. Dari kakas yang tersedia, ada yang hanya mengimplementasikan satu metode, beberapa metode, atau bahkan ada yang menggabungkan beberapa metode tersebut. Berdasarkan hal ini, untuk mengimplementasikan metode PETL pada kakas IndoLEM, diperlukan pemilihan kakas yang tepat serta integrasinya.
+
+\subsection{Pemilihan Model}
+
+Tugas evaluasi yang digunakan pada tugas akhir ini, sesuai yang telah disebutkan pada subbab \ref{sec:batasan-masalah}, adalah \nlptask. Setiap tugas evaluasi mempunyai kategori yang berbeda. \textit{Named entity recognition} merupakan tugas \textit{token classification}, yang berarti setiap token perlu diklasifikasikan terhadap sebuah label. \textit{Sentiment analysis} merupakan tugas \textit{text classification},  yang berarti suatu atau beberapa kalimat akan diklasifikan terhadap suatu sentimen (label) tertentu. Terakhir, tugas \textit{summarization} merupakan tugas \textit{generation} yang berarti dari suatu teks perlu diolah menjadi tesk lain.
+
+Setiap model mempunyai karakteristik yang berbeda, sebagai contoh pada arsitektur Transformers, ada model yang merupakan \textit{encoder}, \textit{decoder}, atau \textit{encoder decoder}. Tugas \textit{classification} seperti NER dan \textit{sentiment analysis} hanya memerlukan model \textit{encoder}, sedangkan tugas \textit{generation} memerlukan \textit{encoder decoder}. Untuk melakukan pelatihan dan evaluasi terhadap kakas IndoLEM diperlukan pemilihan model yang sesuai.
+
+\subsection{Pelatihan dan Evaluasi Model}
+
+Untuk menguji metode PETL yang nanti akan diimplementasikan, perlu adanya pelatihan dan evaluasi pada model. Pelatihan dan evaluasi ini perlu dilakukan agar kakas evaluasi dapat memberikan metriks evaluasi yang menjadi hasil dari pelatihan model tersebut. Pelatihan dan evaluasi model memerlukan beberapa komponen, yaitu \textit{dataset} (latih, evaluasi, dan uji), \textit{hyperparameter} yang digunakan, dan lingkungan pelatihan.
+
+Setiap komponen tersebut perlu ditentukan agar proses pelatihan dan evaluasi model dapat berjalan dengan sesuai. Untuk setiap pelatihan dan evaluasi model, akan dilakukan metode \textit{fine-tuning} serta berbagai metode PEFT. Hal ini perlu dilakukan agar setiap metode tersebut bisa dibandingkan antara satu sama lain.
+
+
 Berdasarkan latar belakang yang telah diuraikan pada subbab \ref{sec:latar-belakang}, peningkatan kinerja model IndoBERT dilakukan dengan menggunkan metode \PEFT (PEFT). Peningkatan kinerja model dengan metode PEFT ini melibatkan penambahan konfigurasi ataupun \textit{layer} tambahan terhadap model tergantung dengan karateristik dari metode PEFT masing-masing. Selain itu, analisis komprehensif dibutuhkan untuk membandingkan metode PEFT yang dapat memberikan hasil terbaik. Untuk membuat analisis yang komprehensif dibutuhkan metode evaluasi terhadap kinerja model. Secara keseluruhan, penelitian yang dilakukan pada tugas akhir ini akan mencakup tiga tahap sebagai berikut.
 
-\begin{enumerate}
-    \item Pengembangan setiap metode PEFT.
-    \item Konfigurasi setiap metode PEFT.
-    \item Eksperimen dan evaluasi kinerja model.
-\end{enumerate}
-
-Berdasarkan tahapan-tahapan penelitian yang diuraikan tersebut, terdapat lima persoalan utama dengan rincian sebagai berikut.
-
-\begin{enumerate}
-    \item Kakas IndoLEM yang \textit{outdated}.
-    
-    Berdasarkan tahap penelitian nomor 1, eksperimen yang dilakukan pada kakas IndoLEM menggunakan versi Python yang lama. Selain itu, pustaka yang digunakan seperti Torch, Transformers, dan Seqeval yang digunakan mempunyai versi yang lama juga. Sehingga, untuk mengembangkan metode PEFT pada kakas IndoLEM harus menggunakan versi yang sesuai dengan IndoLEM-nya. Selain itu, setiap eksperimen pada setiap tugas NLP mempunyai proses pemanggilan \textit{script} yang berbeda antara satu dengan yang lain pada kakas IndoLEM. Padahal, beberapa prosesnya dapat disamakan sehingga akan mempermudah untuk dilakukan pengembangan. Jadi, perlu dilakukan refaktorisasi pada kakas IndoLEM untuk memperbarui versi dan juga mempermudah proses pengembangan. 
-
-    \item Pengembangan metode PEFT pada kakas IndoLEM.
-    
-    IndoLEM merupakan kakas untuk melakukan training pada model IndoBERT. Berdasarkan tahap penelitian nomor 1, diperlukan pengembangan setiap metode pada kakas IndoLEM. Pengembangan ini mencakup penambahan dan perubahan kode pada kakas tersebut. Setiap metode PEFT mempunyai cara implementasi yang berbeda, sehingga perlu dikembangkan untuk setiap metode yang akan digunakan, yaitu \methodPEFT.
-
-    \item Pemilihan konfigurasi terbaik untuk setiap metode PEFT.
-    
-    Setiap metode PEFT mempunyai karakteristik yang berbeda dalam penggunaannya, sehingga konfigurasi untuk setiap metode perlu diperhatikan. Proses ini melibatkan penyesuaian \textit{layer} dan parameter yang spesifik untuk setiap metode. Penting untuk mengeksplorasi berbagai konfigurasi untuk menemukan kombinasi yang paling efektif. Hal ini mencakup penyesuaian ukuran \textit{layer}, jumlah parameter, dan aspek teknis lainnya yang dapat mempengaruhi kinerja model. Selain itu, metode PEFT juga memerlukan penambahan \textit{adapter} seperti pada teknik \textit{Bottleneck Adapter}. Bahkan, menggabungkan beberapa metode PEFT juga memungkinkan, sehingga diperlukan pembuatan konfigurasi yang spesifik untuk setiap metode.
-
-    \item Pemilihan kombinasi \textit{hyperparameter} terbaik pada proses \textit{training}.
-    
-    Berdasarkan tahap penelitian nomor 3 yaitu eksperimen dan evaluasi kinerja model, proses \textit{transfer learning} melibatkan proses \textit{training}. Pada proses tersebut perlu pemilihan kombinasi \textit{hyperparameter} yang optimal. \textit{Hyperparameter} seperti \textit{learning rate}, \textit{batch size}, dan jumlah \textit{epoch} berperan penting dalam menentukan kinerja model. Proses ini melibatkan eksperimen dengan berbagai kombinasi untuk menemukan setelan yang memberikan hasil terbaik. 
-    
-    \item Pemilihan metode evaluasi.
-    
-    Untuk dapat melakukan analisis terhadap model diperlukan adanya metode evaluasi yang memang relevan dengan tugas NLP-nya. Metode evaluasi yang digunakan pada proses \textit{training} berupa metrik seperti akurasi, \textit{presisi}, \textit{recall}, dan F1-\textit{score}. Sedangkan, untuk analisis komprehensif yang dilakukan terakhir akan digunakan IndoLEM sebagai \textit{NLP Task Benchmarking}.
-
-\end{enumerate}

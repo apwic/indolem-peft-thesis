@@ -1,0 +1,36 @@
+\section{Analisis Solusi}
+
+Berdasarkan analisis masalah, terdapat beberapa solusi yang dapat langsung menjawab permasalahan yang diuraikan pada Bab \ref{sec:analisis-persoalan}. Diajukan solusi-solusi yang dijabarkan pada analisis solusi berikut. Setiap bagian dari analisis solusi ini akan menjawab setiap bagian pada analisis persoalan.
+
+\subsection{Kakas IndoLEM yang \textit{Outdated}}
+
+Untuk menjawab persoalaan ini, diperlukan pengembangan ulang untuk memperbarui dan memperbaiki infrastruktur dari kakas IndoLEM. Selain itu, proses ini juga diperlukan untuk mengembangkan metode PEFT karena metode tersebut memerlukan versi yang lebih baru dari pustaka yang digunakan. Untuk melakukan pengembangan ulang, terdapat beberapa langkah yang diperlukan, yaitu memperbarui versi dari perangkat lunak yang digunakan, penyederhanaan dan standardisasi proses, serta dokumentasi.
+
+Peningkatan versi perangkat lunak yaitu Python ke versi lebih baru yang kompatibel dengan pustaka yang akan digunakan beserta dependensinya, salah satunya adalah Torch dan Transformers. Hal ini perlu dilakukan karena versi pustaka yang digunakan pada kakas IndoLEM banyak yang tidak bisa digunakan pada versi Python yang lebih baru.
+
+\textit{Script} yang saat ini digunakan pada kakas IndoLEM cukup berbeda antar setiap tugas evaluasi. Padahal, untuk setiap tugas evaluasi, proses pelatihannya itu bisa distandardisasi. Dengan menggunakan modul Trainer dari pustaka Transformers, bagian pelatihan bisa distandardisasi. Hanya perlu menyesuaikan pada bagian praproses data dan perhitungan metriksnya.
+
+Dokumentasi pada kakas IndoLEM saat ini cukup terbatas, terutama pada \textit{requirement} untuk versi Python dan pustaka yang digunakannya. Dengan menambahkan \textit{requirement} yang dibutuhkan untuk menajalankan proses pelatihan dan evaluasi dapat menjawab masalah ini.
+
+\subsection{Implementasi Metode PEFT pada Kakas IndoLEM}
+
+Metode PEFT yaitu \methodPEFT perlu diimplementasikan pada kakas IndoLEM. Implementasi dari setiap metode PEFT ini terdapat pada penelitian terkaitnya. Tetapi, sudah banyak kakas yang memungkinkan untuk menggunakan metode ini dengan mengintegrasikannya pada model. Hal ini dilakukan dengan menggunakan pustaka dari metode PEFT tersebut.
+
+Terdapat beberapa pustaka yang sudah mengimplementasikan metode PEFT, ada yang hanya mengimplementasikan satu, beberapa, atau bahkan menggabungkan beberapa metode PEFT tersebut. Salah satunya adalah pustaka PEFT, OpenDelta, dan Adapters. Setiap pustaka tersebut mempunyai metode PEFT yang berbeda. Pustaka PEFT hanya mengimplementasikan metodenya saja tanpa ada fungsionalitas untuk menggabungkan beberapa metode PEFT. Sedangkan, OpenDelta dan Adapters mampu untuk melakukan penggubangan metode PEFT. Hanya saja, metode PEFT yang bisa digunakan pada pustaka OpenDelta dan Adapters lebih sedikit dibandingkan dengan pustaka PEFT.
+
+Pada tugas akhir ini, akan dilakukan implementasi pada metode PEFT yaitu \methodPEFT. Selain itu juga, dilakukan penggabungan antara ketiga metode tersebut. Sehingga, yang bisa menjadi pilihan adalah pustaka OpenDelta dan Adapters. Berdasarkan aktivitas dari \textit{soure code}-nya, pustaka Adapters, masih banyak dilakukan perubahan, sedangkan OpenDelta tidak ada perubahan dari sekitar setahun yang lalu. Sehingg, pustaka Adapters yang akan digunakan untuk implementasi metode PEFT pada kakas IndoLEM.
+
+\subsection{Pemilihan Model}
+
+Pada penelitian yang menerbitkan kakas IndoLEM, diterbitkan juga sekaligus modelnya yaitu IndoBERT. Seperti yang disebtukan pada subbab \ref{sec:indobet}, model IndoBERT menjadi \textit{state-of-the-art} pada hasil evaluasi pada kakas IndoLEM. IndoBERT merupakan model \textit{encoder} yang cocok untuk tugas \textit{classification}, sehingga sesuai dengan tugas evaluasi NER dan \textit{sentiment analysis}. Namun, untuk tugas \textit{generation} yaitu \textit{summarization} yang membutuhkan model \textit{encoder decoder} bukan hal yang sesuai.
+
+Tugas evaluasi \textit{summarization} pada kakas IndoLEM menggunakan model IndoBERT yang merupakan model \textit{encoder}. Hal ini bisa dilakukan dengan menjadikan model yang sama sebagai \textit{decoder}-nya juga, menjadikan 2 model IndoBERT sebagai \textit{encoder} dan \textit{decoder}. Terdapat model yang merupakan \textit{encoder decoder} yang lebih cocok untuk tugas evaluasi \textit{summarization} yaitu model BART dan T5. Untuk versi bahasa Indonesianya, terdapat model IndoBART dan IndoT5. Berdasarkan hasil evaluasi dari IndoBART dan IndoT5, model IndoT5 menghasilkan evaluasi yang lebih baik daripada IndoBART. 
+
+\subsection{Pelatihan dan Evaluasi Model}
+
+Terdapat beberapa komponen dalam pelatihan dan evaluasi model, yaitu \textit{dataset} (latih, evaluasi dan uji), \textit{hyperparameter} yang digunakan, dan lingkungan pelatihan. Pada kakas IndoLEM, untuk tugas evaluasi \nlptask sudah terdapat \textit{dataset} yang tersedia. \textit{Dataset} yang telah tersedia ini tetap digunakan, \textit{dataset} tersebut sudah terbagi dalam 5-\textit{fold}. Perubahan dilakukan untuk menyesuaikan format dan nama kolom akan lebih sesuai.
+
+\textit{Hyperparameter} yang digunakan ada dua, yaitu \textit{hyperparameter} pelatihan seperti \textit{learning rate}, dan \textit{hyperparameter} metode PEFT seperti \textit{rank} pada LoRA. Kedua \textit{hyperparameter} ini perlu ditentukan agar eksperimen konsisten. Untuk \textit{hyperaparemeter} pelatihan sudah ditentukan pada kakas IndoLEM. \textit{Hyperparameter} pelatihan ini digunakan kembali dengan \textit{hyperparameter} metode PEFT. Untuk \textit{hyperparameter} metode PEFT perlu dilakukan \textit{hyperparameter tuning} untuk menentukan \textit{hyperparameter} mana yang paling baik.
+
+Terakhir, lingkungan pelatihan dibutuhkan untuk menjalankan proses pelatihan dan evaluasi. Lingkungan pelatihan membutuhkan GPU sehingga bisa memanfaatkan CUDA untuk mempercepat proses pelatihan. GPU yang khusus dibuat untuk pelatihan model merupakan pilihan yang paling tepat karena bisa menghemat waktu pelatihan. Terdapat banyak pilihan GPU untuk pelatihan berbasis \textit{cloud}, seperti Vast.AI dan Google Cloud Provider (GCP). Vast.AI mampu memberikan GPU sesuai permintaan setiap saaat, mempunyai pilihan GPU yang banyak, dan harga yang cukup terjangkau dibandingkan \textit{cloud provider} yang lain. Vast.AI menjadi pilihan yang tepat sebagai lingkungan pelatihan.
+
