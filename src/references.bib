@@ -39,16 +39,16 @@
 @article{lora,
 	title = {Low-Rank Adaptation for Large Language Models},
 	author = {Edward J. Hu and Yelong Shen and Phillip Wallis and Zeyuan
-	          Allen-Zhu and Yuanzhi Li and Shean Wang and Lu Wang and Weizhu Chen
-	          },
+	          Allen-Zhu and Yuanzhi Li and Shean Wang and Lu Wang and Weizhu
+	          Chen },
 	year = {2021},
 	journal = {arXiv preprint arXiv:2106.09685},
 	url = {https://arxiv.org/abs/2106.09685},
 }
 
 @article{tinyattention,
-	title = {Bottleneck Adapter: Contexts Are More Important Than the Number of
-	         Parameters},
+	title = {Bottleneck Adapter: Contexts Are More Important Than the Number
+	         of Parameters},
 	author = {Hongyu Zhao and Hao Tan and Hongyuan Mei},
 	year = {2022},
 	journal = {arXiv preprint arXiv:2211.01979},
@@ -65,8 +65,8 @@
 }
 
 @article{bert,
-	title = {BERT: Pre-training of Deep Bidirectional Transformers for Language
-	         Understanding},
+	title = {BERT: Pre-training of Deep Bidirectional Transformers for
+	         Language Understanding},
 	author = {Jacob Devlin and Ming-Wei Chang and Kenton Lee and Kristina
 	          Toutanova},
 	journal = {arXiv preprint arXiv:1810.04805},
@@ -74,8 +74,9 @@
 	url = {},
 }
 
-@article{indobert,
-	author = {Fajri Koto and Afshin Rahimi and Jey Han Lau and Timothy Baldwin},
+@article{indolem,
+	author = {Fajri Koto and Afshin Rahimi and Jey Han Lau and Timothy
+	          Baldwin},
 	title = {IndoLEM and IndoBERT: {A} Benchmark Dataset and Pre-trained
 	         Language Model for Indonesian {NLP}},
 	journal = {CoRR},
@@ -89,13 +90,27 @@
 	bibsource = {dblp computer science bibliography, https://dblp.org},
 }
 
-@article{glue,
+@inproceedings{glue,
 	title = {GLUE: A Multi-Task Benchmark and Analysis Platform for Natural
 	         Language Understanding},
-	author = {Alex Wang and Amanpreet Singh and Julian Michael and Felix Hill
-	          and Omer Levy and Samuel R. Bowman},
+	url = {http://dx.doi.org/10.18653/v1/W18-5446},
+	DOI = {10.18653/v1/w18-5446},
+	booktitle = {Proceedings of the 2018 EMNLP Workshop BlackboxNLP:
+	             Analyzing and Interpreting Neural Networks for NLP},
+	publisher = {Association for Computational Linguistics},
+	author = {Wang, Alex and Singh, Amanpreet and Michael, Julian and Hill,
+	          Felix and Levy, Omer and Bowman, Samuel},
+	year = {2018},
+}
+
+@misc{superglue,
+	title = {SuperGLUE: A Stickier Benchmark for General-Purpose Language
+	         Understanding Systems},
+	author = {Alex Wang and Yada Pruksachatkun and Nikita Nangia and
+	          Amanpreet Singh and Julian Michael and Felix Hill and Omer Levy
+	          and Samuel R. Bowman},
 	year = {2019},
-	eprint = {1804.07461},
+	eprint = {1905.00537},
 	archivePrefix = {arXiv},
 	primaryClass = {cs.CL},
 }
@@ -112,8 +127,8 @@
 @misc{parameter,
 	title = {Parameter-Efficient Transfer Learning for NLP},
 	author = {Neil Houlsby and Andrei Giurgiu and Stanislaw Jastrzebski and
-	          Bruna Morrone and Quentin de Laroussilhe and Andrea Gesmundo and
-	          Mona Attariyan and Sylvain Gelly},
+	          Bruna Morrone and Quentin de Laroussilhe and Andrea Gesmundo
+	          and Mona Attariyan and Sylvain Gelly},
 	year = {2019},
 	eprint = {1902.00751},
 	archivePrefix = {arXiv},
@@ -121,10 +136,10 @@
 }
 
 @misc{peng2022parameterefficient,
-	title = {Parameter-efficient transfer learning of pre-trained Transformer
-	         models for speaker verification using adapters},
-	author = {Junyi Peng and Themos Stafylakis and Rongzhi Gu and Oldřich Plchot
-	          and Ladislav Mošner and Lukáš Burget and Jan Černocký},
+	title = {Parameter-efficient transfer learning of pre-trained
+	         Transformer models for speaker verification using adapters},
+	author = {Junyi Peng and Themos Stafylakis and Rongzhi Gu and Oldřich
+	          Plchot and Ladislav Mošner and Lukáš Burget and Jan Černocký},
 	year = {2022},
 	eprint = {2210.16032},
 	archivePrefix = {arXiv},
@@ -150,9 +165,9 @@
 
 @inproceedings{adapter,
 	title = {Parameter-Efficient Transfer Learning for NLP},
-	author = {Houlsby, Neil and Giurgiu, Andrei and Jastrzebski, Stanislaw and
-	          Morrone, Bruna and De Laroussilhe, Quentin and Gesmundo, Andrea and
-	          Attariyan, Mona and Gelly, Sylvain},
+	author = {Houlsby, Neil and Giurgiu, Andrei and Jastrzebski, Stanislaw
+	          and Morrone, Bruna and De Laroussilhe, Quentin and Gesmundo,
+	          Andrea and Attariyan, Mona and Gelly, Sylvain},
 	booktitle = {Proceedings of the 36th International Conference on Machine
 	             Learning},
 	pages = {2790--2799},
@@ -167,37 +182,12 @@
 }
 
 @article{peft_on_plm,
-	abstract = {With the prevalence of pre-trained language models (PLMs) and
-	            the pre-training--fine-tuning paradigm, it has been continuously
-	            shown that larger models tend to yield better performance.
-	            However, as PLMs scale up, fine-tuning and storing all the
-	            parameters is prohibitively costly and eventually becomes
-	            practically infeasible. This necessitates a new branch of
-	            research focusing on the parameter-efficient adaptation of PLMs,
-	            which optimizes a small portion of the model parameters while
-	            keeping the rest fixed, drastically cutting down computation and
-	            storage costs. In general, it demonstrates that large-scale
-	            models could be effectively stimulated by the optimization of a
-	            few parameters. Despite the various designs, here we discuss and
-	            analyse the approaches under a more consistent and accessible
-	            term `delta-tuning', where `delta'a mathematical notation often
-	            used to denote changes, is borrowed to refer to the portion of
-	            parameters that are `changed'during training. We formally
-	            describe the problem and propose a unified categorization
-	            criterion for existing delta-tuning methods to explore their
-	            correlations and differences. We also discuss the theoretical
-	            principles underlying the effectiveness of delta-tuning and
-	            interpret them from the perspectives of optimization and optimal
-	            control. Furthermore, we provide a holistic empirical study on
-	            over 100 natural language processing tasks and investigate
-	            various aspects of delta-tuning. With comprehensive study and
-	            analysis, our research demonstrates the theoretical and practical
-	            properties of delta-tuning in the adaptation of PLMs.},
-	author = {Ding, Ning and Qin, Yujia and Yang, Guang and Wei, Fuchao and Yang
-	          , Zonghan and Su, Yusheng and Hu, Shengding and Chen, Yulin and
-	          Chan, Chi-Min and Chen, Weize and Yi, Jing and Zhao, Weilin and
-	          Wang, Xiaozhi and Liu, Zhiyuan and Zheng, Hai-Tao and Chen, Jianfei
-	          and Liu, Yang and Tang, Jie and Li, Juanzi and Sun, Maosong},
+	author = {Ding, Ning and Qin, Yujia and Yang, Guang and Wei, Fuchao and
+	          Yang , Zonghan and Su, Yusheng and Hu, Shengding and Chen,
+	          Yulin and Chan, Chi-Min and Chen, Weize and Yi, Jing and Zhao,
+	          Weilin and Wang, Xiaozhi and Liu, Zhiyuan and Zheng, Hai-Tao
+	          and Chen, Jianfei and Liu, Yang and Tang, Jie and Li, Juanzi
+	          and Sun, Maosong},
 	date = {2023/03/01},
 	date-added = {2023-12-14 01:30:09 +0700},
 	date-modified = {2023-12-14 01:30:09 +0700},
@@ -207,8 +197,8 @@
 	journal = {Nature Machine Intelligence},
 	number = {3},
 	pages = {220--235},
-	title = {Parameter-efficient fine-tuning of large-scale pre-trained language
-	         models},
+	title = {Parameter-efficient fine-tuning of large-scale pre-trained
+	         language models},
 	url = {https://doi.org/10.1038/s42256-023-00626-4},
 	volume = {5},
 	year = {2023},
@@ -221,3 +211,32 @@
 	year = {2023},
 	note = {Diakses pada 14 Desember 2023},
 } 
+
+@misc{indonlu,
+	title = {IndoNLU: Benchmark and Resources for Evaluating Indonesian
+	         Natural Language Understanding},
+	author = {Bryan Wilie and Karissa Vincentio and Genta Indra Winata and
+	          Samuel Cahyawijaya and Xiaohong Li and Zhi Yuan Lim and Sidik
+	          Soleman and Rahmad Mahendra and Pascale Fung and Syafri Bahar
+	          and Ayu Purwarianti},
+	year = {2020},
+	eprint = {2009.05387},
+	archivePrefix = {arXiv},
+	primaryClass = {cs.CL},
+}
+
+@inproceedings{indonlg,
+	title = {IndoNLG: Benchmark and Resources for Evaluating Indonesian
+	         Natural Language Generation},
+	url = {http://dx.doi.org/10.18653/v1/2021.emnlp-main.699},
+	DOI = {10.18653/v1/2021.emnlp-main.699},
+	booktitle = {Proceedings of the 2021 Conference on Empirical Methods in
+	             Natural Language Processing},
+	publisher = {Association for Computational Linguistics},
+	author = {Cahyawijaya, Samuel and Winata, Genta Indra and Wilie, Bryan
+	          and Vincentio, Karissa and Li, Xiaohong and Kuncoro, Adhiguna
+	          and Ruder, Sebastian and Lim, Zhi Yuan and Bahar, Syafri and
+	          Khodra, Masayu and Purwarianti, Ayu and Fung, Pascale},
+	year = {2021},
+}
+
