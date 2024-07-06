@@ -1,25 +1,4 @@
-% @book{knuth2001art,
-	% = title=,
-}{The Art of Computer Programming: Fundamental Algorithms},
-%     author={Knuth, D.E.},
-%     number={v. 1},
-%     isbn={9780201896831},
-%     series={The Art of Computer Programming: Fundamental Algorithms},
-%     year={2001},
-%     publisher={Addison-Wesley}
-% }
-% @inproceedings{4026885,
-	% = author=,
-}{W. Vogels},
-%     booktitle={2006 IEEE International Conference on Services Computing (SCC'06)},
-%     title={Web Services at Amazon.com},
-%     year={2006},
-%     pages={xxii-xxii},
-%     keywords={Distributed computing;Technological innovation;Web services},
-%     doi={10.1109/SCC.2006.116},
-%     month={Sept}
-% }
-
+% NLP
 @article{nlp,
 	title = {Speech and Language Processing},
 	author = {Jurafsky, D. and Martin, J. H.},
@@ -28,6 +7,7 @@
 	url = {https://web.stanford.edu/~jurafsky/slp3/},
 }
 
+% Models
 @article{transformers,
 	title = {Attention Is All You Need},
 	author = {Vaswani, A. and others},
@@ -36,6 +16,17 @@
 	url = {https://arxiv.org/abs/1706.03762},
 }
 
+@article{bert,
+	title = {BERT: Pre-training of Deep Bidirectional Transformers for
+	         Language Understanding},
+	author = {Jacob Devlin and Ming-Wei Chang and Kenton Lee and Kristina
+	          Toutanova},
+	journal = {arXiv preprint arXiv:1810.04805},
+	year = {2018},
+	url = {},
+}
+
+% Adapters
 @article{lora,
 	title = {Low-Rank Adaptation for Large Language Models},
 	author = {Edward J. Hu and Yelong Shen and Phillip Wallis and Zeyuan
@@ -55,41 +46,34 @@
 	url = {https://arxiv.org/abs/2211.01979},
 }
 
-@article{uvpl,
-	title = {Unified Parameter-Efficient Transfer Learning},
-	author = {Junxian He and Chunting Zhou and Xuezhe Ma and Taylor
-	          Berg-Kirkpatrick and Graham Neubig},
+@article{prefix_tuning,
+	title = {Prefix-Tuning: Optimizing Continuous Prompts for Generation},
+	author = {Xiang Lisa Li and Percy Liang},
 	year = {2021},
-	journal = {arXiv preprint arXiv:2110.04366},
-	url = {https://arxiv.org/abs/2110.04366},
+	eprint = {2101.00190},
+	archivePrefix = {arXiv},
+	primaryClass = {cs.CL},
 }
 
-@article{bert,
-	title = {BERT: Pre-training of Deep Bidirectional Transformers for
-	         Language Understanding},
-	author = {Jacob Devlin and Ming-Wei Chang and Kenton Lee and Kristina
-	          Toutanova},
-	journal = {arXiv preprint arXiv:1810.04805},
-	year = {2018},
-	url = {},
+@inproceedings{adapter,
+	title = {Parameter-Efficient Transfer Learning for NLP},
+	author = {Houlsby, Neil and Giurgiu, Andrei and Jastrzebski, Stanislaw
+	          and Morrone, Bruna and De Laroussilhe, Quentin and Gesmundo,
+	          Andrea and Attariyan, Mona and Gelly, Sylvain},
+	booktitle = {Proceedings of the 36th International Conference on Machine
+	             Learning},
+	pages = {2790--2799},
+	year = {2019},
+	editor = {Chaudhuri, Kamalika and Salakhutdinov, Ruslan},
+	volume = {97},
+	series = {Proceedings of Machine Learning Research},
+	month = {09--15 Jun},
+	publisher = {PMLR},
+	pdf = {http://proceedings.mlr.press/v97/houlsby19a/houlsby19a.pdf},
+	url = {https://proceedings.mlr.press/v97/houlsby19a.html},
 }
 
-@article{indolem,
-	author = {Fajri Koto and Afshin Rahimi and Jey Han Lau and Timothy
-	          Baldwin},
-	title = {IndoLEM and IndoBERT: {A} Benchmark Dataset and Pre-trained
-	         Language Model for Indonesian {NLP}},
-	journal = {CoRR},
-	volume = {abs/2011.00677},
-	year = {2020},
-	url = {https://arxiv.org/abs/2011.00677},
-	eprinttype = {arXiv},
-	eprint = {2011.00677},
-	timestamp = {Fri, 06 Nov 2020 15:32:47 +0100},
-	biburl = {https://dblp.org/rec/journals/corr/abs-2011-00677.bib},
-	bibsource = {dblp computer science bibliography, https://dblp.org},
-}
-
+% LEM
 @inproceedings{glue,
 	title = {GLUE: A Multi-Task Benchmark and Analysis Platform for Natural
 	         Language Understanding},
@@ -114,103 +98,6 @@
 	archivePrefix = {arXiv},
 	primaryClass = {cs.CL},
 }
-
-@article{prefix_tuning,
-	title = {Prefix-Tuning: Optimizing Continuous Prompts for Generation},
-	author = {Xiang Lisa Li and Percy Liang},
-	year = {2021},
-	eprint = {2101.00190},
-	archivePrefix = {arXiv},
-	primaryClass = {cs.CL},
-}
-
-@misc{parameter,
-	title = {Parameter-Efficient Transfer Learning for NLP},
-	author = {Neil Houlsby and Andrei Giurgiu and Stanislaw Jastrzebski and
-	          Bruna Morrone and Quentin de Laroussilhe and Andrea Gesmundo
-	          and Mona Attariyan and Sylvain Gelly},
-	year = {2019},
-	eprint = {1902.00751},
-	archivePrefix = {arXiv},
-	primaryClass = {cs.LG},
-}
-
-@misc{peng2022parameterefficient,
-	title = {Parameter-efficient transfer learning of pre-trained
-	         Transformer models for speaker verification using adapters},
-	author = {Junyi Peng and Themos Stafylakis and Rongzhi Gu and Oldřich
-	          Plchot and Ladislav Mošner and Lukáš Burget and Jan Černocký},
-	year = {2022},
-	eprint = {2210.16032},
-	archivePrefix = {arXiv},
-	primaryClass = {eess.AS},
-}
-
-@online{nusacatalogue,
-	title = {Nusa Catalogue},
-	url = {https://indonlp.github.io/nusa-catalogue/},
-	year = {2023},
-	note = {Diakses pada 16 November},
-}
-
-@inbook{metrics,
-	author = {Dalianis, Hercules},
-	year = {2018},
-	month = {05},
-	pages = {45-53},
-	title = {Evaluation Metrics and Evaluation},
-	isbn = {978-3-319-78502-8},
-	doi = {10.1007/978-3-319-78503-5_6},
-}
-
-@inproceedings{adapter,
-	title = {Parameter-Efficient Transfer Learning for NLP},
-	author = {Houlsby, Neil and Giurgiu, Andrei and Jastrzebski, Stanislaw
-	          and Morrone, Bruna and De Laroussilhe, Quentin and Gesmundo,
-	          Andrea and Attariyan, Mona and Gelly, Sylvain},
-	booktitle = {Proceedings of the 36th International Conference on Machine
-	             Learning},
-	pages = {2790--2799},
-	year = {2019},
-	editor = {Chaudhuri, Kamalika and Salakhutdinov, Ruslan},
-	volume = {97},
-	series = {Proceedings of Machine Learning Research},
-	month = {09--15 Jun},
-	publisher = {PMLR},
-	pdf = {http://proceedings.mlr.press/v97/houlsby19a/houlsby19a.pdf},
-	url = {https://proceedings.mlr.press/v97/houlsby19a.html},
-}
-
-@article{peft_on_plm,
-	author = {Ding, Ning and Qin, Yujia and Yang, Guang and Wei, Fuchao and
-	          Yang , Zonghan and Su, Yusheng and Hu, Shengding and Chen,
-	          Yulin and Chan, Chi-Min and Chen, Weize and Yi, Jing and Zhao,
-	          Weilin and Wang, Xiaozhi and Liu, Zhiyuan and Zheng, Hai-Tao
-	          and Chen, Jianfei and Liu, Yang and Tang, Jie and Li, Juanzi
-	          and Sun, Maosong},
-	date = {2023/03/01},
-	date-added = {2023-12-14 01:30:09 +0700},
-	date-modified = {2023-12-14 01:30:09 +0700},
-	doi = {10.1038/s42256-023-00626-4},
-	id = {Ding2023},
-	isbn = {2522-5839},
-	journal = {Nature Machine Intelligence},
-	number = {3},
-	pages = {220--235},
-	title = {Parameter-efficient fine-tuning of large-scale pre-trained
-	         language models},
-	url = {https://doi.org/10.1038/s42256-023-00626-4},
-	volume = {5},
-	year = {2023},
-	bdsk-url-1 = {https://doi.org/10.1038/s42256-023-00626-4},
-}
-
-@online{T5,
-	url = {https://huggingface.co/docs/transformers/model_doc/t5},
-	journal = {T5},
-	year = {2023},
-	note = {Diakses pada 14 Desember 2023},
-} 
 
 @misc{indonlu,
 	title = {IndoNLU: Benchmark and Resources for Evaluating Indonesian
@@ -240,3 +127,63 @@
 	year = {2021},
 }
 
+@article{indolem,
+	author = {Fajri Koto and Afshin Rahimi and Jey Han Lau and Timothy
+	          Baldwin},
+	title = {IndoLEM and IndoBERT: {A} Benchmark Dataset and Pre-trained
+	         Language Model for Indonesian {NLP}},
+	journal = {CoRR},
+	volume = {abs/2011.00677},
+	year = {2020},
+	url = {https://arxiv.org/abs/2011.00677},
+	eprinttype = {arXiv},
+	eprint = {2011.00677},
+	timestamp = {Fri, 06 Nov 2020 15:32:47 +0100},
+	biburl = {https://dblp.org/rec/journals/corr/abs-2011-00677.bib},
+	bibsource = {dblp computer science bibliography, https://dblp.org},
+}
+
+% Metrics
+@inbook{metrics,
+	author = {Dalianis, Hercules},
+	year = {2018},
+	month = {05},
+	pages = {45-53},
+	title = {Evaluation Metrics and Evaluation},
+	isbn = {978-3-319-78502-8},
+	doi = {10.1007/978-3-319-78503-5_6},
+}
+
+% Related Research
+@article{peft_on_plm,
+	author = {Ding, Ning and Qin, Yujia and Yang, Guang and Wei, Fuchao and
+	          Yang , Zonghan and Su, Yusheng and Hu, Shengding and Chen,
+	          Yulin and Chan, Chi-Min and Chen, Weize and Yi, Jing and Zhao,
+	          Weilin and Wang, Xiaozhi and Liu, Zhiyuan and Zheng, Hai-Tao
+	          and Chen, Jianfei and Liu, Yang and Tang, Jie and Li, Juanzi
+	          and Sun, Maosong},
+	date = {2023/03/01},
+	date-added = {2023-12-14 01:30:09 +0700},
+	date-modified = {2023-12-14 01:30:09 +0700},
+	doi = {10.1038/s42256-023-00626-4},
+	id = {Ding2023},
+	isbn = {2522-5839},
+	journal = {Nature Machine Intelligence},
+	number = {3},
+	pages = {220--235},
+	title = {Parameter-efficient fine-tuning of large-scale pre-trained
+	         language models},
+	url = {https://doi.org/10.1038/s42256-023-00626-4},
+	volume = {5},
+	year = {2023},
+	bdsk-url-1 = {https://doi.org/10.1038/s42256-023-00626-4},
+}
+
+@article{uvpl,
+	title = {Unified Parameter-Efficient Transfer Learning},
+	author = {Junxian He and Chunting Zhou and Xuezhe Ma and Taylor
+	          Berg-Kirkpatrick and Graham Neubig},
+	year = {2021},
+	journal = {arXiv preprint arXiv:2110.04366},
+	url = {https://arxiv.org/abs/2110.04366},
+}
