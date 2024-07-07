@@ -1,1 +1,41 @@
-\section{Lingkungan}
+\section{Lingkungan Eksperimen}
+
+Lingkungan eksperimen yang dipakai berbasis \textit{cloud} dengan menggunakan GPU khusus untuk pelatihan model. Lingkungan ini dibagi menjadi dua bagian, yaitu untuk tugas evaluasi \textit{classification} dan \textit{generation}. Pembagian ini berdasarkan pada kebutuhan memori yang berbeda antara kedua tugas tersebut. Tugas evaluasi \textit{generation} membutuhkan memori pada GPU yang lebih besar karena perlu memproses data dengan volume lebih banyak. Selain itu, tugas evaluasi \textit{generation} perlu melakukan generasi terhadap teks untuk menghasilkan evaluasi, sehingga membutuhkan memori yang lebih banyak.
+
+Lingkugan eksperimen yang digunakan untuk tugas evaluasi \textit{classification} adalah sebagai berikut.
+
+\begin{itemize}
+    \item \makebox[4cm][l]{GPU} : Nvidia Tesla V100
+    \item \makebox[4cm][l]{GPU RAM} : 16 GB
+    \item \makebox[4cm][l]{TeraFLOPS} : 11.3
+    \item \makebox[4cm][l]{Lokasi} : Swedia
+    \item \makebox[4cm][l]{Jumlah GPU} : 1
+\end{itemize}
+
+Lalu, lingkungan eksperimen yang digunakan untuk tugas evaluasi \textit{generation} adalah sebagai berikut.
+
+\begin{itemize}
+    \item \makebox[4cm][l]{GPU} : Nvidia A40
+    \item \makebox[4cm][l]{GPU RAM} : 45 GB
+    \item \makebox[4cm][l]{TeraFLOPS} : 29.9
+    \item \makebox[4cm][l]{Lokasi} : Kroasia
+    \item \makebox[4cm][l]{Jumlah GPU} : 1
+\end{itemize}
+
+Versi kakas dan perangkat lunak yang digunakan pada kedua lingkungan eksperimen adalah sebagai berikut.
+
+\begin{itemize}
+    \item \makebox[4cm][l]{Python} : 3.11
+    \item \makebox[4cm][l]{Transformers} : 4.40.2
+    \item \makebox[4cm][l]{Adapters} : 0.2.2
+    \item \makebox[4cm][l]{Datasets} : 2.20.0
+    \item \makebox[4cm][l]{Evaluate} : 0.4.2
+    \item \makebox[4cm][l]{Numpy} : 2.0.0
+    \item \makebox[4cm][l]{Pandas} : 2.2.2
+    \item \makebox[4cm][l]{Seqeval} : 1.2.2
+    \item \makebox[4cm][l]{Torch} : 2.3.1
+    \item \makebox[4cm][l]{Wandb} : 0.17.3
+    \item \makebox[4cm][l]{nltk} : 3.8.1
+    \item \makebox[4cm][l]{rouge\_score} : 0.1.2
+    \item \makebox[4cm][l]{huggingface\_hub} : 0.23.4
+\end{itemize}

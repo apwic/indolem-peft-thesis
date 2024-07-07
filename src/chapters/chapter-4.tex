@@ -1,10 +1,12 @@
-\chapter{Implementasi dan Pengujian}
-Bab ini akan menjelaskan proses implementasi dari rancangan solusi yang telah dikaji pada Bab III. Setelah pembahasan terkait implementasi, akan dilanjutkan dengan pemaparan hasil uji terkait implementasi yang telah dibuat.
+\chapter{Implementasi, Eksperimen dan Hasil Evaluasi Eksperimen}
+Bab ini menjelaskan proses implementasi dari rancangan solusi yang telah dikaji pada Bab \ref{sec:chapter-3} dalam menyelesaikan permasalahan utama tugas akhir, yaitu pemanfaatan berbagai metode PEFT pada kakas evaluasi IndoLEM. Selain itu, dijelaskan juga lingkungan, implementasi, dan eksperimen.
 
-\input{chapters/chapter-4/01-lingkungan}
+Berdasarkan rancangan solusi yang diajukan pada subbab \ref{sec:rancangan-solusi}, pembangunan ulang kakas IndoLEM diperlukan untuk mengimplementasi setiap metode PEFT. Model yang dipilih yaitu IndoBERT untuk tugas evaluasi \textit{classification} dan IndoT5 untuk tugas evaluasi \textit{generation} dilatih pada lingkungan eksperimen. Model yang telah dilatih dengan metode \textit{fine-tuning} tradisional dan metode PEFT dievaluasi untuk membandingkan kinerja dari setiap metode pada setiap tugas evaluasinya.
 
-\input{chapters/chapter-4/02-implementasi}
-
-\input{chapters/chapter-4/03-pengujian}
-
-\input{chapters/chapter-4/04-perbandingan}
+\input{chapters/chapter-4/01-lingkungan.tex}
+\input{chapters/chapter-4/02-pengembangan-kakas.tex}
+\input{chapters/chapter-4/03-pengembangan-metode.tex}
+\input{chapters/chapter-4/04-pelatihan-model.tex}
+\input{chapters/chapter-4/05-ner.tex}
+\input{chapters/chapter-4/06-sentiment-analysis.tex}
+\input{chapters/chapter-4/07-summarization.tex}
