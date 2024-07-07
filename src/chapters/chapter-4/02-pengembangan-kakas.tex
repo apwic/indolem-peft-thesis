@@ -1,2 +1,303 @@
 \section{Pengembangan Ulang Kakas IndoLEM}
 
+Pengembangan ulang kakas IndoLEM ini diperlukan untuk memperbarui dan memperbaiki infrastruktur dari kakas tersebut. Pengembangan ini dilakukan pada lingkungan lokal pribadi, untuk keperluan eksperimen dilakukan pada lingkungan \textit{cloud} seperti yang sudah disebutkan pada subbab \ref{sec:lingkungan-eksperimen}.
+
+\subsection{Persiapan Lingkungan Pengembangan}
+
+Implementasi diawali dengan menyiapkan lingkungan pengembangan, untuk menyiapkan lingkungan pengembangan dilakukan dengan melakukan instalasi terhadap perangkat lunak dan pustaka yang dibutuhkan. Berikut merupakan \textit{requirements.txt} yang berisi pustaka yang perlu dilakukan intalasi yang bisa dilihat pada tabel \ref{table:requirements}
+
+\begin{table}
+    \caption{Tabel \textit{requirements.txt}}
+    \label{table:requirements}
+    \begin{lstlisting}[language=bash]
+    accelerate
+    adapters==0.2.2
+    datasets
+    evaluate
+    huggingface-hub
+    numpy
+    pandas
+    scikit-learn
+    seqeval
+    torch
+    transformers==4.40.*
+    wandb
+    nltk
+    rouge_score
+    indobenchmark-toolkit
+    \end{lstlisting}
+\end{table}
+
+Untuk memudahkan pengembangan perlu membuat \textit{virtual environment} untuk mengenkapsulasi pustaka yang dipakai. \textit{Virtual environment} bisa dibuat dengan menggunakan Conda atau pustaka virtualenv. Untuk tugas akhir ini, digunakan Conda. \textit{Command} yang digunakan dapat dilihat pada tabel \ref{table:command-virtualenv}.
+
+\begin{table}
+    \caption{Tabel \textit{command virtual environment}}
+    \label{table:command-virtualenv}
+    \begin{lstlisting}[language=bash]
+    # Membuat virtual environment
+    conda create env -n indolem python=3.11
+    # Menjalankan virtual environment
+    conda activate indolem
+    # Melakukan instalasi pustaka 
+    pip install -r requirements.txt
+    \end{lstlisting}
+\end{table}
+
+\textit{Command} tersebut akan membuat \textit{virtual environment}, mengakitfkannya, dan melakukan instalasi pada versi Python dan pustaka yang dibutuhkan.
+
+\subsection{Penguraian Argumen}
+\label{sec:parse-arg}
+
+Penguraian argumen dilakukan dengan menggunakan modul HfArgumentParser dari pustaka Transformers. Modul ini digunakan untuk memudahkan penguraian argumen karena argumen yang dipakai untuk model, pelatihan, dan evaluasi sudah diimplementasikan dari modul tersebut. Untuk argumen tambahan yang spesifik pada suatu tugas evaluasi perlu ditambahkan secara manual, sebagai contoh pada tugas evaluasi NER terdapat argumen \textit{return\_entity\_level\_metrics} yaitu menggunakan metriks evaluasi untuk level entitasnya.
+
+\begin{table}
+    \caption{Tabel kode HfArgumentParser}
+    \label{table:hfargumentparser}
+    \begin{lstlisting}[language=python]
+    parser = HfArgumentParser(
+        [
+            ModelArguments,
+            DataTrainingArguments,
+            TrainingArguments,
+            AdapterArguments,
+            WandbArguments,
+        ]
+    )
+
+    if len(sys.argv) == 2 and sys.argv[1].endswith(".json"):
+        # If we pass only one argument to the script and it's the path to a json file,
+        # let's parse it to get our arguments.
+        model_args, data_args, training_args, adapter_args, wandb_args = (
+            parser.parse_json_file(json_file=os.path.abspath(sys.argv[1]))
+        )
+    else:
+        model_args, data_args, training_args, adapter_args, wandb_args = (
+            parser.parse_args_into_dataclasses()
+        )
+    \end{lstlisting}
+\end{table}
+
+Berdasarkan tabel \ref{table:hfargumentparser} terdapat 5 jenis argumen, yaitu model, \textit{data training}, pelatihan, \textit{adapter}, dan wandb. Argumen model digunakan untuk pemuatan model. Argumen \textit{data training} digunakan untuk pemuatan \textit{file} (latih, evaluasi, dan uji), \textit{padding}, maksimum sampel, maksimum sekuens, dan lain sebagainya yang berhubungan dengan \textit{dataset}. Lalu, argumen pelatihan merupakan \textit{hyperparemeter} yang digunakan pada proses pelatihan seperti \textit{learning rate, epoch, batch size}, dan lain sebagainya. Selanjutnya, argumen \textit{adapter} berfungsi sebagai konfigurasi untuk jenis metode PEFT beserta \textit{hyperparameter} yang digunakannya. Terakhir, merupakan argumen wandb yang digunakan untuk konfigurasi sinkronisasi pada hasil evaluasi ke \textit{cloud}.
+
+\subsection{Praproses \textit{Dataset}}
+
+Praproses \textit{dataset} diperlukan agar model dapat memproses \textit{dataset} dengan konteks yang sesuai. Konteks yang dimaksud adalah, model dapat memahami \textit{metadata} dari \textit{dataset}, sehingga mampu mengetahui setiap bagian data yang merupakan bagian dari teks atau label. Praproses \textit{dataset} ini berbeda untuk setiap tugas evaluasi karena karakteristik dari tugas evaluasinya yang berbeda juga.
+
+\subsubsection{Praproses Data NER}
+
+Tugas evaluasi NER merupakan jenis tugas \textit{classification} pada level token yang berarti setiap token akan diklasifikasikan dengan label tertentu. Pada kakas IndoLEM, untuk tugas evaluasi NER terdapat dua jenis \textit{dataset}, yaitu NERUI dan NERUGM. Kedua \textit{dataset} tersebut mempunyai label yang berbeda berikut merupakan label pada setiap \textit{dataset}-nya dapat dilihat pada tabel \ref{table:label-ner}.
+
+\begin{table}[h]
+    \vspace{0.25cm}
+    \caption{Tabel label \textit{dataset} NER}
+    \label{table:label-ner}
+    \begin{center}
+        \begin{tabular}{|l|l|}
+            \hline \rowcolor{black!10}
+            \multicolumn{1}{|c|}{\textbf{NERUI}} & \multicolumn{1}{|c|}{\textbf{NERUI}} \\ \hline
+            B-LOCATION & B-LOCATION \\ \hline
+            B-ORGANIZATION & B-ORGANIZATION \\ \hline
+            B-PERSON & B-PERSON \\ \hline
+            - & B-QUANTITY \\ \hline
+            - & B-TIME \\ \hline
+            I-LOCATION & I-LOCATION \\ \hline
+            I-ORGANIZATION & I-ORGANIZATION \\ \hline
+            I-PERSON & I-PERSON \\ \hline
+            - & I-QUANTITY \\ \hline
+            - & I-TIME \\ \hline
+            O & O \\ \hline
+        \end{tabular}
+    \end{center}
+\end{table}
+
+Label tersebut diperlukan untuk melakukan \textit{mapping} antara id dengan labelnya yang akan digunakan pada konfigurasi model. \textit{Padding} juga dilakukan berdasarkan panjang sekuens maksimum yang didefinisikan melaluai argumen \textit{data training}. Selanjutnya, tokenisasi akan dilakukan terhadap \textit{dataset} tersebut. Implementasi dari fungsi tokenisasi tersebut dapat dilihat pada tabel \ref{table:tokenisasi-ner}.
+
+\begin{table}
+    \caption{Tabel fungsi tokenisasi NER}
+    \label{table:tokenisasi-ner}
+    \begin{lstlisting}[language=python]
+    # Tokenize all texts and align the labels with them.
+    def tokenize_and_align_labels(examples):
+        tokenized_inputs = tokenizer(
+            examples[text_column_name],
+            padding=padding,
+            truncation=True,
+            max_length=data_args.max_seq_length,
+            # We use this argument because the texts in our dataset are lists of words (with a label for each word).
+            is_split_into_words=True,
+        )
+        labels = []
+        for i, label in enumerate(examples[label_column_name]):
+            word_ids = tokenized_inputs.word_ids(batch_index=i)
+            previous_word_idx = None
+            label_ids = []
+            for word_idx in word_ids:
+                # Special tokens have a word id that is None. We set the label to -100 so they are automatically
+                # ignored in the loss function.
+                if word_idx is None:
+                    label_ids.append(-100)
+                # We set the label for the first token of each word.
+                elif word_idx != previous_word_idx:
+                    label_ids.append(label_to_id[label[word_idx]])
+                # For the other tokens in a word, we set the label to either the current label or -100, depending on
+                # the label_all_tokens flag.
+                else:
+                    if data_args.label_all_tokens:
+                        label_ids.append(b_to_i_label[label_to_id[label[word_idx]]])
+                    else:
+                        label_ids.append(-100)
+                previous_word_idx = word_idx
+
+            labels.append(label_ids)
+        tokenized_inputs["labels"] = labels
+        return tokenized_inputs
+    \end{lstlisting}
+\end{table}
+
+Tokenisasi dilakukan dengan menggunakan modul Tokenizer pada pustaka Transformers. Fungsi tokenisasi pada tabel \ref{table:tokenisasi-ner} mengabaikan token spesial [CLS] dan [SEP] yang muncul dari hasil tokenisasi model berbasi BERT. Token spesial tersebut diubah menjadi -100 agar bisa diabaikan dari perhitungan metriks evaluasinya. Sehingga, hanya token yang berkorespondensi terhadap sebuah label saja yang dapat dievaluasi.
+
+\subsubsection{Praproses Data \textit{Sentiment Analysis}}
+
+Tugas evaluasi \textit{sentiment analysis} merupakan jenis tugas \textit{classification} sama seperti NER, hanya perbedaannya pada level klasifikasi yang digunakan. Jika pada NER klasifikasi dilakukan pada level token, pada \textit{sentiment analysis} klasifikasi dilakukan pada level teks yang merupakan gabungan dari beberapa token. \textit{Dataset} dari \textit{sentiment analysis} berupa \textit{file} CSV yang berisi dari dua kolom yaitu \textit{sentence} dan \textit{labels}. Kolom \textit{sentence} merupakan teks yang mengandung sentiment tertentu. Sementara kolom \textit{labels} menandakan sentimen dari teks tersebut, dengan nilai 0 berupa sentimen negatif dan  nilai 1 berupa sentiment positif.
+
+\begin{table}
+    \caption{Tabel fungsi tokenisasi \textit{sentiment analysis}}
+    \label{table:tokenisasi-sentiment}
+    \begin{lstlisting}[language=python]
+        def preprocess_function(examples):
+            # Tokenize the texts
+            args = (
+                (examples[sentence1_key],)
+                if sentence2_key is None
+                else (examples[sentence1_key], examples[sentence2_key])
+            )
+            result = tokenizer(
+                *args, padding=padding, max_length=max_seq_length, truncation=True
+            )
+
+            # Map labels to IDs
+            if label_to_id is not None and "labels" in examples:
+                result["labels"] = [
+                    (label_to_id[l] if l != -1 else -1) for l in examples["labels"]
+                ]
+            return result
+    \end{lstlisting}
+\end{table}
+
+Pada tugas evaluasi \textit{sentiment analysis} juga diperlukan \textit{mapping} antara label dengan idnya, sehingga model mampu mengetahui label yang dilatih. Fungsi tokenisasi \textit{sentiment analysis} yang dapat dilihat pada tabel \ref{table:tokenisasi-sentiment} menggunakan modul Tokenizer dari pustaka Transformers. Fungsi tersebut terdapat \textit{sentence1\_key} dan juga \textit{sentence2\_key}, yang berguna apabila terdapat dua kolom teks pada \textit{dataset}, tetapi pada IndoLEM \textit{dataset sentiment analysis} hanya mempunyai satu kolom teks. Sehingga, \textit{sentence2\_key} tidak digunakan. 
+
+\subsubsection{Praproses Data \textit{Summarization}}
+
+Tugas evaluasi \textit{summarization} merupakan jenis tugas \textit{generation} yang berbeda dengan jenis tugas \textit{classification}. Tugas \textit{generation} memerlukan generasi teks untuk dapat dilakukan evaluasi, pada konteks ini yaitu membuat ringkasan dari teks. \textit{Dataset} yang digunakan pada IndoLEM untuk tugas evaluasi \textit{summarization} adalah \textit{dataset} IndoSUM. \textit{Dataset} ini berisi \textit{file} dengan format JSONL dengan masing-masing objek dapat dilihat pada tabel \ref{table:data-summarization}.
+
+\begin{table}
+    \vspace{0.25cm}
+    \caption{Tabel data \textit{summarization}}
+    \label{table:data-summarization}
+    \begin{center}
+        \begin{tabular}{|l|l|}
+            \hline \rowcolor{black!10}
+            \multicolumn{1}{|c|}{\textbf{Objek}} & \multicolumn{1}{|c|}{\textbf{Deskripsi}} \\ \hline
+            id & nilai unik untuk setiap artikel \\ \hline
+            paragraphs & \textit{list} dari paragraf yang berasal dari artikel \\ \hline
+            summary & ringkasan dari artikel, disimpan sebagai \textit{list} dari kalimat \\ \hline 
+            gold\_labels & label ekstraktif dari setiap kalimat pada artikel \\ \hline
+            category & kategori dari artikel \\ \hline
+            source & sumber artikel \\ \hline
+            source\_url & URL dari artikel \\ \hline
+        \end{tabular}
+    \end{center}
+\end{table}
+
+Dari data yang dapat dilihat pada tabel \ref{table:data-summarization}, terdapat 7 objek  pada \textit{dataset}. Namun, pada tugas evaluasi ini hanya akan digunakan dua objek yaitu \textit{paragraphs} dan \textit{summary} karena tugas \textit{summarization} membutuhkan teks asli sebelum diringkas dan hasil ringkasannya. Objek yang lain selain dua yang digunakan bisa diabaikan saja. \textit{Dataset} ini perlu dipraproses terlebih dahulu menggunakan fungsi yang dapat dilihat pada tabel \ref{table:tokensisasi-summ}.
+
+\begin{table}
+    \caption{Tabel fungsi tokenisasi \textit{summarization}}
+    \label{table:tokensisasi-summ}
+    \begin{lstlisting}[language=python]
+    def preprocess_function(examples):
+        # Preprocess data for indosum
+        if is_indosum:
+            examples[text_column] = paragraph_to_text(examples[text_column])
+            examples[summary_column] = summary_to_text(examples[summary_column])
+
+        inputs, targets = [], []
+        for i in range(len(examples[text_column])):
+            if examples[text_column][i] and examples[summary_column][i]:
+                inputs.append(examples[text_column][i])
+                targets.append(examples[summary_column][i])
+
+        inputs = [prefix + inp for inp in inputs]
+        model_inputs = tokenizer(
+            inputs,
+            max_length=data_args.max_source_length,
+            padding=padding,
+            truncation=True,
+        )
+
+        # Tokenize targets with the `text_target` keyword argument
+        labels = tokenizer(
+            text_target=targets,
+            max_length=max_target_length,
+            padding=padding,
+            truncation=True,
+        )
+
+        # If we are padding here, replace all tokenizer.pad_token_id in the labels by -100 when we want to ignore
+        # padding in the loss.
+        if padding == "max_length" and data_args.ignore_pad_token_for_loss:
+            labels["input_ids"] = [
+                [(l if l != tokenizer.pad_token_id else -100) for l in label]
+                for label in labels["input_ids"]
+            ]
+
+        model_inputs["labels"] = labels["input_ids"]
+        return model_inputs
+    \end{lstlisting}
+\end{table}
+
+Berdasarkan tabel \ref{table:tokensisasi-summ}, tokenisasi dilakukan dengan mengolah objek \textit{paragraphs} menjadi \textit{list} dari teks. Setiap paragraf terdiri dari beberapa kalimat, dan setiap kalimat terdiri dari beberapa teks. Untuk \textit{text\_column} yang merupakan objek \textit{paragraphs} akan diolah menjadi \textit{list} dari teks. Hal yang sama berlaku juga untuk \textit{summary\_column}, hanya saja objek ini merupakan \textit{summary} yang berisi kalimat. Selain itu, tugas evaluasi \textit{summarization} ini terdapat \textit{prefix} yang berguna pada beberapa model tertentu. Tokenisasi juga menggunakan modul \textit{tokenizer} dari pustaka Transformers.
+
+\subsection{Pemuatan Konfigurasi Model}
+
+Untuk dapat melakukan pelatihan dan evaluasi terhadap model, terlebih dahulu model perlu dimuat. Pemuatan model ini menggunakan konfigurasi yang berasal dari penguraian argumen pada subbab \ref{sec:parse-arg}. Argumen model akan dimuat ke dalam model sehingga model bisa dipakai. Model akan dimuat dengan menggunakan modul yang relevan dari pustaka Transformers.
+
+\begin{table}
+    \caption{Tabel kode pemuatan model \textit{summarization}}
+    \label{table:kode-model-summ}
+    \begin{lstlisting}[language=python]
+    model = AutoModelForSeq2SeqLM.from_pretrained(
+        model_args.model_name_or_path,
+        from_tf=bool(".ckpt" in model_args.model_name_or_path),
+        config=config,
+        cache_dir=model_args.cache_dir,
+        revision=model_args.model_revision,
+        token=True if model_args.token else None,
+    )
+    \end{lstlisting}
+\end{table}
+
+Pada tabel \ref{table:kode-model-summ} dimuat model AutoModelForSeq2SeqLM yang merupakan model \textit{sequence to sequence} yang merupakan model \textit{encoder decoder}. Modul AutoModel ini akan menghasilkan model berdasarkan dari konfigurasi \textit{model\_args} yang dimasukkan pada modul tersebut. Untuk tugas evaluasi \textit{summarization} yang menggunakan model IndoT5 akan menghasilkan model tersebut juga. Berbeda untuk tugas \textit{classification}, cukup dengan menyatakan AutoModel saja sudah cukup untuk menghasilkan model yang sesuai. Pada konteks ini, model yang digunakan untuk NER dan \textit{sentiment analysis} adalah IndoBERT yang berbasis BERT.
+
+\subsection{Perhitungan Metriks Evaluasi}
+
+Metriks evaluasi yang digunakan pada setiap tugas evaluasi tidak sama semuanya. Metriks yang digunakan untuk tugas \textit{classification} adalah \textit{accuracy} dan F1 \textit{score}. Sedangkan, pada tugas \textit{generation} adalah ROUGE \textit{score}. Perhitungan metriks evaluasi ini dilakukan saat proses evaluasi dengan menggunakan fungsi \textit{compute\_metrics}.
+
+\begin{table}
+    \caption{Tabel fungsi \textit{compute\_metrics}}
+    \label{table:compute-metrics}
+    \begin{lstlisting}[language=python]
+    def compute_metrics(p):
+        logits, labels = p
+        predictions = np.argmax(logits, axis=1)
+
+        return {
+            "accuracy": accuracy_score(labels, predictions),
+            "precision": precision_score(labels, predictions, average="macro"),
+            "recall": recall_score(labels, predictions, average="macro"),
+            "f1": f1_score(labels, predictions, average="macro"),
+        }
+    \end{lstlisting}
+\end{table}
+
+Pada tabel \ref{table:compute-metrics}, fungsi perhitungan metriks evaluasinya merupakan fungsi yang dipakai untuk tugas \textit{classification}. Fungsi tersebut memanfaatkan modul seqeval untuk melakukan perhitungan setiap metriksnya. Terdapat perbeedaan pada fungsi yang dipakai pada tugas \textit{classifcation}, NER menggunakan \textit{entity\_level\_metrics} yang berarti perhitungan evaluasinya berdasarkan pada entitasnya yang berbeda dengan \textit{sentiment analysis}. Untuk tugas \textit{generation} yaitu \textit{summarization} menggunakan ROUGE \textit{score}.
