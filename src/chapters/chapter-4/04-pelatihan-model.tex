@@ -1,1 +1,105 @@
 \section{Pelatihan Model}
+
+Pelatihan model dilakukan pada lingkungan eksperimen yang telah disebutkan pada subbab \ref{sec:lingkungan-eksperimen}. Pelatihan dilakukan dengan \textit{bash script} yang akan dijalankan pada \textit{shell} untuk memudahkan reka ulang dari eksperimen tersebut. Untuk setiap tugas evaluasi terdapat \textit{bash script} yang akan menjalankan semua eksperimen, yaitu \textit{fine-tuning}, \methodPEFT.
+
+\begin{figure}[h]
+    \centering
+    \caption{Struktur \textit{file} eksperimen}
+    \label{fig:file-eksperimen}
+    \begin{forest}
+        for tree={
+            font=\ttfamily,
+            grow'=0,
+            child anchor=west,
+            parent anchor=south,
+            anchor=west,
+            calign=first,
+            edge path={
+                \noexpand\path [draw, \forestoption{edge}]
+                (!u.south west) +(7.5pt,0) |- node[fill,inner sep=1.25pt] {} (.child anchor)\forestoption{edge label};
+            },
+            before typesetting nodes={
+                if n=1
+                    {insert before={[,phantom]}}
+                    {}
+            },
+            fit=band,
+            before computing xy={l=15pt},
+        }
+    [run\_sentiment.sh
+        [script
+            [run\_sentiment\_base.sh]
+            [run\_sentiment\_lora.sh]
+            [run\_sentiment\_pt.sh]
+            [run\_sentiment\_seq\_bn.sh]
+            [run\_sentiment\_unipelt.sh]
+        ]
+    ]
+    \end{forest}
+\end{figure}
+
+Pada gambar \ref{fig:file-eksperimen}, dengan melakukan pemanggilan pada {\ttfamily run\_sentiment.sh} akan menjalankan semua eksperimen yang ada pada folder {\ttfamily script}. Setiap \textit{script} akan menjalankan eksperimen sesuai dari konfigurasi yang telah ditentukan pada \textit{script} tersebut. Konfigurasi yang ditentukan tersebut akan diterima sebagai argumen pada kakas IndoLEM. Untuk setiap \textit{hyperparameter} yang digunakan untuk pelatihan dapat dilihat pada tabel \ref{table:hyperparameter-train}.
+
+\begin{table}[h]
+    \centering
+    \caption{Tabel \textit{hyperparameter} pelatihan}
+    \label{table:hyperparameter-train}
+    \begin{tabular}{|c|l|c|}
+        \hline \rowcolor{black!10}
+        \textbf{Tugas} & \multicolumn{1}{|c|}{\textbf{Argumen}} & \textbf{Nilai} \\ \hline
+        \multirow{9}{*}{\textit{NER}} & model & "indolem/indobert-base-uncased" \\ \cline{2-3}
+                                      & train batch size & 16 \\ \cline{2-3}
+                                      & eval batch size & 64 \\ \cline{2-3}
+                                      & epochs & 100 \\ \cline{2-3}
+                                      & learning rate & 5e-5 \\ \cline{2-3}
+                                      & max sequence length & 128 \\ \cline{2-3}
+                                      & text column names & "tokens" \\ \cline{2-3}
+                                      & label column names & "ner\_tags" \\ \cline{2-3}
+                                      & return entity level metrics & true \\ \cline{2-3}
+                                      & seed & 42 \\ \hline
+        \multirow{7}{*}{\textit{sentiment analysis}} & model & "indolem/indobert-base-uncased" \\ \cline{2-3}
+                                                     & batch size & 30 \\ \cline{2-3}
+                                                     & epochs & 20 \\ \cline{2-3}
+                                                     & learning rate & 5e-5 \\ \cline{2-3}
+                                                     & max sequence length & 200 \\ \cline{2-3}
+                                                     & seed & 42 \\ \cline{2-3}
+                                                     & label names & "labels" \\ \hline
+        \multirow{14}{*}{\textit{summarization}} & model & "LazarusNLP/IndoNanoT5-base" \\ \cline{2-3}
+                                                & train batch size & 4 \\ \cline{2-3}
+                                                & eval batch size & 8 \\ \cline{2-3}
+                                                & epochs & 5 \\ \cline{2-3}
+                                                & learning rate & 1e-5 \\ \cline{2-3}
+                                                & max source length & 512 \\ \cline{2-3}
+                                                & max target length & 512 \\ \cline{2-3}
+                                                & num beams & 5 \\ \cline{2-3}
+                                                & weight decay & 0.01 \\ \cline{2-3}
+                                                & patience & 5 \\ \cline{2-3}
+                                                & seed & 42 \\ \cline{2-3}
+                                                & text column & paragraphs \\ \cline{2-3}
+                                                & summary column & summary \\ \cline{2-3}
+                                                & source prefix & "summarize: " \\ \cline{2-3}
+                                                & pad to max length & true \\ \cline{2-3}
+                                                & predict with generate & true \\ \cline{2-3}
+                                                & bf16 & true \\ \hline
+    \end{tabular}
+\end{table}
+
+Untuk pelatihan model NER terdapat dua \textit{dataset} yang akan digunakan yaitu NERUGM dan NERUI. Sedangkan, untuk tugas \textit{sentiment analysis} dan \textit{summarization} menggunakan satu dataset. Selain itu, untuk tugas NER terdapat argumen "return entity level metrics" dengan nilai "true" yang berarti penilaian metriks evaluasinya akan dinilai pada level entitas. Ini mengikuti eksperimen yang sebelumnya sudah dilakukan pada IndoLEM.
+
+Terdapat perbedaan pada \textit{hyperparameter} yang digunakan untuk tugas \textit{summarization} karena argumen yang digunakan mengikuti eksperimen pada IndoT5 bukan pada IndoLEM. Terdapat juga argumen "predict with generate" dengan nilai "true" karena tugas \textit{summarization} perlu menghasilkan hasil ringkasan untuk dapat dievaluasi. Selain itu, nilai argumen "bf16" bernilai "true" karena presisi "bf16" dianggap bisa mempercepat proses pelatihan untuk model T5 yang digunakan. Pada tugas ini perlu menambahkan argumen "source prefix" yang bernilai "summarize: " khusus unutk penggunaan model T5 pada tugas \textit{summarization}.
+
+\begin{table}[h]
+    \centering
+    \caption{Tabel \textit{hyperparameter} metode PEFT}
+    \label{table:hyperparameter-PEFT}
+    \begin{tabular}{|l|l|c|}
+        \hline \rowcolor{black!10}
+        \multicolumn{1}{|c|}{\textbf{Metode}} & \multicolumn{1}{|c|}{\textbf{Argumen}} & \textbf{Nilai} \\ \hline
+        LoRA & ranks & [8, 16] \\ \hline
+        Prefix Tuning & prefix length & [10, 20, 30] \\ \hline
+        Bottleneck Adapter & \multicolumn{1}{|c|}{-} & - \\ \hline
+        UniPELT & \multicolumn{1}{|c|}{-}  & - \\ \hline
+    \end{tabular}
+\end{table}
+
+Pada pelatihan dengan metode PEFT akan menggunakan \textit{hyperparameter} pelatihan seperti pada tabel \ref{table:hyperparameter-train}. Untuk setiap metode PEFT terdapat \textit{hyperparameter} yang sesuai dengan metode PEFT tersebut. Perlu dilakukan \textit{hyperparameter tuning} untuk \textit{hyperparameter} metode PEFT. Seperti yang bisa dilihat pada tabel \ref{table:hyperparameter-PEFT}, untuk metode LoRA dilakukan eksperimen dengan argumen "ranks" dengan nilai 8 dan 16. Lalu, untuk metode Prefix Tuning dilakukan eksperimen dengan argumen "prefix tuning" dengan nilai 10, 20, dan 30. Selain itu, yaitu metode Bottleneck Adapter dan UniPELT tidak menggunakan argumen tambahan, hal ini dilakukan karena metode tersebut memang spesifik diimplementasikan pada pustaka Adapters sesuai dengan penelitian terkaitnya.
