@@ -44,7 +44,7 @@ Untuk memudahkan pengembangan perlu membuat \textit{virtual environment} untuk m
     \end{lstlisting}
 \end{table}
 
-\textit{Command} tersebut akan membuat \textit{virtual environment}, mengakitfkannya, dan melakukan instalasi pada versi Python dan pustaka yang dibutuhkan.
+\textit{Command} tersebut  membuat \textit{virtual environment}, mengakitfkannya, dan melakukan instalasi pada versi Python dan pustaka yang dibutuhkan.
 
 \subsection{Penguraian Argumen}
 \label{sec:parse-arg}
@@ -87,7 +87,7 @@ Praproses \textit{dataset} diperlukan agar model dapat memproses \textit{dataset
 
 \subsubsection{Praproses Data NER}
 
-Tugas evaluasi NER merupakan jenis tugas \textit{classification} pada level token yang berarti setiap token akan diklasifikasikan dengan label tertentu. Pada kakas IndoLEM, untuk tugas evaluasi NER terdapat dua jenis \textit{dataset}, yaitu NERUI dan NERUGM. Kedua \textit{dataset} tersebut mempunyai label yang berbeda berikut merupakan label pada setiap \textit{dataset}-nya dapat dilihat pada tabel \ref{table:label-ner}.
+Tugas evaluasi NER merupakan jenis tugas \textit{classification} pada level token yang berarti setiap token  diklasifikasikan dengan label tertentu. Pada kakas IndoLEM, untuk tugas evaluasi NER terdapat dua jenis \textit{dataset}, yaitu NERUI dan NERUGM. Kedua \textit{dataset} tersebut mempunyai label yang berbeda berikut merupakan label pada setiap \textit{dataset}-nya dapat dilihat pada tabel \ref{table:label-ner}.
 
 \begin{table}[h]
     \vspace{0.25cm}
@@ -112,7 +112,7 @@ Tugas evaluasi NER merupakan jenis tugas \textit{classification} pada level toke
     \end{center}
 \end{table}
 
-Label tersebut diperlukan untuk melakukan \textit{mapping} antara id dengan labelnya yang akan digunakan pada konfigurasi model. \textit{Padding} juga dilakukan berdasarkan panjang sekuens maksimum yang didefinisikan melaluai argumen \textit{data training}. Selanjutnya, tokenisasi akan dilakukan terhadap \textit{dataset} tersebut. Implementasi dari fungsi tokenisasi tersebut dapat dilihat pada tabel \ref{table:tokenisasi-ner}.
+Label tersebut diperlukan untuk melakukan \textit{mapping} antara id dengan labelnya yang  digunakan pada konfigurasi model. \textit{Padding} juga dilakukan berdasarkan panjang sekuens maksimum yang didefinisikan melaluai argumen \textit{data training}. Selanjutnya, tokenisasi  dilakukan terhadap \textit{dataset} tersebut. Implementasi dari fungsi tokenisasi tersebut dapat dilihat pada tabel \ref{table:tokenisasi-ner}.
 
 \begin{table}[h]
     \caption{Tabel fungsi tokenisasi NER}
@@ -205,7 +205,7 @@ Tugas evaluasi \textit{summarization} merupakan jenis tugas \textit{generation} 
     \end{center}
 \end{table}
 
-Dari data yang dapat dilihat pada tabel \ref{table:data-summarization}, terdapat 7 objek  pada \textit{dataset}. Namun, pada tugas evaluasi ini hanya akan digunakan dua objek yaitu \textit{paragraphs} dan \textit{summary} karena tugas \textit{summarization} membutuhkan teks asli sebelum diringkas dan hasil ringkasannya. Objek yang lain selain dua yang digunakan bisa diabaikan saja. \textit{Dataset} ini perlu dipraproses terlebih dahulu menggunakan fungsi yang dapat dilihat pada tabel \ref{table:tokensisasi-summ}.
+Dari data yang dapat dilihat pada tabel \ref{table:data-summarization}, terdapat 7 objek  pada \textit{dataset}. Namun, pada tugas evaluasi ini hanya  digunakan dua objek yaitu \textit{paragraphs} dan \textit{summary} karena tugas \textit{summarization} membutuhkan teks asli sebelum diringkas dan hasil ringkasannya. Objek yang lain selain dua yang digunakan bisa diabaikan saja. \textit{Dataset} ini perlu dipraproses terlebih dahulu menggunakan fungsi yang dapat dilihat pada tabel \ref{table:tokensisasi-summ}.
 
 \begin{table}[h]
     \caption{Tabel fungsi tokenisasi \textit{summarization}}
@@ -242,11 +242,11 @@ Dari data yang dapat dilihat pada tabel \ref{table:data-summarization}, terdapat
     \end{lstlisting}
 \end{table}
 
-Berdasarkan tabel \ref{table:tokensisasi-summ}, tokenisasi dilakukan dengan mengolah objek \textit{paragraphs} menjadi \textit{list} dari teks. Setiap paragraf terdiri dari beberapa kalimat, dan setiap kalimat terdiri dari beberapa teks. Untuk \textit{text\_column} yang merupakan objek \textit{paragraphs} akan diolah menjadi \textit{list} dari teks. Hal yang sama berlaku juga untuk \textit{summary\_column}, hanya saja objek ini merupakan \textit{summary} yang berisi kalimat. Selain itu, tugas evaluasi \textit{summarization} ini terdapat \textit{prefix} yang berguna pada beberapa model tertentu. Tokenisasi juga menggunakan modul \textit{tokenizer} dari pustaka Transformers.
+Berdasarkan tabel \ref{table:tokensisasi-summ}, tokenisasi dilakukan dengan mengolah objek \textit{paragraphs} menjadi \textit{list} dari teks. Setiap paragraf terdiri dari beberapa kalimat, dan setiap kalimat terdiri dari beberapa teks. Untuk \textit{text\_column} yang merupakan objek \textit{paragraphs}  diolah menjadi \textit{list} dari teks. Hal yang sama berlaku juga untuk \textit{summary\_column}, hanya saja objek ini merupakan \textit{summary} yang berisi kalimat. Selain itu, tugas evaluasi \textit{summarization} ini terdapat \textit{prefix} yang berguna pada beberapa model tertentu. Tokenisasi juga menggunakan modul \textit{tokenizer} dari pustaka Transformers.
 
 \subsection{Pemuatan Konfigurasi Model}
 
-Untuk dapat melakukan pelatihan dan evaluasi terhadap model, terlebih dahulu model perlu dimuat. Pemuatan model ini menggunakan konfigurasi yang dimuat dari penguraian argumen pada subbab \ref{sec:parse-arg}. Argumen model akan dimuat ke dalam model sehingga model bisa dipakai. Model akan dimuat dengan menggunakan modul yang relevan dari pustaka Transformers.
+Untuk dapat melakukan pelatihan dan evaluasi terhadap model, terlebih dahulu model perlu dimuat. Pemuatan model ini menggunakan konfigurasi yang dimuat dari penguraian argumen pada subbab \ref{sec:parse-arg}. Argumen model  dimuat ke dalam model sehingga model bisa dipakai. Model  dimuat dengan menggunakan modul yang relevan dari pustaka Transformers.
 
 \begin{table}[h]
     \caption{Tabel kode pemuatan model \textit{summarization}}
@@ -263,7 +263,7 @@ Untuk dapat melakukan pelatihan dan evaluasi terhadap model, terlebih dahulu mod
     \end{lstlisting}
 \end{table}
 
-Pada tabel \ref{table:kode-model-summ} dimuat model AutoModelForSeq2SeqLM yang merupakan model \textit{sequence to sequence} yang merupakan model \textit{encoder decoder}. Modul AutoModel ini akan menghasilkan model berdasarkan dari konfigurasi \textit{model\_args} yang dimasukkan pada modul tersebut. Untuk tugas evaluasi \textit{summarization} yang menggunakan model IndoT5 akan menghasilkan model tersebut juga. Berbeda untuk tugas \textit{classification}, cukup dengan menyatakan AutoModel saja sudah cukup untuk menghasilkan model yang sesuai. Pada konteks ini, model yang digunakan untuk NER dan \textit{sentiment analysis} adalah IndoBERT yang berbasis BERT.
+Pada tabel \ref{table:kode-model-summ} dimuat model AutoModelForSeq2SeqLM yang merupakan model \textit{sequence to sequence} yang merupakan model \textit{encoder decoder}. Modul AutoModel ini  menghasilkan model berdasarkan dari konfigurasi \textit{model\_args} yang dimasukkan pada modul tersebut. Untuk tugas evaluasi \textit{summarization} yang menggunakan model IndoT5  menghasilkan model tersebut juga. Berbeda untuk tugas \textit{classification}, cukup dengan menyatakan AutoModel saja sudah cukup untuk menghasilkan model yang sesuai. Pada konteks ini, model yang digunakan untuk NER dan \textit{sentiment analysis} adalah IndoBERT yang berbasis BERT.
 
 \subsection{Perhitungan Metriks Evaluasi}
 \label{sec:metriks-evaluasi}
@@ -291,7 +291,7 @@ Pada tabel \ref{table:compute-metrics}, fungsi perhitungan metriks evaluasinya m
 
 \subsection{Pemuatan Trainer untuk Pelatihan dan Evaluasi Model}
 
-Untuk pelatihan dan evaluasi model dibutuhkan standardisasi agar kode yang digunakan pada setiap tugas tidak berbeda. Modul Trainer dari pustaka Transformers digunakan untuk pelatihan dan evaluasi model. Setiap komponen yang sudah disebutkan sebelumnya akan dimuat pada modul Trainer. Setiap tugas evaluasi akan menggunakan implementasi yang sama yang bisa dilihat pada tabel \ref{table:kode-trainer}.
+Untuk pelatihan dan evaluasi model dibutuhkan standardisasi agar kode yang digunakan pada setiap tugas tidak berbeda. Modul Trainer dari pustaka Transformers digunakan untuk pelatihan dan evaluasi model. Setiap komponen yang sudah disebutkan sebelumnya  dimuat pada modul Trainer. Setiap tugas evaluasi  menggunakan implementasi yang sama yang bisa dilihat pada tabel \ref{table:kode-trainer}.
 
 \begin{table}[h]
     \caption{Tabel kode implementasi Trainer}

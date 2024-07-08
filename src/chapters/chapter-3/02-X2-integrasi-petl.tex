@@ -4,7 +4,7 @@ Proses ini bertujuan untuk mengintegrasikan metode PEFT yaitu \methodPEFT pada a
 
 LoRA adalah teknik yang memodifikasi bobot dari PLM  dengan menambahkan adapatasi berbasis \textit{rank} rendah pada bobot tersebut. Pada arsitektur IndoBERT, LoRA diintegrasikan dengan menambahkan adaptasi LoRA pada layer tertentu dari model IndoBERT. Sehingga, layer adaptasi ini berfungsi untuk mengatur interaksi antara bobot asli modle dengan adapatasi LoRA, dengan tujuan untuk memertahankan jumlah parameter yang efisien sambil meningkatkan model.
 
-\textit{Prefix-Tuning} merupakan metode yang menambahkan sejumlah kecil parameter yang dapat dipelajari yaitu \textit{prefixes} ke dalam model. Pada implementasi dari \textit{Prefix-Tuning} ini akan ditambahkan \textit{prefixes} ke dalam \textit{input} dari model. Teknik ini memungkinkan model untuk menyesuaikan prediksinya berdasarkan konteks yang diberikan oleh \textit{prefixes}, dengan menambahkan parameter yang minimal. 
+\textit{Prefix-Tuning} merupakan metode yang menambahkan sejumlah kecil parameter yang dapat dipelajari yaitu \textit{prefixes} ke dalam model. Pada implementasi dari \textit{Prefix-Tuning} ini  ditambahkan \textit{prefixes} ke dalam \textit{input} dari model. Teknik ini memungkinkan model untuk menyesuaikan prediksinya berdasarkan konteks yang diberikan oleh \textit{prefixes}, dengan menambahkan parameter yang minimal. 
 
 \textit{Bottleneck Adapter} adalah teknik yang mengintegrasikan adapter kecil ke dalam arsitektur \textit{attention} dari model untuk menyesuaikan output dari \textit{attention layers}. \textit{Adapter} memungkinkan penyesuaian pada aspek tertentu dari proses \textit{attention} tanpa perlu mengubah arsitektur model secara keseluruhan.
 
