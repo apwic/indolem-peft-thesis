@@ -80,6 +80,7 @@ Penguraian argumen dilakukan dengan menggunakan modul HfArgumentParser dari pust
 Berdasarkan tabel \ref{table:hfargumentparser} terdapat 5 jenis argumen, yaitu model, \textit{data training}, pelatihan, \textit{adapter}, dan wandb. Argumen model digunakan untuk pemuatan model. Argumen \textit{data training} digunakan untuk pemuatan \textit{file} (latih, evaluasi, dan uji), \textit{padding}, maksimum sampel, maksimum sekuens, dan lain sebagainya yang berhubungan dengan \textit{dataset}. Lalu, argumen pelatihan merupakan \textit{hyperparemeter} yang digunakan pada proses pelatihan seperti \textit{learning rate, epoch, batch size}, dan lain sebagainya. Selanjutnya, argumen \textit{adapter} berfungsi sebagai konfigurasi untuk jenis metode PEFT beserta \textit{hyperparameter} yang digunakannya. Terakhir, merupakan argumen wandb yang digunakan untuk konfigurasi sinkronisasi pada hasil evaluasi ke \textit{cloud}.
 
 \subsection{Praproses \textit{Dataset}}
+\label{sec:praproses}
 
 Praproses \textit{dataset} diperlukan agar model dapat memproses \textit{dataset} dengan konteks yang sesuai. Konteks yang dimaksud adalah, model dapat memahami \textit{metadata} dari \textit{dataset}, sehingga mampu mengetahui setiap bagian data yang merupakan bagian dari teks atau label. Praproses \textit{dataset} ini berbeda untuk setiap tugas evaluasi karena karakteristik dari tugas evaluasinya yang berbeda juga.
 
@@ -260,7 +261,7 @@ Berdasarkan tabel \ref{table:tokensisasi-summ}, tokenisasi dilakukan dengan meng
 
 \subsection{Pemuatan Konfigurasi Model}
 
-Untuk dapat melakukan pelatihan dan evaluasi terhadap model, terlebih dahulu model perlu dimuat. Pemuatan model ini menggunakan konfigurasi yang berasal dari penguraian argumen pada subbab \ref{sec:parse-arg}. Argumen model akan dimuat ke dalam model sehingga model bisa dipakai. Model akan dimuat dengan menggunakan modul yang relevan dari pustaka Transformers.
+Untuk dapat melakukan pelatihan dan evaluasi terhadap model, terlebih dahulu model perlu dimuat. Pemuatan model ini menggunakan konfigurasi yang dimuat dari penguraian argumen pada subbab \ref{sec:parse-arg}. Argumen model akan dimuat ke dalam model sehingga model bisa dipakai. Model akan dimuat dengan menggunakan modul yang relevan dari pustaka Transformers.
 
 \begin{table}
     \caption{Tabel kode pemuatan model \textit{summarization}}
@@ -280,6 +281,7 @@ Untuk dapat melakukan pelatihan dan evaluasi terhadap model, terlebih dahulu mod
 Pada tabel \ref{table:kode-model-summ} dimuat model AutoModelForSeq2SeqLM yang merupakan model \textit{sequence to sequence} yang merupakan model \textit{encoder decoder}. Modul AutoModel ini akan menghasilkan model berdasarkan dari konfigurasi \textit{model\_args} yang dimasukkan pada modul tersebut. Untuk tugas evaluasi \textit{summarization} yang menggunakan model IndoT5 akan menghasilkan model tersebut juga. Berbeda untuk tugas \textit{classification}, cukup dengan menyatakan AutoModel saja sudah cukup untuk menghasilkan model yang sesuai. Pada konteks ini, model yang digunakan untuk NER dan \textit{sentiment analysis} adalah IndoBERT yang berbasis BERT.
 
 \subsection{Perhitungan Metriks Evaluasi}
+\label{sec:metriks-evaluasi}
 
 Metriks evaluasi yang digunakan pada setiap tugas evaluasi tidak sama semuanya. Metriks yang digunakan untuk tugas \textit{classification} adalah \textit{accuracy} dan F1 \textit{score}. Sedangkan, pada tugas \textit{generation} adalah ROUGE \textit{score}. Perhitungan metriks evaluasi ini dilakukan saat proses evaluasi dengan menggunakan fungsi \textit{compute\_metrics}.
 
@@ -301,3 +303,28 @@ Metriks evaluasi yang digunakan pada setiap tugas evaluasi tidak sama semuanya. 
 \end{table}
 
 Pada tabel \ref{table:compute-metrics}, fungsi perhitungan metriks evaluasinya merupakan fungsi yang dipakai untuk tugas \textit{classification}. Fungsi tersebut memanfaatkan modul seqeval untuk melakukan perhitungan setiap metriksnya. Terdapat perbeedaan pada fungsi yang dipakai pada tugas \textit{classifcation}, NER menggunakan \textit{entity\_level\_metrics} yang berarti perhitungan evaluasinya berdasarkan pada entitasnya yang berbeda dengan \textit{sentiment analysis}. Untuk tugas \textit{generation} yaitu \textit{summarization} menggunakan ROUGE \textit{score}.
+
+\subsection{Pemuatan Trainer untuk Pelatihan dan Evaluasi Model}
+
+Untuk pelatihan dan evaluasi model dibutuhkan standardisasi agar kode yang digunakan pada setiap tugas tidak berbeda. Modul Trainer dari pustaka Transformers digunakan untuk pelatihan dan evaluasi model. Setiap komponen yang sudah disebutkan sebelumnya akan dimuat pada modul Trainer. Setiap tugas evaluasi akan menggunakan implementasi yang sama yang bisa dilihat pada tabel \ref{table:kode-trainer}.
+
+\begin{table}
+    \caption{Tabel kode implementasi Trainer}
+    \label{table:kode-trainer}
+    \begin{lstlisting}[language=python]
+    trainer = Trainer(
+        model=model,
+        args=training_args,
+        train_dataset=train_dataset if training_args.do_train else None,
+        eval_dataset=eval_dataset if training_args.do_eval else None,
+        tokenizer=tokenizer,
+        data_collator=data_collator,
+        compute_metrics=compute_metrics,
+    )
+
+    trainer.train(resume_from_checkpoint=checkpoint)
+    trainer.evaluate()
+    \end{lstlisting}
+\end{table}
+
+Kode implementasi Trainer pada tabel \ref{table:kode-trainer} memuat modul Trainer dan memanggil metode \textit{train} dan \textit{evaluate} untuk melakukan pelatihan dan evluasi. Modul Trainer membutuhkan beberapa argumen yang dimuat. Argumen tersebut dimuat dari komponen-komponen yang sudah disebutkan pada subbab sebelumnya. Argumen untuk pelatihan, dan model didapat dari hasil penguraian argumen pada \ref{sec:parse-arg}. Untuk \textit{tokenizer} dan \textit{dataset} pelatihan dan evaluasi dimuat dari hasil praproses data pada \ref{sec:praproses}. Lalu, untuk \textit{compute\_metrics} fungsinya dimuat dari metriks evaluasi pada \ref{sec:metriks-evaluasi}. 
