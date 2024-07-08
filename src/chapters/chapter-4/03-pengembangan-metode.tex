@@ -3,7 +3,7 @@
 Pengembangan metode PEFT pada kakas IndoLEM menggunakan pustaka Adapters. Pustaka tersebut tidak hanya mengimplementasikan setiap metode saja, tetapi terdapat fungsionalitas untuk menggabungkan beberapa metode PEFT. Pada subbab sebelumnya yaitu subbab \ref{sec:pengembangan-kakas}, kakas IndoLEM dikembangkan ulang agar mampu untuk mengimplementasikan metode PEFT. Implementasi tersebut  mengubah beberapa komponen, yaitu komponen model dan trainer. Metode PEFT  melakukan \textit{freeze} pada parameter model sehingga pada proses pelatihan tidak  mengubah parameter model melainkan parameter dari metode PEFT tersebut.
 
 \begin{table}[h]
-    \caption{Tabel kode pemuatan model Adapters}
+    \caption{Kode pemuatan model Adapters}
     \label{table:kode-model-adapters}
     \begin{lstlisting}[language=python]
     model = AutoAdapterModel.from_pretrained(
@@ -21,7 +21,7 @@ Pengembangan metode PEFT pada kakas IndoLEM menggunakan pustaka Adapters. Pustak
 Pada kode pemuatan model Adapters yang bisa dilihat pada tabel \ref{table:kode-model-adapters}, model dimuat dengan modul AutoAdapterModel dari pustaka Adapters. Hal ini dilakukan untuk \textit{support} metode PEFT yang lebih baik berdasarkan dari dokumentasi dari pustakanya. Berbeda dari tabel \ref{table:kode-model-summ} yang menggunakan AutoModel dari pustaka Transformers, AutoAdapterModel memberikan fungsionalitas yang lebih baik untuk metode PEFT, salah satunya adalah untuk membandingkan parameter yang  dilatih dibanding dengan parameter asli dari modelnya.
 
 \begin{table}[h]
-    \caption{Tabel kode implementasi AdapterTrainer}
+    \caption{Kode implementasi AdapterTrainer}
     \label{table:kode-adaptertrainer}
     \begin{lstlisting}[language=python]
     setup_adapter_training(model, adapter_args)

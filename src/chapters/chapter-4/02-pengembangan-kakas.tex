@@ -8,7 +8,7 @@ Pengembangan ulang kakas IndoLEM ini diperlukan untuk memperbarui dan memperbaik
 Implementasi diawali dengan menyiapkan lingkungan pengembangan, untuk menyiapkan lingkungan pengembangan dilakukan dengan melakukan instalasi terhadap perangkat lunak dan pustaka yang dibutuhkan. Berikut merupakan \textit{requirements.txt} yang berisi pustaka yang perlu dilakukan intalasi yang bisa dilihat pada tabel \ref{table:requirements}
 
 \begin{table}[h]
-    \caption{Tabel \textit{requirements.txt}}
+    \caption{\textit{Requirements.txt}}
     \label{table:requirements}
     \begin{lstlisting}[language=bash]
     accelerate
@@ -32,7 +32,7 @@ Implementasi diawali dengan menyiapkan lingkungan pengembangan, untuk menyiapkan
 Untuk memudahkan pengembangan perlu membuat \textit{virtual environment} untuk mengenkapsulasi pustaka yang dipakai. \textit{Virtual environment} bisa dibuat dengan menggunakan Conda atau pustaka virtualenv. Untuk tugas akhir ini, digunakan Conda. \textit{Command} yang digunakan dapat dilihat pada tabel \ref{table:command-virtualenv}.
 
 \begin{table}[h]
-    \caption{Tabel \textit{command virtual environment}}
+    \caption{\textit{Command virtual environment}}
     \label{table:command-virtualenv}
     \begin{lstlisting}[language=bash]
     # Membuat virtual environment
@@ -52,7 +52,7 @@ Untuk memudahkan pengembangan perlu membuat \textit{virtual environment} untuk m
 Penguraian argumen dilakukan dengan menggunakan modul HfArgumentParser dari pustaka Transformers. Modul ini digunakan untuk memudahkan penguraian argumen karena argumen yang dipakai untuk model, pelatihan, dan evaluasi sudah diimplementasikan dari modul tersebut. Untuk argumen tambahan yang spesifik pada suatu tugas evaluasi perlu ditambahkan secara manual, sebagai contoh pada tugas evaluasi NER terdapat argumen \textit{return\_entity\_level\_metrics} yaitu menggunakan metriks evaluasi untuk level entitasnya.
 
 \begin{table}[h]
-    \caption{Tabel kode HfArgumentParser}
+    \caption{Kode HfArgumentParser}
     \label{table:hfargumentparser}
     \begin{lstlisting}[language=python]
     parser = HfArgumentParser(
@@ -91,7 +91,7 @@ Tugas evaluasi NER merupakan jenis tugas \textit{classification} pada level toke
 
 \begin{table}[h]
     \vspace{0.25cm}
-    \caption{Tabel label \textit{dataset} NER}
+    \caption{Label \textit{dataset} NER}
     \label{table:label-ner}
     \begin{center}
         \begin{tabular}{|l|l|}
@@ -115,7 +115,7 @@ Tugas evaluasi NER merupakan jenis tugas \textit{classification} pada level toke
 Label tersebut diperlukan untuk melakukan \textit{mapping} antara id dengan labelnya yang  digunakan pada konfigurasi model. \textit{Padding} juga dilakukan berdasarkan panjang sekuens maksimum yang didefinisikan melaluai argumen \textit{data training}. Selanjutnya, tokenisasi  dilakukan terhadap \textit{dataset} tersebut. Implementasi dari fungsi tokenisasi tersebut dapat dilihat pada tabel \ref{table:tokenisasi-ner}.
 
 \begin{table}[h]
-    \caption{Tabel fungsi tokenisasi NER}
+    \caption{Fungsi tokenisasi NER}
     \label{table:tokenisasi-ner}
     \begin{lstlisting}[language=python]
     def tokenize_and_align_labels(examples):
@@ -157,7 +157,7 @@ Tokenisasi dilakukan dengan menggunakan modul Tokenizer pada pustaka Transformer
 Tugas evaluasi \textit{sentiment analysis} merupakan jenis tugas \textit{classification} sama seperti NER, hanya perbedaannya pada level klasifikasi yang digunakan. Jika pada NER klasifikasi dilakukan pada level token, pada \textit{sentiment analysis} klasifikasi dilakukan pada level teks yang merupakan gabungan dari beberapa token. \textit{Dataset} dari \textit{sentiment analysis} berupa \textit{file} CSV yang berisi dari dua kolom yaitu \textit{sentence} dan \textit{labels}. Kolom \textit{sentence} merupakan teks yang mengandung sentiment tertentu. Sementara kolom \textit{labels} menandakan sentimen dari teks tersebut, dengan nilai 0 berupa sentimen negatif dan  nilai 1 berupa sentiment positif.
 
 \begin{table}[h]
-    \caption{Tabel fungsi tokenisasi \textit{sentiment analysis}}
+    \caption{Fungsi tokenisasi \textit{sentiment analysis}}
     \label{table:tokenisasi-sentiment}
     \begin{lstlisting}[language=python]
         def preprocess_function(examples):
@@ -188,7 +188,7 @@ Tugas evaluasi \textit{summarization} merupakan jenis tugas \textit{generation} 
 
 \begin{table}[h]
     \vspace{0.25cm}
-    \caption{Tabel data \textit{summarization}}
+    \caption{Data \textit{summarization}}
     \label{table:data-summarization}
     \begin{center}
         \begin{tabular}{|l|l|}
@@ -208,7 +208,7 @@ Tugas evaluasi \textit{summarization} merupakan jenis tugas \textit{generation} 
 Dari data yang dapat dilihat pada tabel \ref{table:data-summarization}, terdapat 7 objek  pada \textit{dataset}. Namun, pada tugas evaluasi ini hanya  digunakan dua objek yaitu \textit{paragraphs} dan \textit{summary} karena tugas \textit{summarization} membutuhkan teks asli sebelum diringkas dan hasil ringkasannya. Objek yang lain selain dua yang digunakan bisa diabaikan saja. \textit{Dataset} ini perlu dipraproses terlebih dahulu menggunakan fungsi yang dapat dilihat pada tabel \ref{table:tokensisasi-summ}.
 
 \begin{table}[h]
-    \caption{Tabel fungsi tokenisasi \textit{summarization}}
+    \caption{Fungsi tokenisasi \textit{summarization}}
     \label{table:tokensisasi-summ}
     \begin{lstlisting}[language=python]
     def preprocess_function(examples):
@@ -249,7 +249,7 @@ Berdasarkan tabel \ref{table:tokensisasi-summ}, tokenisasi dilakukan dengan meng
 Untuk dapat melakukan pelatihan dan evaluasi terhadap model, terlebih dahulu model perlu dimuat. Pemuatan model ini menggunakan konfigurasi yang dimuat dari penguraian argumen pada subbab \ref{sec:parse-arg}. Argumen model  dimuat ke dalam model sehingga model bisa dipakai. Model  dimuat dengan menggunakan modul yang relevan dari pustaka Transformers.
 
 \begin{table}[h]
-    \caption{Tabel kode pemuatan model \textit{summarization}}
+    \caption{Kode pemuatan model \textit{summarization}}
     \label{table:kode-model-summ}
     \begin{lstlisting}[language=python]
     model = AutoModelForSeq2SeqLM.from_pretrained(
@@ -271,7 +271,7 @@ Pada tabel \ref{table:kode-model-summ} dimuat model AutoModelForSeq2SeqLM yang m
 Metriks evaluasi yang digunakan pada setiap tugas evaluasi tidak sama semuanya. Metriks yang digunakan untuk tugas \textit{classification} adalah \textit{accuracy} dan F1 \textit{score}. Sedangkan, pada tugas \textit{generation} adalah ROUGE \textit{score}. Perhitungan metriks evaluasi ini dilakukan saat proses evaluasi dengan menggunakan fungsi \textit{compute\_metrics}.
 
 \begin{table}[h]
-    \caption{Tabel fungsi \textit{compute\_metrics}}
+    \caption{Fungsi \textit{compute\_metrics}}
     \label{table:compute-metrics}
     \begin{lstlisting}[language=python]
     def compute_metrics(p):
@@ -294,7 +294,7 @@ Pada tabel \ref{table:compute-metrics}, fungsi perhitungan metriks evaluasinya m
 Untuk pelatihan dan evaluasi model dibutuhkan standardisasi agar kode yang digunakan pada setiap tugas tidak berbeda. Modul Trainer dari pustaka Transformers digunakan untuk pelatihan dan evaluasi model. Setiap komponen yang sudah disebutkan sebelumnya  dimuat pada modul Trainer. Setiap tugas evaluasi  menggunakan implementasi yang sama yang bisa dilihat pada tabel \ref{table:kode-trainer}.
 
 \begin{table}[h]
-    \caption{Tabel kode implementasi Trainer}
+    \caption{Kode implementasi Trainer}
     \label{table:kode-trainer}
     \begin{lstlisting}[language=python]
     trainer = Trainer(
