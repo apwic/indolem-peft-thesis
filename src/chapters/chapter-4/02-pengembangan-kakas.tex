@@ -1,4 +1,5 @@
 \section{Pengembangan Ulang Kakas IndoLEM}
+\label{sec:pengembangan-kakas}
 
 Pengembangan ulang kakas IndoLEM ini diperlukan untuk memperbarui dan memperbaiki infrastruktur dari kakas tersebut. Pengembangan ini dilakukan pada lingkungan lokal pribadi, untuk keperluan eksperimen dilakukan pada lingkungan \textit{cloud} seperti yang sudah disebutkan pada subbab \ref{sec:lingkungan-eksperimen}.
 
@@ -327,4 +328,4 @@ Untuk pelatihan dan evaluasi model dibutuhkan standardisasi agar kode yang digun
     \end{lstlisting}
 \end{table}
 
-Kode implementasi Trainer pada tabel \ref{table:kode-trainer} memuat modul Trainer dan memanggil metode \textit{train} dan \textit{evaluate} untuk melakukan pelatihan dan evluasi. Modul Trainer membutuhkan beberapa argumen yang dimuat. Argumen tersebut dimuat dari komponen-komponen yang sudah disebutkan pada subbab sebelumnya. Argumen untuk pelatihan, dan model didapat dari hasil penguraian argumen pada \ref{sec:parse-arg}. Untuk \textit{tokenizer} dan \textit{dataset} pelatihan dan evaluasi dimuat dari hasil praproses data pada \ref{sec:praproses}. Lalu, untuk \textit{compute\_metrics} fungsinya dimuat dari metriks evaluasi pada \ref{sec:metriks-evaluasi}. 
+Kode implementasi Trainer pada tabel \ref{table:kode-trainer} memuat modul Trainer dan memanggil metode \textit{train} dan \textit{evaluate} untuk melakukan pelatihan dan evaluasi. Modul Trainer membutuhkan beberapa argumen yang dimuat. Argumen tersebut dimuat dari komponen-komponen yang sudah disebutkan pada subbab sebelumnya. Argumen untuk pelatihan, dan model didapat dari hasil penguraian argumen pada \ref{sec:parse-arg}. Untuk \textit{tokenizer} dan \textit{dataset} pelatihan dan evaluasi dimuat dari hasil praproses data pada \ref{sec:praproses}. Lalu, untuk \textit{compute\_metrics} fungsinya dimuat dari metriks evaluasi pada \ref{sec:metriks-evaluasi}. 

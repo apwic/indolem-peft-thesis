@@ -1,1 +1,43 @@
 \section{Pengembangan Metode PEFT pada Kakas IndoLEM}
+
+Pengembangan metode PEFT pada kakas IndoLEM menggunakan pustaka Adapters. Pustaka tersebut tidak hanya mengimplementasikan setiap metode saja, tetapi terdapat fungsionalitas untuk menggabungkan beberapa metode PEFT. Pada subbab sebelumnya yaitu subbab \ref{sec:pengembangan-kakas}, kakas IndoLEM dikembangkan ulang agar mampu untuk mengimplementasikan metode PEFT. Implementasi tersebut akan mengubah beberapa komponen, yaitu komponen model dan trainer. Metode PEFT akan melakukan \textit{freeze} pada parameter model sehingga pada proses pelatihan tidak akan mengubah parameter model melainkan parameter dari metode PEFT tersebut.
+
+\begin{table}
+    \caption{Tabel kode pemuatan model Adapters}
+    \label{table:kode-model-adapters}
+    \begin{lstlisting}[language=python]
+    model = AutoAdapterModel.from_pretrained(
+        model_args.model_name_or_path,
+        from_tf=bool(".ckpt" in model_args.model_name_or_path),
+        config=config,
+        cache_dir=model_args.cache_dir,
+        revision=model_args.model_revision,
+        token=True if model_args.token else None,
+        ignore_mismatched_sizes=model_args.ignore_mismatched_sizes,
+    )
+    \end{lstlisting}
+\end{table}
+
+Pada kode pemuatan model Adapters yang bisa dilihat pada tabel \ref{table:kode-model-adapters}, model dimuat dengan modul AutoAdapterModel dari pustaka Adapters. Hal ini dilakukan untuk \textit{support} metode PEFT yang lebih baik berdasarkan dari dokumentasi dari pustakanya. Berbeda dari tabel \ref{table:kode-model-summ} yang menggunakan AutoModel dari pustaka Transformers, AutoAdapterModel memberikan fungsionalitas yang lebih baik untuk metode PEFT, salah satunya adalah untuk membandingkan parameter yang akan dilatih dibanding dengan parameter asli dari modelnya.
+
+\begin{table}
+    \caption{Tabel kode implementasi AdapterTrainer}
+    \label{table:kode-adaptertrainer}
+    \begin{lstlisting}[language=python]
+    setup_adapter_training(model, adapter_args)
+    trainer = AdapterTrainer(
+        model=model,
+        args=training_args,
+        train_dataset=train_dataset if training_args.do_train else None,
+        eval_dataset=eval_dataset if training_args.do_eval else None,
+        tokenizer=tokenizer,
+        data_collator=data_collator,
+        compute_metrics=compute_metrics,
+    )
+
+    trainer.train(resume_from_checkpoint=checkpoint)
+    trainer.evaluate()
+    \end{lstlisting}
+\end{table}
+
+Selanjutnya, untuk proses pelatihan perlu disiapkan untuk menggunakan metode PEFT. Implementasinya menggunakan modul AdapterTrainer dari pustaka Adapters juga. Model perlu disiapkan untuk pelatihan dengan metode PEFT dengan menggunakan fungsi \textit{setup\_adapter\_training}. Fungsi tersebut akan melakukan \textit{freeze} pada parameter model dan hanya akan mengubah parameter dari metode PEFT yang digunakan. Argumen untuk \textit{adapter} dimuat dari hasil pengurain argumen pada \ref{sec:parse-arg}, argumen tersebut berisi jenis metode PEFT serta \textit{hyperparameter} yang digunakan pada proses pelatihan. Proses pelatihan metode PEFT berbeda dengan pelatihan dengan metode \textit{fine tuning} tergantung dari karakteristik dari metode tersebut. Pustaka Adapters mengimplementasikannya dengan menambahkan semacam \textit{adapter} pada model, sehingga \textit{adapter} tersebut yang dilatih bukan modelnya. Parameter dari \textit{adapter} tersebut relatif jauh lebih kecil daripada parameter model.
