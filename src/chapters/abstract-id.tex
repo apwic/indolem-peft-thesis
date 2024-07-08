@@ -14,15 +14,8 @@
     \end{singlespace}
 \end{center} 
 
-
 \begin{singlespace}
-    IndoBERT telah menjadi model bahasa pre-trained yang diakui sebagai \textit{state of the art} dalam berbagai evaluasi di \textit{IndoLEM}.
-    Namun, kinerjanya dalam berbagai tugas masih memiliki ruang untuk peningkatan. 
-    Beberapa teknik \textit{transfer learning} yang efisien dari sisi parameter semakin populer 
-    untuk fine-tuning model bahasa yang telah di-pretrain, seperti \textit{LoRA}, \textit{Prefix-Tuning}, \textit{Bottleneck Adapter}, dan \textit{Unified Parameter Transfer Learning}. 
-    Teknik-teknik ini dapat meningkatkan kinerja model pre-trained tanpa memerlukan sumber daya sebanyak metode \textit{fine-tuning} tradisional. 
-    Dalam penelitian ini, proses tuning  dilakukan dengan metode-metode tersebut untuk meningkatkan kinerja IndoBERT dalam berbagai tugas dan membandingkan efektivitas teknik yang diterapkan.
+    Metode \textit{fine-tuning} tradisional selalu digunakan sebagai metode pelalihan untuk melakukan evaluasi pada berbagai evaluasi NLU. Kakas evaluasi IndoLEM yang merupakan pionir dari evaluasi NLU berbahasa Indonesia menggunakan \textit{fine-tuning} sebagai metode pelatihannya. \textit{Fine-tuning} melatih model dengan mengubah seluruh paramter model. Hal ini bisa menjadi tantangan dari segi memori dan juga waktu pelatihannya. Terdapat metode \PEFT yang dapat melatih model dengan kinerja yang sebanding dengan metode \textit{fine-tuning} tradisional. Dalam tugas akhir ini, berbagai metode \PEFT, yaitu \methodPEFT akan dimaanfaatkan dalam kakas evaluasi IndoLEM tersebut.
 \end{singlespace}
-\clearpage
 
 \clearpage
