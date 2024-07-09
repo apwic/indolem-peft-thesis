@@ -3,9 +3,9 @@
 
 Berdasarkan latar belakang yang telah diuraikan pada subbab \ref{sec:latar-belakang}, diperlukan implementasi metode \PEFT pada kakas IndoLEM. Untuk melakukan implementasi tersebut serta menjawab tujuan yang telah disebutkan pada subbab \ref{sec:tujuan}. Terdapat beberapa persoalan yang perlu dijawab.
 
-\subsection{Kakas IndoLEM yang \textit{Outdated}}
+\subsection{Keterbatasan pada Kakas IndoLEM}
 
-Penelitian IndoLEM sudah diterbitkan semenjak 4 tahun yang lalu, tentunya banyak kakas yang sudah berkembang semenjak saat itu. Pada \textit{source code}-nya, terdapat \textit{script} untuk menjalankan pelatihan dan melakukan evaluasi. Tetapi, untuk menjalankannya membutuhkan konfigurasi dari Python, serta pustaka yang lain. Ini merupakan salah satu kelemahan dari kakas IndoLEM, yaitu kurangnya dokumentasi pada versi yang digunakan. Sebagai contoh, dari 7 tugas evaluasi, hanya terdapat 1 tugas evaluasi yang memberikan \textit{requirements} untuk menjalankan \textit{script} tersebut. Sehingga, banyak kesulitan yang muncul saat mencoba menjalankan proses pelatihan dan evaluasinya.
+Penelitian IndoLEM sudah diterbitkan semenjak 4 tahun yang lalu, tentunya banyak kakas yang sudah berkembang semenjak saat itu. Pada \textit{source code}-nya, terdapat \textit{script} untuk menjalankan pelatihan dan melakukan evaluasi. Tetapi, untuk menjalankannya membutuhkan konfigurasi dari Python, serta pustaka yang lain. Ini merupakan salah satu kelemahan dari kakas IndoLEM, yaitu kurangnya dokumentasi pada versi yang digunakan. Sebagai contoh, dari 7 tugas evaluasi, hanya terdapat 1 tugas evaluasi yang memberikan kebutuhan versi Python dan pustaka untuk menjalankan \textit{script} tersebut. Sehingga, banyak kesulitan yang muncul saat mencoba menjalankan proses pelatihan dan evaluasinya.
 
 Selain itu, banyak pustaka yang digunakan seperti Torch, Transformers, dan Seqeval mempunyai versi yang lama. Sedangkan, untuk mengimplementasikan metode PEFT pada kakas IndoLEM memerlukan versi yang sesuai. Terdapat beberapa fungsi yang digunakan pada kakas IndoLEM sudah \textit{deprecated} karena sudah ada versi yang lebih baru dari fungsi tersebut.
 

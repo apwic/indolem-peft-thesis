@@ -46,10 +46,10 @@ Untuk memudahkan pengembangan perlu membuat \textit{virtual environment} untuk m
 
 \textit{Command} tersebut  membuat \textit{virtual environment}, mengakitfkannya, dan melakukan instalasi pada versi Python dan pustaka yang dibutuhkan.
 
-\subsection{Penguraian Argumen}
+\subsection{\textit{Parsing} Argumen}
 \label{sec:parse-arg}
 
-Penguraian argumen dilakukan dengan menggunakan modul HfArgumentParser dari pustaka Transformers. Modul ini digunakan untuk memudahkan penguraian argumen karena argumen yang dipakai untuk model, pelatihan, dan evaluasi sudah diimplementasikan dari modul tersebut. Untuk argumen tambahan yang spesifik pada suatu tugas evaluasi perlu ditambahkan secara manual, sebagai contoh pada tugas evaluasi NER terdapat argumen \textit{return\_entity\_level\_metrics} yaitu menggunakan metriks evaluasi untuk level entitasnya.
+\textit{Parsing} argumen dilakukan dengan menggunakan modul HfArgumentParser dari pustaka Transformers. Modul ini digunakan untuk memudahkan \textit{Parsing} argumen karena argumen yang dipakai untuk model, pelatihan, dan evaluasi sudah diimplementasikan dari modul tersebut. Untuk argumen tambahan yang spesifik pada suatu tugas evaluasi perlu ditambahkan secara manual, sebagai contoh pada tugas evaluasi NER terdapat argumen \textit{return\_entity\_level\_metrics} yaitu menggunakan metriks evaluasi untuk level entitasnya.
 
 \begin{table}[h]
     \caption{Kode HfArgumentParser}
@@ -187,7 +187,6 @@ Pada tugas evaluasi \textit{sentiment analysis} juga diperlukan \textit{mapping}
 Tugas evaluasi \textit{summarization} merupakan jenis tugas \textit{generation} yang berbeda dengan jenis tugas \textit{classification}. Tugas \textit{generation} memerlukan generasi teks untuk dapat dilakukan evaluasi, pada konteks ini yaitu membuat ringkasan dari teks. \textit{Dataset} yang digunakan pada IndoLEM untuk tugas evaluasi \textit{summarization} adalah \textit{dataset} IndoSUM. \textit{Dataset} ini berisi \textit{file} dengan format JSONL dengan masing-masing objek dapat dilihat pada tabel \ref{table:data-summarization}.
 
 \begin{table}[h]
-    \vspace{0.25cm}
     \caption{Data \textit{summarization}}
     \label{table:data-summarization}
     \begin{center}
@@ -246,7 +245,7 @@ Berdasarkan tabel \ref{table:tokensisasi-summ}, tokenisasi dilakukan dengan meng
 
 \subsection{Pemuatan Konfigurasi Model}
 
-Untuk dapat melakukan pelatihan dan evaluasi terhadap model, terlebih dahulu model perlu dimuat. Pemuatan model ini menggunakan konfigurasi yang dimuat dari penguraian argumen pada subbab \ref{sec:parse-arg}. Argumen model  dimuat ke dalam model sehingga model bisa dipakai. Model  dimuat dengan menggunakan modul yang relevan dari pustaka Transformers.
+Untuk dapat melakukan pelatihan dan evaluasi terhadap model, terlebih dahulu model perlu dimuat. Pemuatan model ini menggunakan konfigurasi yang dimuat dari \textit{parsing} argumen pada subbab \ref{sec:parse-arg}. Argumen model  dimuat ke dalam model sehingga model bisa dipakai. Model  dimuat dengan menggunakan modul yang relevan dari pustaka Transformers.
 
 \begin{table}[h]
     \caption{Kode pemuatan model \textit{summarization}}
@@ -312,4 +311,4 @@ Untuk pelatihan dan evaluasi model dibutuhkan standardisasi agar kode yang digun
     \end{lstlisting}
 \end{table}
 
-Kode implementasi Trainer pada tabel \ref{table:kode-trainer} memuat modul Trainer dan memanggil metode \textit{train} dan \textit{evaluate} untuk melakukan pelatihan dan evaluasi. Modul Trainer membutuhkan beberapa argumen yang dimuat. Argumen tersebut dimuat dari komponen-komponen yang sudah disebutkan pada subbab sebelumnya. Argumen untuk pelatihan, dan model didapat dari hasil penguraian argumen pada \ref{sec:parse-arg}. Untuk \textit{tokenizer} dan \textit{dataset} pelatihan dan evaluasi dimuat dari hasil praproses data pada \ref{sec:praproses}. Lalu, untuk \textit{compute\_metrics} fungsinya dimuat dari metriks evaluasi pada \ref{sec:metriks-evaluasi}. 
+Kode implementasi Trainer pada tabel \ref{table:kode-trainer} memuat modul Trainer dan memanggil metode \textit{train} dan \textit{evaluate} untuk melakukan pelatihan dan evaluasi. Modul Trainer membutuhkan beberapa argumen yang dimuat. Argumen tersebut dimuat dari komponen-komponen yang sudah disebutkan pada subbab sebelumnya. Argumen untuk pelatihan, dan model didapat dari hasil \textit{parsing} argumen pada \ref{sec:parse-arg}. Untuk \textit{tokenizer} dan \textit{dataset} pelatihan dan evaluasi dimuat dari hasil praproses data pada \ref{sec:praproses}. Lalu, untuk \textit{compute\_metrics} fungsinya dimuat dari metriks evaluasi pada \ref{sec:metriks-evaluasi}. 

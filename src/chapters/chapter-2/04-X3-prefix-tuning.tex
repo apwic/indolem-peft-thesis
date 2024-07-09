@@ -1,6 +1,6 @@
 \subsection{\textit{Prefix-Tuning}}
 
-\textit{Prefix-Tuning} adalah teknik yang diperkenalkan untuk mengoptimalkan \textit{prompt} kontinu dalam generasi teks. Berbeda dengan pendekatan tradisional yang melibatkan \textit{training} ulang seluruh model atau menambahkan parameter tambahan, \textit{Prefix-Tuning} fokus pada pengoptimalan sejumlah kecil parameter yang didefinisikan sebagai "prefix" dari sekuens input \parencite{prefix_tuning}. Dengan kata lain, dibanding mengubah seluruh model, hanya \textit{prefix} dari input yang dioptimalkan untuk meningkatkan kinerja generasi dengan arsitekturnya dapat dilihat pada Gambar \ref{fig:prefix-tuning}.
+\textit{Prefix-Tuning} adalah teknik yang diperkenalkan untuk mengoptimalkan \textit{prompt} kontinu dalam generasi teks. Berbeda dengan pendekatan  yang melibatkan \textit{training} ulang seluruh model atau menambahkan parameter tambahan, \textit{Prefix-Tuning} fokus pada pengoptimalan sejumlah kecil parameter yang didefinisikan sebagai "prefix" dari sekuens input \parencite{prefix_tuning}. Dengan kata lain, dibanding mengubah seluruh model, hanya \textit{prefix} dari input yang dioptimalkan untuk meningkatkan kinerja generasi dengan arsitekturnya dapat dilihat pada Gambar \ref{fig:prefix-tuning}.
 
 \begin{figure}[ht]
     \centering
@@ -9,7 +9,7 @@
     \label{fig:prefix-tuning}
 \end{figure}
 
-Keuntungan utama dari pendekatan ini adalah efisiensi. Dengan mengoptimalkan hanya sebagian kecil dari parameter, \textit{Prefix-Tuning} dapat mencapai peningkatan kinerja dengan \textit{overhead} komputasi yang jauh lebih rendah dibandingkan dengan teknik \textit{fine-tuning} tradisional. Selain itu, dengan fokus pada \textit{prefix}, teknik ini memungkinkan adaptasi yang lebih spesifik terhadap tugas atau domain tertentu, memberikan fleksibilitas lebih dalam aplikasi praktis.
+Keuntungan utama dari pendekatan ini adalah efisiensi. Dengan mengoptimalkan hanya sebagian kecil dari parameter, \textit{Prefix-Tuning} dapat mencapai peningkatan kinerja dengan \textit{overhead} komputasi yang jauh lebih rendah dibandingkan dengan teknik \textit{fine-tuning} . Selain itu, dengan fokus pada \textit{prefix}, teknik ini memungkinkan adaptasi yang lebih spesifik terhadap tugas atau domain tertentu, memberikan fleksibilitas lebih dalam aplikasi praktis.
 
-Teknik ini dapat digunakan untuk meningkatkan kinerja model generatif di berbagai tugas, termasuk penerjemahan mesin, peringkasan teks, dan lainnya. Hasil eksperimen menunjukkan bahwa \textit{Prefix-Tuning} mampu mencapai kinerja yang sebanding atau bahkan lebih baik dibandingkan dengan metode \textit{fine-tuning} tradisional, tetapi dengan biaya komputasi yang jauh lebih rendah.
+Teknik ini dapat digunakan untuk meningkatkan kinerja model generatif di berbagai tugas, termasuk penerjemahan mesin, peringkasan teks, dan lainnya. Hasil eksperimen menunjukkan bahwa \textit{Prefix-Tuning} mampu mencapai kinerja yang sebanding atau bahkan lebih baik dibandingkan dengan metode \textit{fine-tuning} , tetapi dengan biaya komputasi yang jauh lebih rendah.
 

@@ -1,9 +1,0 @@
-\subsection{Pengembangan Ulang Kakas IndoLEM}
-
-Pengembangan ulang ini diperlukan untuk memperbarui dan memperbaiki infrastuktur dari kakas IndoLEM. Selain itu, proses ini juga diperlukan untuk mengembangkan metode PEFT karena metode tersebut banyak memerlukan versi yang lebih baru dari pustaka yang digunakan. Untuk melakukan faktorisasi teradapat beberapa langkah yaitu memperbarui versi dari perangkat lunak, penyederhanaan dan standardisasi proses, dan dokumentasi.
-
-Peningkatan versi Python ke versi terbaru yang kompatibel dengan pustaka yang digunakan beserta dependensinya, salah satunya adalah Torch dan Transformers. Versi pustaka yang digunakan pada IndoLEM banyak yang tidak bisa digunakan pada versi Python yang lebih baru, sehingga eksperimen sulit untuk dibuat ulang pada perangkat yang berbeda. 
-
-\textit{Script} yang saat ini terdapat pada IndoLEM menggunakan pustaka versi lama terutama pada proses \textit{training}-nya. Sedangkan, untuk mengintegrasi metode PEFT perlu menggunakan pustaka dengan versi yang terkini. Sehingga, perlu pengembangan ulang terhadap kakas IndoLEM agar setiap prosesnya menggunakan metode dan versi yang lebih baru dari pustakanya. Selain itu, \textit{script} yang dikembangkan dari awal bisa di-\textit{reuse} terhadap setiap \textit{task}-nya untuk meningkatkan \textit{readibility} dari kodenya.
-
-Dokumentasi pada kakas IndoLEM saat ini cukup terbatas, terutama pada \textit{requirement} untuk versi Python dan pustaka yang digunakannya, sehingga sulit untuk menajalankan eksperimennya. Perlu dilakukan dokumentasi yang lengkap terutama pada versi dari semua kakas yang digunakan pada eksperimen.
