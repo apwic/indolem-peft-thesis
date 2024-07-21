@@ -1,29 +1,123 @@
 % NLP
-@article{nlp,
-	title = {Speech and Language Processing},
-	author = {Jurafsky, D. and Martin, J. H.},
+@book{nlp,
+	author = {Jurafsky, Daniel and Martin, James},
+	year = {2008},
+	month = {02},
+	pages = {},
+	title = {Speech and Language Processing: An Introduction to Natural
+	         Language Processing, Computational Linguistics, and Speech
+	         Recognition},
+	volume = {2},
+}
+
+% NLP Task
+@inbook{sentiment,
+	author = {Aqlan, Ameen and Bairam, Dr. Manjula and Naik, R Lakshman},
 	year = {2019},
-	journal = {Stanford University},
-	url = {https://web.stanford.edu/~jurafsky/slp3/},
+	month = {01},
+	pages = {147-162},
+	title = {A Study of Sentiment Analysis: Concepts, Techniques, and
+	         Challenges},
+	isbn = {978-1-4939-9044-3},
+	doi = {10.1007/978-981-13-6459-4_16},
+}
+
+@inproceedings{ner,
+	author = {Azarine, Indira Suri and Arif Bijaksana, Moch and Asror, Ibnu},
+	booktitle = {2019 7th International Conference on Information and
+	             Communication Technology (ICoICT)},
+	title = {Named Entity Recognition on Indonesian Tweets using Hidden
+	         Markov Model},
+	year = {2019},
+	volume = {},
+	number = {},
+	pages = {1-5},
+	keywords = {Hidden Markov
+	            models;Twitter;Organizations;Tokenization;Labeling;Stochastic
+	            processes;Grammar;Named Entity Recognition;Tweet;Hidden
+	            Markov Model.},
+	doi = {10.1109/ICoICT.2019.8835277},
+}
+
+@misc{summarization,
+	title = {IndoSum: A New Benchmark Dataset for Indonesian Text
+	         Summarization},
+	author = {Kemal Kurniawan and Samuel Louvan},
+	year = {2019},
+	eprint = {1810.05334},
+	archivePrefix = {arXiv},
+	primaryClass = {cs.CL},
+	url = {https://arxiv.org/abs/1810.05334},
 }
 
 % Models
-@article{transformers,
-	title = {Attention Is All You Need},
-	author = {Vaswani, A. and others},
+
+@inproceedings{transformers,
+	author = {Vaswani, Ashish and Shazeer, Noam and Parmar, Niki and
+	          Uszkoreit, Jakob and Jones, Llion and Gomez, Aidan N and Kaiser
+	          , \L ukasz and Polosukhin, Illia},
+	booktitle = {Advances in Neural Information Processing Systems},
+	publisher = {Curran Associates, Inc.},
+	title = {Attention is All you Need},
+	url = {
+	       https://proceedings.neurips.cc/paper_files/paper/2017/file/3f5ee243547dee91fbd053c1c4a845aa-Paper.pdf
+	       },
+	volume = {30},
 	year = {2017},
-	journal = {arXiv preprint arXiv:1706.03762},
-	url = {https://arxiv.org/abs/1706.03762},
+	bdsk-url-1 = {
+	              https://proceedings.neurips.cc/paper_files/paper/2017/file/3f5ee243547dee91fbd053c1c4a845aa-Paper.pdf
+	              },
 }
 
-@article{bert,
-	title = {BERT: Pre-training of Deep Bidirectional Transformers for
-	         Language Understanding},
-	author = {Jacob Devlin and Ming-Wei Chang and Kenton Lee and Kristina
-	          Toutanova},
-	journal = {arXiv preprint arXiv:1810.04805},
-	year = {2018},
-	url = {},
+@inproceedings{bert,
+	title = "{BERT}: Pre-training of Deep Bidirectional Transformers for
+	         Language Understanding",
+	author = "Devlin, Jacob and Chang, Ming-Wei and Lee, Kenton and
+	          Toutanova, Kristina",
+	booktitle = "Proceedings of the 2019 Conference of the North {A}merican
+	             Chapter of the Association for Computational Linguistics:
+	             Human Language Technologies, Volume 1 (Long and Short
+	             Papers)",
+	month = jun,
+	year = "2019",
+	address = "Minneapolis, Minnesota",
+	publisher = "Association for Computational Linguistics",
+	url = "https://aclanthology.org/N19-1423",
+	doi = "10.18653/v1/N19-1423",
+	pages = "4171--4186",
+	abstract = "We introduce a new language representation model called BERT
+	            , which stands for Bidirectional Encoder Representations from
+	            Transformers. Unlike recent language representation models
+	            (Peters et al., 2018a; Radford et al., 2018), BERT is
+	            designed to pre-train deep bidirectional representations from
+	            unlabeled text by jointly conditioning on both left and right
+	            context in all layers. As a result, the pre-trained BERT
+	            model can be fine-tuned with just one additional output layer
+	            to create state-of-the-art models for a wide range of tasks,
+	            such as question answering and language inference, without
+	            substantial task-specific architecture modifications. BERT is
+	            conceptually simple and empirically powerful. It obtains new
+	            state-of-the-art results on eleven natural language
+	            processing tasks, including pushing the GLUE score to 80.5
+	            (7.7 point absolute improvement), MultiNLI accuracy to 86.7{
+	            \%} (4.6{\%} absolute improvement), SQuAD v1.1 question
+	            answering Test F1 to 93.2 (1.5 point absolute improvement)
+	            and SQuAD v2.0 Test F1 to 83.1 (5.1 point absolute
+	            improvement).",
+}
+
+@article{T5,
+	author = {Colin Raffel and Noam Shazeer and Adam Roberts and Katherine
+	          Lee and Sharan Narang and Michael Matena and Yanqi Zhou and Wei
+	          Li and Peter J. Liu},
+	title = {Exploring the Limits of Transfer Learning with a Unified
+	         Text-to-Text Transformer},
+	journal = {Journal of Machine Learning Research},
+	year = {2020},
+	volume = {21},
+	number = {140},
+	pages = {1--67},
+	url = {http://jmlr.org/papers/v21/20-074.html},
 }
 
 % Adapters
@@ -37,25 +131,74 @@
 	url = {https://arxiv.org/abs/2106.09685},
 }
 
-@article{tinyattention,
-	title = {Bottleneck Adapter: Contexts Are More Important Than the Number
-	         of Parameters},
-	author = {Hongyu Zhao and Hao Tan and Hongyuan Mei},
-	year = {2022},
-	journal = {arXiv preprint arXiv:2211.01979},
-	url = {https://arxiv.org/abs/2211.01979},
+@inproceedings{adapter_tiny_attention,
+	title = "Tiny-Attention Adapter: Contexts Are More Important Than the
+	         Number of Parameters",
+	author = "Zhao, Hongyu and Tan, Hao and Mei, Hongyuan",
+	booktitle = "Proceedings of the 2022 Conference on Empirical Methods in
+	             Natural Language Processing",
+	month = dec,
+	year = "2022",
+	address = "Abu Dhabi, United Arab Emirates",
+	publisher = "Association for Computational Linguistics",
+	url = "https://aclanthology.org/2022.emnlp-main.444",
+	doi = "10.18653/v1/2022.emnlp-main.444",
+	pages = "6626--6638",
+	abstract = "Adapter-tuning is a paradigm that transfers a pretrained
+	            language model to downstream tasks by adding and tuning a
+	            small number of new parameters. Previously proposed adapter
+	            architectures are all feed-forward neural networks. In this
+	            paper, we investigate the effectiveness of using
+	            tiny-attention{---}i.e., attention with extremely small
+	            per-head dimensionality{---}as adapters. Our tiny-attention
+	            adapter learns to modify the hidden states at each position
+	            directly conditioned on the hidden states at all the other
+	            positions, which is missed by the previously proposed
+	            adapters. Moreover, we view its multiple attention heads as a
+	            mixture of experts and propose to average their weights
+	            during deployment, which further reduces its inference
+	            computation cost. On the GLUE benchmark, our tiny-attention
+	            adapter outperforms the other parameter-efficient transfer
+	            learning methods as well as full fine-tuning while only
+	            updating 0.05{\%} of the parameters. On the FewGLUE benchmark
+	            , its performance is comparable to that of GPT-3 and PET.",
 }
 
-@article{prefix_tuning,
-	title = {Prefix-Tuning: Optimizing Continuous Prompts for Generation},
-	author = {Xiang Lisa Li and Percy Liang},
-	year = {2021},
-	eprint = {2101.00190},
-	archivePrefix = {arXiv},
-	primaryClass = {cs.CL},
+@inproceedings{prefix_tuning,
+	title = "Prefix-Tuning: Optimizing Continuous Prompts for Generation",
+	author = "Li, Xiang Lisa and Liang, Percy",
+	booktitle = "Proceedings of the 59th Annual Meeting of the Association
+	             for Computational Linguistics and the 11th International
+	             Joint Conference on Natural Language Processing (Volume 1:
+	             Long Papers)",
+	month = aug,
+	year = "2021",
+	address = "Online",
+	publisher = "Association for Computational Linguistics",
+	url = "https://aclanthology.org/2021.acl-long.353",
+	doi = "10.18653/v1/2021.acl-long.353",
+	pages = "4582--4597",
+	abstract = "Fine-tuning is the de facto way of leveraging large
+	            pretrained language models for downstream tasks. However,
+	            fine-tuning modifies all the language model parameters and
+	            therefore necessitates storing a full copy for each task. In
+	            this paper, we propose prefix-tuning, a lightweight
+	            alternative to fine-tuning for natural language generation
+	            tasks, which keeps language model parameters frozen and
+	            instead optimizes a sequence of continuous task-specific
+	            vectors, which we call the prefix. Prefix-tuning draws
+	            inspiration from prompting for language models, allowing
+	            subsequent tokens to attend to this prefix as if it were {``}
+	            virtual tokens{''}. We apply prefix-tuning to GPT-2 for
+	            table-to-text generation and to BART for summarization. We
+	            show that by learning only 0.1{\%} of the parameters,
+	            prefix-tuning obtains comparable performance in the full data
+	            setting, outperforms fine-tuning in low-data settings, and
+	            extrapolates better to examples with topics that are unseen
+	            during training.",
 }
 
-@inproceedings{adapter,
+@inproceedings{adapter_houlsby,
 	title = {Parameter-Efficient Transfer Learning for NLP},
 	author = {Houlsby, Neil and Giurgiu, Andrei and Jastrzebski, Stanislaw
 	          and Morrone, Bruna and De Laroussilhe, Quentin and Gesmundo,
@@ -64,7 +207,6 @@
 	             Learning},
 	pages = {2790--2799},
 	year = {2019},
-	editor = {Chaudhuri, Kamalika and Salakhutdinov, Ruslan},
 	volume = {97},
 	series = {Proceedings of Machine Learning Research},
 	month = {09--15 Jun},
@@ -72,6 +214,116 @@
 	pdf = {http://proceedings.mlr.press/v97/houlsby19a/houlsby19a.pdf},
 	url = {https://proceedings.mlr.press/v97/houlsby19a.html},
 }
+
+@inproceedings{adapter_pfeiffer,
+	title = "{A}dapter{F}usion: Non-Destructive Task Composition for
+	         Transfer Learning",
+	author = {Pfeiffer, Jonas and Kamath, Aishwarya and R{\"u}ckl{\'e},
+	          Andreas and Cho, Kyunghyun and Gurevych, Iryna},
+	booktitle = "Proceedings of the 16th Conference of the European Chapter
+	             of the Association for Computational Linguistics: Main
+	             Volume",
+	month = apr,
+	year = "2021",
+	address = "Online",
+	publisher = "Association for Computational Linguistics",
+	url = "https://aclanthology.org/2021.eacl-main.39",
+	doi = "10.18653/v1/2021.eacl-main.39",
+	pages = "487--503",
+	abstract = "Sequential fine-tuning and multi-task learning are methods
+	            aiming to incorporate knowledge from multiple tasks; however,
+	            they suffer from catastrophic forgetting and difficulties in
+	            dataset balancing. To address these shortcomings, we propose
+	            AdapterFusion, a new two stage learning algorithm that
+	            leverages knowledge from multiple tasks. First, in the
+	            knowledge extraction stage we learn task specific parameters
+	            called adapters, that encapsulate the task-specific
+	            information. We then combine the adapters in a separate
+	            knowledge composition step. We show that by separating the
+	            two stages, i.e., knowledge extraction and knowledge
+	            composition, the classifier can effectively exploit the
+	            representations learned from multiple tasks in a
+	            non-destructive manner. We empirically evaluate AdapterFusion
+	            on 16 diverse NLU tasks, and find that it effectively
+	            combines various types of knowledge at different layers of
+	            the model. We show that our approach outperforms traditional
+	            strategies such as full fine-tuning as well as multi-task
+	            learning. Our code and adapters are available at
+	            AdapterHub.ml.",
+}
+
+@inproceedings{prompt_tuning,
+	title = "The Power of Scale for Parameter-Efficient Prompt Tuning",
+	author = "Lester, Brian and Al-Rfou, Rami and Constant, Noah",
+	booktitle = "Proceedings of the 2021 Conference on Empirical Methods in
+	             Natural Language Processing",
+	month = nov,
+	year = "2021",
+	address = "Online and Punta Cana, Dominican Republic",
+	publisher = "Association for Computational Linguistics",
+	url = "https://aclanthology.org/2021.emnlp-main.243",
+	doi = "10.18653/v1/2021.emnlp-main.243",
+	pages = "3045--3059",
+	abstract = "In this work, we explore {``}prompt tuning,{''} a simple yet
+	            effective mechanism for learning {``}soft prompts{''} to
+	            condition frozen language models to perform specific
+	            downstream tasks. Unlike the discrete text prompts used by
+	            GPT-3, soft prompts are learned through backpropagation and
+	            can be tuned to incorporate signals from any number of
+	            labeled examples. Our end-to-end learned approach outperforms
+	            GPT-3{'}s few-shot learning by a large margin. More
+	            remarkably, through ablations on model size using T5, we show
+	            that prompt tuning becomes more competitive with scale: as
+	            models exceed billions of parameters, our method {``}closes
+	            the gap{''} and matches the strong performance of model
+	            tuning (where all model weights are tuned). This finding is
+	            especially relevant because large models are costly to share
+	            and serve and the ability to reuse one frozen model for
+	            multiple downstream tasks can ease this burden. Our method
+	            can be seen as a simplification of the recently proposed {``}
+	            prefix tuning{''} of Li and Liang (2021) and we provide a
+	            comparison to this and other similar approaches. Finally, we
+	            show that conditioning a frozen model with soft prompts
+	            confers benefits in robustness to domain transfer and enables
+	            efficient {``}prompt ensembling.{''} We release code and
+	            model checkpoints to reproduce our experiments.",
+}
+
+@inproceedings{compacter,
+	author = {Karimi Mahabadi, Rabeeh and Henderson, James and Ruder,
+	          Sebastian},
+	booktitle = {Advances in Neural Information Processing Systems},
+	pages = {1022--1035},
+	publisher = {Curran Associates, Inc.},
+	title = {Compacter: Efficient Low-Rank Hypercomplex Adapter Layers},
+	url = {
+	       https://proceedings.neurips.cc/paper_files/paper/2021/file/081be9fdff07f3bc808f935906ef70c0-Paper.pdf
+	       },
+	volume = {34},
+	year = {2021},
+	bdsk-url-1 = {
+	              https://proceedings.neurips.cc/paper_files/paper/2021/file/081be9fdff07f3bc808f935906ef70c0-Paper.pdf
+	              },
+}
+
+@inproceedings{ia3,
+	author = {Liu, Haokun and Tam, Derek and Muqeeth, Mohammed and Mohta,
+	          Jay and Huang, Tenghao and Bansal, Mohit and Raffel, Colin A},
+	booktitle = {Advances in Neural Information Processing Systems},
+	pages = {1950--1965},
+	publisher = {Curran Associates, Inc.},
+	title = {Few-Shot Parameter-Efficient Fine-Tuning is Better and Cheaper
+	         than In-Context Learning},
+	url = {
+	       https://proceedings.neurips.cc/paper_files/paper/2022/file/0cde695b83bd186c1fd456302888454c-Paper-Conference.pdf
+	       },
+	volume = {35},
+	year = {2022},
+	bdsk-url-1 = {
+	              https://proceedings.neurips.cc/paper_files/paper/2022/file/0cde695b83bd186c1fd456302888454c-Paper-Conference.pdf
+	              },
+}
+
 
 % LEM
 @inproceedings{glue,
@@ -127,20 +379,33 @@
 	year = {2021},
 }
 
-@article{indolem,
-	author = {Fajri Koto and Afshin Rahimi and Jey Han Lau and Timothy
-	          Baldwin},
-	title = {IndoLEM and IndoBERT: {A} Benchmark Dataset and Pre-trained
-	         Language Model for Indonesian {NLP}},
-	journal = {CoRR},
-	volume = {abs/2011.00677},
-	year = {2020},
-	url = {https://arxiv.org/abs/2011.00677},
-	eprinttype = {arXiv},
-	eprint = {2011.00677},
-	timestamp = {Fri, 06 Nov 2020 15:32:47 +0100},
-	biburl = {https://dblp.org/rec/journals/corr/abs-2011-00677.bib},
-	bibsource = {dblp computer science bibliography, https://dblp.org},
+@inproceedings{indolem,
+	title = "{I}ndo{LEM} and {I}ndo{BERT}: A Benchmark Dataset and
+	         Pre-trained Language Model for {I}ndonesian {NLP}",
+	author = "Koto, Fajri and Rahimi, Afshin and Lau, Jey Han and Baldwin,
+	          Timothy",
+	booktitle = "Proceedings of the 28th International Conference on
+	             Computational Linguistics",
+	month = dec,
+	year = "2020",
+	address = "Barcelona, Spain (Online)",
+	publisher = "International Committee on Computational Linguistics",
+	url = "https://aclanthology.org/2020.coling-main.66",
+	doi = "10.18653/v1/2020.coling-main.66",
+	pages = "757--770",
+	abstract = "Although the Indonesian language is spoken by almost 200
+	            million people and the 10th most spoken language in the world
+	            , it is under-represented in NLP research. Previous work on
+	            Indonesian has been hampered by a lack of annotated datasets,
+	            a sparsity of language resources, and a lack of resource
+	            standardization. In this work, we release the IndoLEM dataset
+	            comprising seven tasks for the Indonesian language, spanning
+	            morpho-syntax, semantics, and discourse. We additionally
+	            release IndoBERT, a new pre-trained language model for
+	            Indonesian, and evaluate it over IndoLEM, in addition to
+	            benchmarking it against existing resources. Our experiments
+	            show that IndoBERT achieves state-of-the-art performance over
+	            most of the tasks in IndoLEM.",
 }
 
 % Metrics
@@ -179,11 +444,45 @@
 	bdsk-url-1 = {https://doi.org/10.1038/s42256-023-00626-4},
 }
 
-@article{uvpl,
-	title = {Unified Parameter-Efficient Transfer Learning},
+@misc{uvpl,
+	title = {Towards a Unified View of Parameter-Efficient Transfer Learning
+	         },
 	author = {Junxian He and Chunting Zhou and Xuezhe Ma and Taylor
 	          Berg-Kirkpatrick and Graham Neubig},
-	year = {2021},
-	journal = {arXiv preprint arXiv:2110.04366},
+	year = {2022},
+	eprint = {2110.04366},
+	archivePrefix = {arXiv},
+	primaryClass = {cs.CL},
 	url = {https://arxiv.org/abs/2110.04366},
+}
+
+@inproceedings{adapters,
+	title = "Adapters: A Unified Library for Parameter-Efficient and Modular
+	         Transfer Learning",
+	author = {Poth, Clifton and Sterz, Hannah and Paul, Indraneil and
+	          Purkayastha, Sukannya and Engl{\"a}nder, Leon and Imhof, Timo
+	          and Vuli{\'c}, Ivan and Ruder, Sebastian and Gurevych, Iryna
+	          and Pfeiffer, Jonas},
+	booktitle = "Proceedings of the 2023 Conference on Empirical Methods in
+	             Natural Language Processing: System Demonstrations",
+	month = dec,
+	year = "2023",
+	address = "Singapore",
+	publisher = "Association for Computational Linguistics",
+	url = "https://aclanthology.org/2023.emnlp-demo.13",
+	doi = "10.18653/v1/2023.emnlp-demo.13",
+	pages = "149--160",
+	abstract = "We introduce Adapters, an open-source library that unifies
+	            parameter-efficient and modular transfer learning in large
+	            language models. By integrating 10 diverse adapter methods
+	            into a unified interface, Adapters offers ease of use and
+	            flexible configuration. Our library allows researchers and
+	            practitioners to leverage adapter modularity through
+	            composition blocks, enabling the design of complex adapter
+	            setups. We demonstrate the library{'}s efficacy by evaluating
+	            its performance against full fine-tuning on various NLP
+	            tasks. Adapters provides a powerful tool for addressing the
+	            challenges of conventional fine-tuning paradigms and
+	            promoting more efficient and modular transfer learning. The
+	            library is available via https://adapterhub.ml/adapters.",
 }
