@@ -8,3 +8,8 @@ Dalam konteks pemrosesan bahasa alami (NLP), \textit{transfer learning} sering d
 
 Keuntungan lain dari \textit{transfer learning} adalah efisiensi komputasi. Melatih model pembelajaran mesin dari awal, terutama model dengan banyak parameter, memerlukan sumber daya komputasi yang signifikan. Dengan menggunakan model yang telah dilatih sebagai titik awal, dapat menghemat waktu dan sumber daya komputasi, sambil mempertahankan atau bahkan meningkatkan kinerja model.
 
+Salah satu metode yang sering digunakan untuk \textit{transfer-learning} adalah \textit{fine-tuning}. \textit{Pre-trained model} yang sebelumnya sudah dilatih pada data latih yang besar, dapat dilatih lebih lanjut untuk tugas NLP spesifik lainnya. Proses ini memerlukan \textit{dataset} tambahan, sehingga model dapat mendapatkan pengetahuan tambahan yang spesifik diperlukan terkait tugas NLP tersebut.
+
+Proses \textit{fine-tuning} melanjutkan fase \textit{training} dengan \textit{dataset} tambahan yang diberikan kepada model. Sebelumnya, model mempunyai parameternya sendiri yang berasal dari proses \textit{pre-training}. \textit{Fine-tuning} membolehkan perubahan pada semua parameter model untuk menyesuaikan pada \textit{dataset} tambahan. Agar pengetahuan yang sebelumnya dimiliki oleh model tidak hilang ketika proses pengubahan parameter, \textit{learning rate} bernilai kecil bisa digunakan pada proses ini.
+
+\textit{Fine-tuning} merupakan metode \textit{transfer learning} yang efisien ketika dilatih pada tugas spesifik dengan \textit{dataset} yang relatif kecil. Metode ini mengurangi kebutuhan  sumber daya komputasi dan waktu yang besar, yang biasanya dibutuhkan untuk melakukan \textit{training} model dari awal.
