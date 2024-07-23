@@ -2,8 +2,94 @@
 
 Pemrosesan Bahasa Alami (PBA) atau dalam bahasa Inggris dikenal dengan \textit{Natural Language Processing} (NLP) merupakan cabang dari ilmu komputer, kecerdasan buatan, dan linguistik yang berfokus pada interaksi antara komputer dan bahasa manusia. NLP bertujuan untuk memungkinkan komputer tidak hanya memahami dan menafsirkan bahasa manusia, tetapi juga untuk menghasilkannya dengan cara yang bermakna dan efektif. Hal ini dijelaskan oleh \citeauthor{nlp} \parencite{nlp}, menyatakan pentingnya NLP dalam membangun jembatan komunikasi antara manusia dan mesin.
 
-Dalam beberapa dekade terakhir, NLP telah mengalami kemajuan yang signifikan, memungkinkan komputer tidak hanya memahami bahasa manusia tetapi juga merespons dengan cara yang semakin kompleks dan kontekstual. Teknologi seperti mesin penerjemah, asisten virtual, dan sistem rekomendasi semuanya memanfaatkan prinsip-prinsip NLP untuk berfungsi.
+Dalam beberapa dekade terakhir, NLP telah mengalami kemajuan yang signifikan, memungkinkan komputer tidak hanya memahami bahasa manusia tetapi juga merespons dengan cara yang semakin kompleks dan kontekstual. Teknologi seperti mesin penerjemah, asisten virtual, dan sistem rekomendasi semuanya memanfaatkan prinsip-prinsip NLP untuk berfungsi \parencite{nlp}.
 
-Salah satu tantangan utama dalam NLP adalah keragaman dan kompleksitas bahasa manusia. Bahasa penuh dengan nuansa, ambiguitas, dan struktur yang dapat bervariasi tergantung pada konteks dan budaya. Untuk mengatasi tantangan ini, berbagai tugas NLP telah didefinisikan dan dikembangkan untuk memecah masalah pemahaman bahasa menjadi komponen yang lebih kecil dan lebih spesifik.
+Salah satu tantangan utama dalam NLP adalah keragaman dan kompleksitas bahasa manusia. Bahasa penuh dengan nuansa, ambiguitas, dan struktur yang dapat bervariasi tergantung pada konteks dan budaya \parencite{ai}. Untuk mengatasi tantangan ini, berbagai tugas NLP telah didefinisikan dan dikembangkan untuk memecah masalah pemahaman bahasa menjadi komponen yang lebih kecil dan lebih spesifik.
 
 Beberapa tugas NLP yang umum antara lain \textit{Part of Speech} (POS) \textit{Tagging}, \textit{Named Entity Recognition} (NER), \textit{Dependency Parsing}, \textit{Sentiment Analysis}, dan \textit{Summarization}. Masing-masing tugas ini menargetkan aspek tertentu dari pemahaman bahasa dan memiliki aplikasi praktisnya sendiri dalam berbagai bidang, mulai dari analisis teks hingga pengembangan sistem percakapan otomatis.
+
+\subsection{\textit{Named-Entity Recognition} (NER)}
+
+NER merupakan salah satu tugas dari NLP yang bertujuan untuk mengklasifikasikan entitas pada sebuah teks \parencite{ner}. Setiap entitas yang ada pada sebuah teks akan diklasifikasikan menjadi sebuah label. Label ini tergantung pada \textit{dataset} yang digunakan.
+
+\begin{table}[h]
+    \vspace{0.25cm}
+    \caption{Contoh Data NER \parencite{ner}}
+    \label{table:contoh-data-ner}
+    \begin{center}
+        \begin{tabular}{cll}
+            \hline
+            \textbf{Label} & \textbf{Informasi} & \textbf{Contoh} \\ \hline
+            PER & Nama orang & Joko Widodo, Soekarno \\ \hline
+            LOC & Nama lokasi & Indonesia, Bandung \\ \hline
+            ORG & Nama organisasi & Telkom, DPR \\ \hline
+        \end{tabular}
+    \end{center}
+\end{table}
+
+Pada penelitian yang dilakukan oleh \citeauthor{ner}, dilakukan NER pada \textit{dataset} yang berisi \textit{tweet} berbahasa indonesia. Sebagai contoh yang bisa dilihat pada tabel \ref{table:contoh-data-ner}, "Soekarno" dan "Joko Widodo" dapat dikenali sebagai nama orang dengan label PER dalam sebuah kalimat "Soekarno dan Joko Widodo merupakan presiden Indonesia". 
+
+Selain diklasifikasikan menjadi label saja, data juga menggunakan format BIO (\textit{Begin, Inside}, dan \textit{Other}). Label B-XXX akan menyatakan kata pertama dan I-XXX menyatakan kata selanjutnya pada suatu entitas XXX. Sedangkan, O digunakan sebagai kata yang ada di luar entitas atau label yang disediakan pada \textit{dataset} \parencite{ner}. Tabel \ref{table:contoh-labeling-ner} merupakan contoh \textit{labeling} yang mengandung nama organisasi (ORG, Telkom University), nama orang (PER, Ridwan Kamil), dan nama lokasi (LOC, Bandung).
+
+\begin{table}[h]
+    \vspace{0.25cm}
+    \caption{Contoh \textit{Labeling} NER \parencite{ner}}
+    \label{table:contoh-labeling-ner}
+    \begin{center}
+        \begin{tabular}{ll}
+            \hline
+            \textbf{Data} & \textbf{NER Label} \\ \hline
+            @infobdg & O \\ \hline
+            Ridwan & B-PER \\ \hline
+            Kamil & I-PER \\ \hline
+            berkunjung & O \\ \hline
+            ke & O \\ \hline
+            Telkom & B-ORG \\ \hline
+            University & I-ORG \\ \hline
+            yang & O \\ \hline
+            terletak & O \\ \hline
+            di & O \\ \hline
+            Bandung & B-LOC \\ \hline
+        \end{tabular}
+    \end{center}
+\end{table}
+
+\subsection{\textit{Sentiment Analysis}}
+
+\textit{Sentiment analysis} merupakan proses untuk mengklasifikasikan polaritas dari sebuah opini. Opini dalam konteks NLP berupa sebuah teks \parencite{sentiment_stock}. Terdapat banyak klasifikasi dari sentimen, salah satunya adalah klasifikasi sentimen ke dalam 3 kelas yaitu positif, negatif, dan netral. Teks yang mengandung kata-kata dengan sentiment positif seperti baik, hebat, lezat, dan lain-lain akan diklasifikasikan sebagai positif, begitu pula sebaliknya. Sedangkan, kata-kata yang tidak mengandung sentimen positif maupun negatif akan diklasifikan sebagai netral.
+
+Terdapat tiga tingkat klasifikasi utama pada \textit{sentiment analysis} yaitu tingkat dokumen, kalimat, dan aspek \parencite{sentiment_algo}. \textit{Sentiment anaylsis} tingkat dokumen bertujuan untuk mengklasifikasikan sebuah dokumen yang mengandung opini tertentu, tingkat dokumen akan memerhatikan seluruh dokumen untuk menentukan sentimennya. Tingkat kalimat akan mempertimbangkan sentimen pada level kalimat. Sedangkan, pada tingkat aspek akan hanya mempertimbangkan pada suatu aspek atau entitas saja.
+
+\subsection{\textit{Summarization}}
+
+\textit{Summarization} mempunyai tujuan untuk menghasilkan ringkasan dari serangkaian teks atau dokumen \parencite{summarization}. Hasil ringkasannya harus mempertahankan informasi penting dengan panjang yang lebih sedikit dibandingkan dengan teks atau dokumen aslinya. Terdapat dua jenis \textit{summarization} tergantung dari cara mendapatkannya, yaitu \textit{extractive} dan \textit{abstractive}. \textit{Extractive summarization} akan mengekstrak kata demi kata yang penting dari dokumen aslinya. Sebaliknya, \textit{abstractive summarization} berusaha menghasilkan abstrak yang mungkin mengandung kata yang tidak terdapat pada dokumen aslinya \parencite{summarization}.
+
+
+\begin{table}[h]
+    \vspace{0.25cm}
+    \caption{Contoh Data \textit{Summarization} \parencite{summarization}}
+    \label{table:contoh-data-summ}
+    \begin{center}
+        \begin{tabularx}{\textwidth}{X}
+            \hline
+            \textbf{Dokumen} \\ \hline
+            \uwave{\textbf{Suara.com = Cerita sekuel terbaru James Bond bocor}} \\
+            \uwave{Menurut sumber yang terlibat dalam produksi film ini, agen rahasia 007 berhenti menjadi mata-mata Inggris demi menikah dengan perempuan yang dicintainya.} \\
+            "Bond berhenti menjadi agen rahasia karena jatuh cinta dan menikah dengan perempuan yang dicintai", tutur seorang sumber yang dekat dengan produksi seperti dikutip laman PageSix.com. \\
+            Dalam film tersebut, Bond diduga menikahi Madelein Swann yang diperankan oleh Lea Seydoux. \\
+            Lea diketahui bermain sebagai gadis Bond di sekuel Spectre pada 2015 silam. \\
+            \uwave{Jika benar, ini merupakan satu-satunya sekuel yang bercerita pernikahan James Bond sejak 1969.} \\
+            \uwave{Sebelumnya, di sekuel On Her Majesty, James Bond menikahi Tracy Draco yang diperankan Diana Rigg.} \\
+            \uwave{Namun, di film itu Draco terbunuh.} \\
+            Plot sekuel film James Bond ke-25 bocor tak lama setelah Daniel Craig mengumumkan bakal kembali memerankan tokoh agen 007. \\ \hline
+            \textbf{Ringkasan} \\ \hline
+            Cerita sekuel terbaru James Bond bocor. \\
+            Menurut sumber yang terlibat dalam produksi film ini, agen rahasia 007 berhenti menjadi mata-mata Inggris demi menikah dengan perempuan yang dicintainya. \\
+            Jika benar, ini merupakan satu-satunya sekuel yang bercerita pernikahan James Bond sejak 1969. \\
+            Sebelumnya, di sekuel On Her Majesty, James Bond menikahi Tracy Draco. \\
+            Namun, di film itu Draco terbunuh. \\ \hline
+        \end{tabularx}
+    \end{center}
+\end{table}
+
+Pada tabel \ref{table:contoh-data-summ} merupakan contoh teks asli beserta hasil dari ringkasannya. Hasil ringkasan pada tabel berupa \textit{abstractive summarization}. Sedangkan, teks yang digaris bawahi yang terdapat pada label dokumen merupakan hasil \textit{extractive summarization}-nya \parencite{summarization}.
