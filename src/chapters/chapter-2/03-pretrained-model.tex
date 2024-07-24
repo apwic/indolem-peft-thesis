@@ -4,42 +4,42 @@
 
 \subsection{\textit{Bidirectional Encoder Representations from Transformers} \\ (BERT)}
 
-BERT, yang merupakan singkatan dari \textit{Bidirectional Encoder Representations from Transformers}, adalah model pemrosesan bahasa alami yang diperkenalkan oleh Google pada tahun 2018 \parencite{bert}. BERT memanfaatkan arsitektur \textit{transformer}, yang telah dibahas sebelumnya, untuk memahami konteks kata dalam teks dengan cara yang lebih mendalam daripada pendekatan sebelumnya.
-
-BERT menggunakan pendekatan yang \textit{bidirectional}. BERT mampu memahami teks dari kiri ke kanan atau sebaliknya, BERT memahami konteks kata dengan mempertimbangkan informasi dari kedua arah. Sehingga, model ini memiliki kemampuan untuk pemahaman yang lebih kaya tentang makna dan nuansa dalam teks.
+BERT, yang merupakan singkatan dari \textit{Bidirectional Encoder Representations from Transformers}, adalah model \textit{encoder} pemrosesan bahasa alami yang diperkenalkan oleh Google pada tahun 2018 \parencite{bert}. BERT memanfaatkan arsitektur \textit{transformer}, yang telah dibahas sebelumnya, untuk memahami konteks kata dalam teks dengan cara yang lebih mendalam daripada pendekatan sebelumnya. BERT menggunakan pendekatan yang \textit{bidirectional}. BERT mampu memahami teks dari kiri ke kanan atau sebaliknya, BERT memahami konteks kata dengan mempertimbangkan informasi dari kedua arah. Sehingga, model ini memiliki kemampuan untuk pemahaman yang lebih kaya tentang makna dan nuansa dalam teks.
 
 \begin{figure}[ht]
+    \vspace{0.25cm}
     \centering
-    \includegraphics[width=0.8\textwidth]{chapter-2/bert.png}
-    \caption{Arsitektur \textit{BERT} \parencite{bert}}
+    \includegraphics[width=\textwidth]{chapter-2/bert.jpg}
+    \caption{Arsitektur BERT \parencite{bert}}
     \label{fig:bert}
 \end{figure}
 
-BERT merupakan \textit{pre-trained model} sehingga telah dilatih pada sejumlah besar teks. Data latih BERT diambil dari BooksCorpus dan Wikipedia bahasa Inggris. Ini memungkinan BERT untuk mempunyai pengetahuan mendasar dalam tugas NLP. Ketika digunakan untuk tugas-tugas NLP spesifik, seperti klasifikasi teks atau pemahaman pertanyaan, BERT dapat disesuaikan dengan data tugas spesifik untuk meningkatkan kinerjanya.
+BERT merupakan \textit{pre-trained model} sehingga telah dilatih pada sejumlah besar teks. Data latih BERT diambil dari BooksCorpus dan Wikipedia bahasa Inggris \parencite{bert}. Ini memungkinan BERT untuk mempunyai pengetahuan mendasar dalam tugas NLP. Ketika digunakan untuk tugas-tugas NLP spesifik, seperti klasifikasi teks atau pemahaman pertanyaan, BERT dapat disesuaikan dengan data tugas spesifik untuk meningkatkan kinerjanya. Seperti yang bisa dilihat pada gambar \ref{fig:bert}, BERT dilatih (\textit{pre-train}) dengan menggunakan dua tugas yaitu \textit{Masked LM} dan \textit{Next Sentence Prediction} (NSP). \textit{Masked LM} melakukan \textit{masking} pada sebagian token dan akan diprediksi oleh model BERT. Sedangkan, untuk NSP, model BERT akan menentukan mana kalimat berikutnya dari kalimat sebelumnya.
 
-Model ini dikembangkan dengan dua konfigurasi, yaitu BASE dan LARGE. BERT dengan konfigurasi BASE memiliki 12 \textit{layer encoder} yang mempunyai 768 \textit{hidden layer} pada FFNN dan 12 \textit{attention heads}. Sedangkan, untuk konfigurasi BERT LARGE memiliki 24 \textit{layer encoder} yang mempunyai 1024 \textit{hidden layer} pada FFNN dan 16 \textit{attention heads}.
+Terdapat versi bahasa Indonesia yaitu IndoBERT. IndoBERT merupakan model transformers yang mirip dengan BERT, namun dilatih dengan bahasa Indonesia \parencite{indolem}. IndoBERT mempunyai konfigurasi yang sama dengan konfigurasi BERT, yaitu 12 \textit{layer} yang masing-masing mempunyai 768 \textit{hidden layer}, 12 \textit{attention head}, dan 3072 \textit{hidden layer} pada \textit{feed-forward layer}. IndoBERT dilatih dengan total 220 juta kata, yang didapatkan dari tiga sumber utama, yaitu Wikipedia Indonesia, sumber berita (Kompas, Tempo, dan Liputan6), dan Indonseian Web Corpus \parencite{indolem}. IndoBERT merupakan \textit{state-of-the-art} pada kakas evaluasi IndoLEM.
 
-\subsection{IndoBERT}
-\label{sec:indobet}
+\subsection{\textit{Text-to-Text Transfer Transformers} (T5)}
 
-Meskipun terdapat lebih dari 200 juta pengguna bahasa Indonesia, bahasa tersebut kurang terwakili di NLP \parencite{indolem}. Sehingga, IndoBERT muncul untuk memperbaiki situasi ini. IndoBERT adalah adaptasi dari model BERT yang khusus dilatih untuk bahasa Indonesia. Mengingat keunikan dan kompleksitas bahasa Indonesia, memiliki model yang khusus dilatih untuk bahasa ini sangat penting untuk memastikan kinerja yang optimal pada tugas-tugas NLP yang berfokus pada bahasa Indonesia \parencite{indolem}.
-
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=0.8\textwidth]{chapter-2/indobert_dataset.png}
-    \caption{\textit{Dataset} pada IndoBERT \parencite{indolem}}
-    \label{fig:indobert_dataset}
-\end{figure}
-
-IndoBERT berbasis pada \textit{pre-trained model} BERT yang dilatih secara khusus pada \textit{dataset} berbahasa Indonesia, seperti yang bisa dilihat pada Gambar \ref{fig:indobert_dataset}. Tugas NLP yang dilatih pada IndoBERT dibagi menjadi tiga, yaitu \textit{sequence labelling}, \textit{semantic}, dan \textit{coherency}. Untuk \textit{sequence labelling} terdapat tiga tugas, yaitu \textit{part-of-speech} (POS) \textit{tagging}, \textit{named entity recognition} (NER), dan \textit{dependency parsing}. Lalu, untuk \textit{semantic} terdapat dua tugas, yaitu \textit{sentiment analysis} dan \textit{summarization}. Terakhir, untuk \textit{coherency} terdapat dua tugas, yaitu \textit{next tweet prediction} dan \textit{tweet ordering}.
+\textit{Text-to-Text Transfer Transformers} atau biasa disebut sebagai T5 merupakan model \textit{encoder decoder} berbasis transformers. Model ini menggunakan pendekatan \textit{text-to-text} seperti namanya, yang berarti menganggap setiap pemrosesan teks sebagai masukan dan mengeluarkannya sebagai teks juga \parencite{T5}. Dengan pendekatan ini, model T5 dapat digunakan secara langsung pada setiap tugas NLP.
 
 \begin{figure}[ht]
+    \vspace{0.25cm}
     \centering
-    \includegraphics[width=0.8\textwidth]{chapter-2/indobert_pos.png}
-    \includegraphics[width=0.8\textwidth]{chapter-2/indobert_dependency_parsing.png}
-    \includegraphics[width=0.8\textwidth]{chapter-2/indobert_semantic.png}
-    \caption{Hasil Evaluasi IndoBERT \parencite{indolem}}
-    \label{fig:indobert_evaluation}
+    \includegraphics[width=\textwidth]{chapter-2/T5.jpg}
+    \caption{\textit{Framework} dari T5 \parencite{T5}}
+    \label{fig:T5}
 \end{figure}
 
-Untuk melakukan evaluasi terhadap model, dilakukan perbandingan dengan model lain. Pada penelitian ini, digunakan \textit{multilingual} BERT (mBERT) dan MalayBERT yang di-\textit{fine-tune} dengan bahasa Indonesia sebagai pembanding \parencite{indolem}. Hasilnya, IndoBERT kebanyakan unggul di setiap tugas. Selain dari tugas \textit{part-of-speech} (POS) \textit{tagging} dan \textit{next-tweet prediction} masih bisa dilakukan peningkatan \parencite{indolem}. Hasil evaluasi secara detail dapat dilihat pada Gambar \ref{fig:indobert_evaluation}.
+Pada gambar \ref{fig:T5} merupakan \textit{framework} dari model T5, setiap tugas pada T5, termasuk \textit{translation, question answering}, dan \textit{classification}, semuanya akan dianggap sebagai masukin teks dan dilatih untuk menghasilkan suatu teks lagi. T5 dilatih pada dataset \textit{Colossal Cleaned Crawled Corpus} (C4) yang merupakan koleksi dari web publik Common Crawl yang telah dibersihkan.
+
+\begin{figure}[ht]
+    \vspace{0.25cm}
+    \centering
+    \includegraphics[width=\textwidth]{chapter-2/unsupervised_objective.png}
+    \caption{\textit{Unsupervised objectives} dari T5 \parencite{T5}}
+    \label{fig:unsupervised-T5}
+\end{figure}
+
+Model T5 didesain agar bagian \textit{encoder} dan \textit{decoder}-nya mirip dengan konfigurasi dari BERT \parencite{T5}. Kedua bagian tersebut terdiri dari 12 \textit{layer} yang mempunyai \textit{hidden layer, attention head}, serta \textit{feed-forward}. Mirip dengan BERT, model T5 dilatih (\textit{pre-train} dengan menggunakan \textit{unsupervised objectives} yang \ref{fig:unsupervised-T5} mirip dengan MLM pada BERT. Beberapa kata yang dihilangkan secara konsekutif akan dianggap sebagai satu \textit{sentinel} token yang nantinya akan diprediksi sebagai target oleh T5.
+
+Terdapat versi bahasa Indonesia dari T5, yaitu IndoT5. IndoT5 dilatih secara spesifik untuk bahasa Indonesia dengan menggunakan \textit{framework} pelatihan nanoT5 \parencite{indoT5}. \textit{Dataset} yang digunakan berasalah dari CulturaX yang mengadung 23 juta dokumen berbahasa Indonesia. Model InodT5 menjadi \textit{state-of-the-art} pada tugas \textit{summarization} pada kakas evaluasi IndoLEM.
