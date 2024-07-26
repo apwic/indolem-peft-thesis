@@ -23,7 +23,26 @@ Arsitektur \textit{bottleneck} dari modul \textit{adapter} diajukan untuk membat
 
 Parameter yang digunakan dibatasi dengan menggunakan $reduction\_factor$ \parencite{adapterhub}. Nilai dari $reduction\_factor$ tersebut didapat dari rasio antara dimensi asli dengan dimensi yang lebih kecil bisa dilihat pada rumus \ref{eq:reduction_factor} \parencite{adapterhub}. Nilai $d_{hidden}$ merupakan nilai dari dimensi asli $d$. Sedangkan, nilai $d_{bottleneck}$ merupakan dimensi dari \textit{bottleneck} yang lebih kecil dari dimensi aslinya.
 
-Penggunaan \textit{adapter} tidak hanya dengan menambahkannya pada setiap \textit{sub-layer Transformer}. Terdapat beberapa konfigurasi yang bisa digunakan. Salah satunya adalah seperti pada gambar \ref{fig:adapters_houlsby_arch} oleh \parencite{adapter_houlsby} dengan menambahkan modul \textit{adapter} pada kedua \textit{sub-layer} (\textit{multi-head attention} dan \textit{feed-forward}). \parencite{adapter_pfeiffer} menggunakan \textit{adapter} hanya pada \textit{sub-layer feed-forward}. Sedangkan, \citeauthor{uvpl} menggunakan \textit{adapter} secara paralel pada \textit{layer transformer}.
+Penggunaan \textit{adapter} tidak hanya dengan menambahkannya pada setiap \textit{sub-layer Transformer}. Terdapat beberapa konfigurasi yang bisa digunakan. Salah satunya adalah seperti pada gambar \ref{fig:adapters_houlsby_arch} oleh \parencite{adapter_houlsby} dengan menambahkan modul \textit{adapter} pada kedua \textit{sub-layer} (\textit{multi-head attention} dan \textit{feed-forward}). \citeauthor{adapter_pfeiffer} menggunakan \textit{adapter} hanya pada \textit{sub-layer feed-forward}. Sedangkan, \citeauthor{uvpl} menggunakan \textit{adapter} secara paralel pada \textit{layer transformer}.
+
+\begin{table}[h]
+    \vspace{0.25cm}
+    \centering
+    \caption{Hasil \textit{Adapter} konfigurasi \citeauthor{adapter_houlsby} pada GLUE \parencite{adapter_houlsby}}
+    \label{table:adapter_houlsby_result}
+    \resizebox{\textwidth}{!}{%
+    \begin{tabular}{l|p{2cm}|p{2cm}|ccccccccc|c}
+        \hline \hline
+        & Total num params & Trained params / task & CoLA & SST & MRPC & STS-B & QQP & MNLI$_m$ & MNLI$_{mm}$ & QNLI & RTE & Total \\
+        \hline
+        BERT$_{LARGE}$ & $9.0\times$ & $100\%$ & $60.5$ & $94.9$ & $89.3$ & $87.6$ & $72.1$ & $86.7$ & $85.9$ & $91.1$ & $70.1$ & $80.4$ \\
+        Adapters (8-256) & $1.3\times$ & $3.6\%$ & $59.5$ & $94.0$ & $89.5$ & $86.9$ & $71.8$ & $84.9$ & $85.1$ & $90.7$ & $71.5$ & $80.0$ \\
+        Adapters (64) & $1.2\times$ & $2.1\%$ & $56.9$ & $94.2$ & $89.6$ & $87.3$ & $71.8$ & $85.3$ & $84.6$ & $91.4$ & $68.8$ & $79.6$ \\
+        \hline \hline
+    \end{tabular}}
+\end{table}
+
+Tabel \ref{table:adapter_houlsby_result} menunjukkan hasil evaluasi dari \textit{Adapter} dengan \textit{baseline} yang menggunakan \textit{fine-tuning} pada kakas evaluasi GLUE. \textit{Adapter} berhasil mendapatkan hasil rata-rata dengan nilai $80.0$, dibandingkan dengan \textit{fine-tuning} yang mendapatkan nilai $80.4$. Selain itu, untuk ukuran dari \textit{adapter} yang tetap yaitu dengan ukuran 64, mendapatkan hasil dengan nilai $79.6$. \textit{Adapter} mampu menyaingi kinerja \textit{fine-tuning} dengan hanya menggunakan $3.6\%$ parameter.
 
 \subsection{\textit{Low Rank Adaptation} (LoRA)}
 
