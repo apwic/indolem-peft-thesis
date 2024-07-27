@@ -44,6 +44,47 @@ Penggunaan \textit{adapter} tidak hanya dengan menambahkannya pada setiap \texti
 
 Tabel \ref{table:adapter_houlsby_result} menunjukkan hasil evaluasi dari \textit{Adapter} dengan \textit{baseline} yang menggunakan \textit{fine-tuning} pada kakas evaluasi GLUE. \textit{Adapter} berhasil mendapatkan hasil rata-rata dengan nilai $80.0$, dibandingkan dengan \textit{fine-tuning} yang mendapatkan nilai $80.4$. Selain itu, untuk ukuran dari \textit{adapter} yang tetap yaitu dengan ukuran 64, mendapatkan hasil dengan nilai $79.6$. \textit{Adapter} mampu menyaingi kinerja \textit{fine-tuning} dengan hanya menggunakan $3.6\%$ parameter.
 
+\subsection{\textit{Prefix-Tuning}}
+
+\textit{Prefix-Tuning} merupakan salah satu metode PEFT yang menjadi alternatif dari metode \textit{fine-tuning} yang menggunakan vektor kontinu (disebut dengan \textit{prefix}) \parencite{prefix_tuning}. Metode ini mengambil inspirasi dari \textit{prompting}, memperbolehkan token-token berikutnya untuk memerhatikan \textit{prefix} tersebut seolah-seolah \textit{prefix} tersebut adalah \textit{virtual token} \parencite{prompt_tuning}. Mirip dengan \textit{Adapter}, \textit{prefix-tuning} hanya perlu menyimpan sedikit parameter tambahan untuk suatu tugas dengan melakukan \textit{freeze} pada parameter asli model dan hanya mengubah parameter dari \textit{prefix} tersebut.
+
+\begin{figure}[h]
+    \vspace{0.25cm}
+    \centering
+    \includegraphics[width=\textwidth]{chapter-2/prefix_tuning_example.png}
+    \caption{Contoh \textit{Prefix-Tuning} pada model \textit{encoder decoder} \parencite{prefix_tuning}}
+    \label{fig:prefix_tuning_example}
+\end{figure}
+
+Dengan intuisi yang didapatkan dari penggunaan \textit{prompting}, penambahan konteks dapat mengarahkan model tanpa mengubah parameter \parencite{prefix_tuning}. \textit{Prefix-Tuning} menambahkan \textit{prefix} pada kedua \textit{encoder} dan \textit{decoder} untuk mendapatkan $z = [PREFIX;x;PREFIX';y]$ seperti yang bisa dilihat pada gambar \ref{fig:prefix_tuning_example}. $P_{idx}$ merupakan indeks dari \textit{prefix} tersebut. Matriks yang bisa dilatih, diinisialisasi sebagai matriks $P_\theta$ dengan $\theta$ sebagai parameternya. Dimensi dari matriks $P_\theta$ adalah panjang dari $P_{idx}$ dikalikan dengan besar dimensi \textit{activation layer}-nya yaitu $h$. Secara langsung melakukan optimisasi terhadap $P_\theta$ itu tidak stabil dan menghasilkan penurunan terhadap kinerja \parencite{prefix_tuning}. Sehingga, matriks $P_\theta$ diperamaterisasi sebagai $P_\theta = MLP_\theta(P'_\theta)$ dengan matriks dimensi lebih kecil ($P'_\theta$) dimasukkan ke dalam \textit{feed forward} ($MLP_\theta$).
+
+\begin{figure}[h]
+    \vspace{0.25cm}
+    \centering
+    \includegraphics[height=0.4\textwidth]{chapter-2/prefix_tuning_arch.png}
+    \caption{Arsitektur \textit{Prefix-Tuning} \parencite{prefix_tuning}}
+    \label{fig:prefix_tuning_arch}
+\end{figure}
+
+Pada gambar \ref{fig:prefix_tuning_arch} ditunjukkan arsitektur dari \textit{Prefix-Tuning} dengan menambahkan \textit{prefix} pada \textit{multi-headattention layer}. \textit{Prefix} ditambahkan pada bagian \textit{key} dan \textit{value} pada \textit{attention head}, menjadi $P^K$ dan $P^V$. Sehingga, rumus \ref{eq:attention} akan menggunakan $[P^K, K]$ dan $[P^V, V]$ menjadi $Attention(Q, [P^K, K], [P^V, V])$ \parencite{adapterhub}. Selain itu, panjang dari \textit{prefix} dapat divariasikan berdasarkan pada nilai \textit{prefix length}-nya.
+
+\begin{table}[h]
+    \vspace{0.25cm}
+    \centering
+    \caption{Hasil \textit{Prefix-Tuning} pada tugas \textit{summarization} XSUM \parencite{prefix_tuning}}
+    \label{table:prefix_tuning_result}
+    \begin{tabular}{lccc}
+        \hline
+        & R-1 & R-2 & R-L \\ \hline
+        FINE-TUNE & $45.14$ & $22.27$ & $37.25$ \\
+        PREFIX($2\%$) & $43.80$ & $20.93$ & $36.05$ \\
+        PREFIX($0.1\%$) & $42.92$ & $20.03$ & $35.05$ \\
+        \hline
+    \end{tabular}
+\end{table}
+
+Pada penelitian yang dilakukan oleh \citeauthor{prefix_tuning}, terdapat dua tugas yang dievaluasi yaitu \textit{table-to-text generation} dan \textit{summarization}. Seperti yang bisa dilihat pada tabel \ref{table:prefix_tuning_result}, dengan hanya $2\%$ parameter dibanding parameter aslinya, \textit{Prefix-Tuning} berhasil mendapatkan kinerja yang sedikit lebih buruk dibanding \textit{fine-tuning} ($36.05$ dibanding $37.25$ pada R-L) \parencite{prefix_tuning}. Hasil ini sedikit berbeda dibanding pada tugas \textit{table-to-text generation} yang mendapatkan hasil yang menyaingi \textit{fine-tuning}. Perbedaan antara kedua tugas tersebut adalah bahwa masukan dari artikel pada XSUM lebih banyak sekitar 17 kali dibanding pada \textit{dataset table-to-text}, serta tugas \textit{summarization} lebih kompleks dibanding \textit{table-to-text generation} karena perlu pemahaman terhadap tulisandan mengidentifikasi topik penting dari sebuah artikel \parencite{prefix_tuning}.
+
 \subsection{\textit{Low Rank Adaptation} (LoRA)}
 
 Konsep dasar di balik LoRA adalah ide bahwa adaptasi model untuk tugas baru tidak selalu memerlukan perubahan besar pada seluruh parameter model. Sebaliknya, perubahan kecil pada representasi tertentu dapat menghasilkan peningkatan kinerja yang signifikan. Dengan fokus pada \textit{low rank adaptation}, LoRA mengubah hanya sebagian kecil dari bobot model, sementara sebagian besar bobot lainnya tetap tidak berubah. Ini berarti bahwa hanya "sebagian" dari informasi dalam model yang diperbarui, yang mengarah pada efisiensi komputasi yang meningkat \parencite{lora}.
@@ -59,20 +100,4 @@ Konsep dasar di balik LoRA adalah ide bahwa adaptasi model untuk tugas baru tida
 Salah satu kelebihan utama dari pendekatan ini adalah kemampuannya untuk mengurangi \textit{overhead} komputasi. Dalam praktiknya, ini berarti waktu \textit{training} dan sumber daya yang diperlukan untuk adaptasi model menjadi jauh lebih sedikit dibandingkan dengan metode lain yang mungkin melibatkan \textit{training} ulang model dari awal atau menambahkan sejumlah besar parameter tambahan. Arsitektur dari LoRA dapat dilihat pada Gambar \ref{fig:lora}.
 
 Pendekatan LoRA menjadi sangat relevan, terutama saat berhadapan dengan model-model berukuran besar. Model-model seperti ini memiliki jumlah parameter yang sangat besar, sehingga \textit{training} ulang atau menambahkan parameter tambahan bisa menjadi sangat mahal dari segi komputasi. Dengan LoRA, adaptasi model-model besar menjadi lebih praktis dan dapat dilakukan dengan efisiensi yang jauh lebih tinggi, tanpa mengorbankan kinerja. Dengan demikian, LoRA menawarkan pendekatan yang menjanjikan untuk mengadaptasi \textit{pre-trained model} dengan cara yang lebih efisien.
-
-\subsection{\textit{Prefix-Tuning}}
-
-\textit{Prefix-Tuning} adalah teknik yang diperkenalkan untuk mengoptimalkan \textit{prompt} kontinu dalam generasi teks. Berbeda dengan pendekatan  yang melibatkan \textit{training} ulang seluruh model atau menambahkan parameter tambahan, \textit{Prefix-Tuning} fokus pada pengoptimalan sejumlah kecil parameter yang didefinisikan sebagai "prefix" dari sekuens input \parencite{prefix_tuning} Dengan kata lain, dibanding mengubah seluruh model, hanya \textit{prefix-tuning} dari input yang dioptimalkan untuk meningkatkan kinerja generasi dengan arsitekturnya dapat dilihat pada Gambar \ref{fig:prefix-tuning}.
-
-\begin{figure}[h]
-    \vspace{0.25cm}
-    \centering
-    \includegraphics[width=0.8\textwidth]{chapter-2/prefix-tuning.png}
-    \caption{Arsitektur \textit{Prefix-Tuning} \parencite{prefix_tuning}}
-    \label{fig:prefix-tuning}
-\end{figure}
-
-Keuntungan utama dari pendekatan ini adalah efisiensi. Dengan mengoptimalkan hanya sebagian kecil dari parameter, \textit{Prefix-Tuning} dapat mencapai peningkatan kinerja dengan \textit{overhead} komputasi yang jauh lebih rendah dibandingkan dengan teknik \textit{fine-tuning} . Selain itu, dengan fokus pada \textit{prefix}, teknik ini memungkinkan adaptasi yang lebih spesifik terhadap tugas atau domain tertentu, memberikan fleksibilitas lebih dalam aplikasi praktis.
-
-Teknik ini dapat digunakan untuk meningkatkan kinerja model generatif di berbagai tugas, termasuk penerjemahan mesin, peringkasan teks, dan lainnya. Hasil eksperimen menunjukkan bahwa \textit{Prefix-Tuning} mampu mencapai kinerja yang sebanding atau bahkan lebih baik dibandingkan dengan metode \textit{fine-tuning} , tetapi dengan biaya komputasi yang jauh lebih rendah.
 
