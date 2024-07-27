@@ -89,29 +89,6 @@ Praproses \textit{dataset} diperlukan agar model dapat memproses \textit{dataset
 
 Tugas evaluasi NER merupakan jenis tugas \textit{classification} pada level token yang berarti setiap token  diklasifikasikan dengan label tertentu. Pada kakas IndoLEM, untuk tugas evaluasi NER terdapat dua jenis \textit{dataset}, yaitu NERUI dan NERUGM. Kedua \textit{dataset} tersebut mempunyai label yang berbeda berikut merupakan label pada setiap \textit{dataset}-nya dapat dilihat pada tabel \ref{table:label-ner}.
 
-\begin{table}[h]
-    \vspace{0.25cm}
-    \caption{Label \textit{dataset} NER}
-    \label{table:label-ner}
-    \begin{center}
-        \begin{tabular}{|l|l|}
-            \hline \rowcolor{black!10}
-            \multicolumn{1}{|c|}{\textbf{NERUI}} & \multicolumn{1}{|c|}{\textbf{NERUI}} \\ \hline
-            B-LOCATION & B-LOCATION \\ \hline
-            B-ORGANIZATION & B-ORGANIZATION \\ \hline
-            B-PERSON & B-PERSON \\ \hline
-            - & B-QUANTITY \\ \hline
-            - & B-TIME \\ \hline
-            I-LOCATION & I-LOCATION \\ \hline
-            I-ORGANIZATION & I-ORGANIZATION \\ \hline
-            I-PERSON & I-PERSON \\ \hline
-            - & I-QUANTITY \\ \hline
-            - & I-TIME \\ \hline
-            O & O \\ \hline
-        \end{tabular}
-    \end{center}
-\end{table}
-
 Label tersebut diperlukan untuk melakukan \textit{mapping} antara id dengan labelnya yang  digunakan pada konfigurasi model. \textit{Padding} juga dilakukan berdasarkan panjang sekuens maksimum yang didefinisikan melaluai argumen \textit{data training}. Selanjutnya, tokenisasi  dilakukan terhadap \textit{dataset} tersebut. Implementasi dari fungsi tokenisasi tersebut dapat dilihat pada tabel \ref{table:tokenisasi-ner}.
 
 \begin{table}[h]
