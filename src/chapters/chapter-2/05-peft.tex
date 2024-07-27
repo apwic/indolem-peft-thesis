@@ -46,7 +46,7 @@ Tabel \ref{table:adapter_houlsby_result} menunjukkan hasil evaluasi dari \textit
 
 \subsection{\textit{Prefix-Tuning}}
 
-\textit{Prefix-Tuning} merupakan salah satu metode PEFT yang menjadi alternatif dari metode \textit{fine-tuning} yang menggunakan vektor kontinu (disebut dengan \textit{prefix}) \parencite{prefix_tuning}. Metode ini mengambil inspirasi dari \textit{prompting}, memperbolehkan token-token berikutnya untuk memerhatikan \textit{prefix} tersebut seolah-seolah \textit{prefix} tersebut adalah \textit{virtual token} \parencite{prompt_tuning}. Mirip dengan \textit{Adapter}, \textit{prefix-tuning} hanya perlu menyimpan sedikit parameter tambahan untuk suatu tugas dengan melakukan \textit{freeze} pada parameter asli model dan hanya mengubah parameter dari \textit{prefix} tersebut.
+\textit{Prefix-Tuning} merupakan salah satu metode PEFT yang menjadi alternatif dari metode \textit{fine-tuning} yang menggunakan vektor kontinu (disebut dengan \textit{prefix}) \parencite{prefix_tuning}. Metode ini mengambil inspirasi dari \textit{prompting}, memperbolehkan token-token berikutnya untuk memerhatikan \textit{prefix} tersebut seolah-seolah \textit{prefix} tersebut adalah \textit{virtual token} \parencite{prefix_tuning}. Mirip dengan \textit{Adapter}, \textit{prefix-tuning} hanya perlu menyimpan sedikit parameter tambahan untuk suatu tugas dengan melakukan \textit{freeze} pada parameter asli model dan hanya mengubah parameter dari \textit{prefix} tersebut.
 
 \begin{figure}[h]
     \vspace{0.25cm}
@@ -98,7 +98,14 @@ Pada penelitian yang dilakukan oleh \citeauthor{prefix_tuning}, terdapat dua tug
     \label{fig:lora_arch}
 \end{figure}
 
-LoRA menggunakan pendekatan bahwa parameter dari model yang dilatih sebenarnya berada pada dimensi instrinsik yang rendah dan masih dapat belajar secara efisien pada dimensi yang lebih rendah tersebut \parencite{lora}. Untuk matriks beban $W_0$ dari sebuah \textit{pre-trained model} dengan dimensi $d\times{k}$, dekomposisi dengan \textit{rank} $r$ (\textit{low-rank decomposition}) dapat direpresentasikan sebagai $W_0 + \Delta{W} = W_0 + BA$, dengan dimensi $B$ adalah $d\times{r}$ dan dimensi $A$ adalah $r\times{k}$, dan \textit{rank} $r << min(d,k)$ \parencite{lora}. Bisa dilihat pada gambar \ref{fig:lora_arch}, LoRA menggunakan matriks dengan rank yang lebih rendah pada matriks $A$ dan matriks $B$. Matriks $A$ diinisialisasi dengan gaussian, sedangkan matriks $B$ diinisialisasi dengan 0. Sehingga, pada awal pelatihan nilai dari $\Delta{W}=BA$ adalah 0. Ketika proses pelatihan, matriks beban $W_0$ dilakukan \textit{freeze}, sedangkan mariks $B$ dan $A$ adalah parameter yang dilatih \parencite{lora}.
+LoRA menggunakan pendekatan bahwa parameter dari model yang dilatih sebenarnya berada pada dimensi instrinsik yang rendah dan masih dapat belajar secara efisien pada dimensi yang lebih rendah tersebut \parencite{lora}. Untuk matriks beban $W_0$ dari sebuah \textit{pre-trained model} dengan dimensi $d\times{k}$, dekomposisi dengan \textit{rank} $r$ (\textit{low-rank decomposition}) dapat direpresentasikan sebagai $W_0 + \Delta{W} = W_0 + BA$, dengan dimensi $B$ adalah $d\times{r}$ dan dimensi $A$ adalah $r\times{k}$, dan \textit{rank} $r << min(d,k)$ \parencite{lora}. Nilai dari $\Delta(W)$ disesuaikan dengan $\frac{\alpha}{r}$, dengan nilai $\alpha$ adalah konstanta \parencite{lora}. Sehingga, rumus untuk melakukan perhitungan pada \textit{hidden layer} dapat dilihat pada rumus \ref{eq:lora-pass}.
+
+\begin{equation}
+    h = W_{0}x + \frac{\alpha}{r}\Delta{W_x} = W_{0}x + \frac{\alpha}{r}BAx
+    \label{eq:lora-pass}
+\end{equation}
+
+Bisa dilihat pada gambar \ref{fig:lora_arch}, LoRA menggunakan matriks dengan rank yang lebih rendah pada matriks $A$ dan matriks $B$. Matriks $A$ diinisialisasi dengan gaussian, sedangkan matriks $B$ diinisialisasi dengan 0. Sehingga, pada awal pelatihan nilai dari $\Delta{W}=BA$ adalah 0. Ketika proses pelatihan, matriks beban $W_0$ dilakukan \textit{freeze}, sedangkan mariks $B$ dan $A$ adalah parameter yang dilatih \parencite{lora}.
 
 \begin{table}[ht]
     \vspace{0.25cm}
@@ -125,3 +132,46 @@ LoRA menggunakan pendekatan bahwa parameter dari model yang dilatih sebenarnya b
 \end{table}
 
 Hasil evaluasi LoRA pada beberapa tugas evaluasi dapat dilihat pada tabel \ref{table:lora_result}. LoRA mampu menyaingi atau bahkan melampaui kinerja \textit{fine-tuning} pada ketiga tugas evaluasi tersebut. Selain itu, dari dibandingkan metode PEFT yang lain, LoRA menghasilkan skalabilitas dan kinerja yang lebih baik \parencite{lora}.
+
+\subsection{UniPELT}
+
+Setiap metode PEFT yang yang telah dijelaskan pada subbab-subbab sebelumnya mempunyai karakteristik yang beragama dan memiliki kinerja yang cukup berbeda pada tugas yang sama \parencite{unipelt}. Sehingga, pemilihan metode PEFT yang paling tepat untuk tugas tertentu menjadi tugas yang cukup sulit, terutama dengan jumlah metode PEFT yang terus bertambah \parencite{unipelt}. UniPELT hadir sebagai \textit{framework} yang menyatukan beberapa metode PEFT sebagai submodul dan mencoba belajar untuk menggunakan metode PEFT yang terbaik pada suatu tugas \parencite{unipelt}.
+
+UniPELT menggunakan empat metode yang cukup merepresentasikan banyakanya metode PEFT, yaitu \textit{Adapter}, \textit{Prefix-Tuning}, LoRA, dan BitFit \parencite{unipelt}. Semua metode tersebut sudah dibahas pada subbab sebelumnya, kecuali BitFit. BitFit merupakan metode PEFT yang hanya melakukan pelatihan pada bias dari modelnya saja \parencite{unipelt}. Berdasarkan eksperimen yang dilakukan oleh \citeauthor{unipelt}, BitFit tidak pernah mendapatkan hasil yang terbaik dan secara umum mendapatkan hasil yang terburuk, sehingga BitFit tidak dimasukkan ke dalam metode gabungan dari UniPELT dan hanya digunakan sebagai pembanding pada eksperimen \parencite{unipelt}.
+
+\begin{figure}[h]
+    \vspace{0.25cm}
+    \centering
+    \includegraphics[height=0.4\textheight]{chapter-2/unipelt_arch.png}
+    \caption{Arsitektur UniPELT \parencite{unipelt}}
+    \label{fig:unipelt_arch}
+\end{figure}
+
+Setiap metode PEFT menggunakan bagian yang berbeda pada arsitektur model, sebagai contoh sebelum \textit{multi-head attention} untuk \textit{Prefix-Tuning} dan setelah \textit{feed-forward} untuk \textit{Adapter} \parencite{unipelt}. Sehingga, memungkinkan untuk menggabungkan beberapa metode PEFT tersebut tanpa mengganggu antara satu metode dengan yang lain \parencite{unipelt}. Arsitektur dari gabungan metode PEFT tersebut dapat dilihat pada gambar \ref{fig:unipelt_arch}. Selain menggabungkan, terdapat \textit{gating mechanism} yang akan melakukan aktivasi atau deaktivasi tergantung dari signifikasi kinerja setiap metode PEFT pada tugas yang sedang dilatih \parencite{unipelt}.
+
+\citeauthor{unipelt} melakukan eksperimen dengan \textit{low-resource} dan \textit{high-resource} pada evaluasi GLUE dengan menggunakan model BERT \parencite{unipelt}. Metode UniPELT divariasikan menjadi dua yaitu UniPELT (AP) dan UniPEL (APL), dengan A berarti \textit{Adapter}, P berarti \textit{Prefix-Tuning}, dan \textit{L} berarti LoRA. Secara umum, UniPELT (AP) dan UniPELT (APL) secara konsisten mendapatkan hasil yang terbaik atau kedua terbaik pada rata-rata evaluasi GLUE untuk semua eksperimen \textit{low-resource} \parencite{unipelt}. Kinerja UniPELT lebih baik dibanding dengan masing-masing submodulnya upada eksperimen \textit{low-resource}, yang menunjukkan bahwa UniPELT menghasilkan kinerja yang baik untuk eksperimen tersebut \parencite{unipelt}.
+
+\begin{table}[ht]
+    \vspace{0.25cm}
+    \centering
+    \caption{Hasil evaluasi UniPELT pada \textit{high-resource} \parencite{unipelt}}
+    \label{table:unipelt_result}
+    \resizebox{\textwidth}{!}{
+        \begin{tabular}{l|ccccccccccc}
+            \toprule
+            Method & SST-2 & MRPC & CoLA & RTE & QNLI & STS-B & MNLI & QQP & Avg. \\
+            \midrule
+            Fine-tuning & 91.63 & 90.94 & 62.08 & 66.43 & 89.95 & \textbf{89.76} & 83.23 & \textbf{87.35} & 82.67 \\
+            Adapter & \textbf{91.86} & 89.86 & 61.51 & 71.84 & 90.55 & 88.63 & 83.14 & 86.78 & 83.02 \\
+            Prefix-tuning & 90.94 & \textbf{91.29} & 55.37 & \textbf{76.90} & 90.39 & 87.19 & 81.83 & 82.30 & 82.07 \\
+            LoRA & 91.51 & 90.03 & 60.47 & 71.48 & 90.73 & 85.65 & 85.61 & 85.98 & 82.20 \\
+            \midrule
+            UNIPELT (AP) & \textbf{91.86} & 90.28 & 61.51 & 71.84 & \textbf{90.77} & \textbf{88.76} & 83.12 & 86.78 & 83.02 \\
+            -NoGate & 91.74 & 90.18 & 58.63 & 71.12 & 90.38 & 88.76 & 81.54 & 85.83 & 82.23 \\
+            UNIPELT (APL) & 91.51 & 90.94 & 61.53 & 73.65 & 90.50 & 88.93 & \textbf{83.89} & 87.12 & \textbf{83.50} \\
+            \bottomrule
+        \end{tabular}
+    }
+\end{table}
+
+Pada tabel \ref{table:unipelt_result} merupakan hasil evaluasi dari UniPELT pada \textit{high-resource}, UniPELT mendapatkan hasil yang terbaik secara umum. Peningkatan yang didapatkan tidak terlalu signifikan dibandingkan dengan eksperimen pada \textit{low-resource}, hal ini sesuai karena metode PEFT mampu menyaingi \textit{fine-tuning} pada \textit{dataset} yang banyak \parencite{unipelt}. Hasil UniPELT tanpa dilakukan \textit{gating mechanism} (-NoGate) tidak menghasilkan kinerja yang baik \parencite{unipelt}. Walaupun dengan kinerja yang baik, \citeauthor{unipelt} menyebutkan bahwa penggunaan UniPELT tidak akan selalu menghasilkan hasil yang lebih baik dibandingkan dengan penggunaan submodulnya secara individual, bahkan bisa memberikan hasil yang lebih buruk \parencite{unipelt}.
