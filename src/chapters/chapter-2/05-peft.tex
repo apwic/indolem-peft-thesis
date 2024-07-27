@@ -28,17 +28,17 @@ Penggunaan \textit{adapter} tidak hanya dengan menambahkannya pada setiap \texti
 \begin{table}[h]
     \vspace{0.25cm}
     \centering
-    \caption{Hasil \textit{Adapter} konfigurasi \citeauthor{adapter_houlsby} pada GLUE \parencite{adapter_houlsby}}
+    \caption{Hasil evaluasi \textit{Adapter} konfigurasi \citeauthor{adapter_houlsby} pada GLUE \parencite{adapter_houlsby}}
     \label{table:adapter_houlsby_result}
-    \resizebox{\textwidth}{!}{%
+    \resizebox{\textwidth}{!}{
     \begin{tabular}{l|p{2cm}|p{2cm}|ccccccccc|c}
-        \hline \hline
+        \toprule
         & Total num params & Trained params / task & CoLA & SST & MRPC & STS-B & QQP & MNLI$_m$ & MNLI$_{mm}$ & QNLI & RTE & Total \\
-        \hline
+        \midrule
         BERT$_{LARGE}$ & $9.0\times$ & $100\%$ & $60.5$ & $94.9$ & $89.3$ & $87.6$ & $72.1$ & $86.7$ & $85.9$ & $91.1$ & $70.1$ & $80.4$ \\
         Adapters (8-256) & $1.3\times$ & $3.6\%$ & $59.5$ & $94.0$ & $89.5$ & $86.9$ & $71.8$ & $84.9$ & $85.1$ & $90.7$ & $71.5$ & $80.0$ \\
         Adapters (64) & $1.2\times$ & $2.1\%$ & $56.9$ & $94.2$ & $89.6$ & $87.3$ & $71.8$ & $85.3$ & $84.6$ & $91.4$ & $68.8$ & $79.6$ \\
-        \hline \hline
+        \bottomrule
     \end{tabular}}
 \end{table}
 
@@ -71,15 +71,16 @@ Pada gambar \ref{fig:prefix_tuning_arch} ditunjukkan arsitektur dari \textit{Pre
 \begin{table}[h]
     \vspace{0.25cm}
     \centering
-    \caption{Hasil \textit{Prefix-Tuning} pada tugas \textit{summarization} XSUM \parencite{prefix_tuning}}
+    \caption{Hasil evaluasi \textit{Prefix-Tuning} pada tugas \textit{summarization} XSUM \parencite{prefix_tuning}}
     \label{table:prefix_tuning_result}
     \begin{tabular}{lccc}
-        \hline
-        & R-1 & R-2 & R-L \\ \hline
+        \toprule
+        Method & R-1 & R-2 & R-L \\
+        \midrule
         FINE-TUNE & $45.14$ & $22.27$ & $37.25$ \\
         PREFIX($2\%$) & $43.80$ & $20.93$ & $36.05$ \\
         PREFIX($0.1\%$) & $42.92$ & $20.03$ & $35.05$ \\
-        \hline
+        \bottomrule
     \end{tabular}
 \end{table}
 
@@ -87,17 +88,40 @@ Pada penelitian yang dilakukan oleh \citeauthor{prefix_tuning}, terdapat dua tug
 
 \subsection{\textit{Low Rank Adaptation} (LoRA)}
 
-Konsep dasar di balik LoRA adalah ide bahwa adaptasi model untuk tugas baru tidak selalu memerlukan perubahan besar pada seluruh parameter model. Sebaliknya, perubahan kecil pada representasi tertentu dapat menghasilkan peningkatan kinerja yang signifikan. Dengan fokus pada \textit{low rank adaptation}, LoRA mengubah hanya sebagian kecil dari bobot model, sementara sebagian besar bobot lainnya tetap tidak berubah. Ini berarti bahwa hanya "sebagian" dari informasi dalam model yang diperbarui, yang mengarah pada efisiensi komputasi yang meningkat \parencite{lora}.
+\textit{Low Rank Adaptation} atau biasa disebut sebagai LoRA merupakan salah satu metode PEFT. Berbeda dengan metode PEFT yang dibahas sebelumnya pada subbab sebelumnya, penambahan \textit{adapter} seperti yang dilakukan oleh \citeauthor{adapter_houlsby} akan menambahkan waktu inferensi \parencite{lora}. Selain itu, melakukan optimisasi pada input dengan menggunakan "\textit{prompt}" seperti yang dilakukan oleh \citeauthor{prefix_tuning} itu sulit untuk dioptimasi dan kinerjanya tidak selalu meningkat \parencite{lora}. Dengan menambahkan panjang dari sekuens masukan akan mengurangi sekuens yang seharusnya bisa digunakan untuk suatu tugas \parencite{lora}. Sehingga, metode tersebut sering kali gagal dalam menyaingi kinerja dari \textit{fine-tuning}, bahkan memerlukan adanya \textit{tradeoff} antara kinerja dengan efisiensi \parencite{lora}.
 
 \begin{figure}[h]
     \vspace{0.25cm}
     \centering
-    \includegraphics[width=0.8\textwidth]{chapter-2/lora.png}
+    \includegraphics[width=0.6\textwidth]{chapter-2/lora.png}
     \caption{Arsitektur LoRA \parencite{lora}}
-    \label{fig:lora}
+    \label{fig:lora_arch}
 \end{figure}
 
-Salah satu kelebihan utama dari pendekatan ini adalah kemampuannya untuk mengurangi \textit{overhead} komputasi. Dalam praktiknya, ini berarti waktu \textit{training} dan sumber daya yang diperlukan untuk adaptasi model menjadi jauh lebih sedikit dibandingkan dengan metode lain yang mungkin melibatkan \textit{training} ulang model dari awal atau menambahkan sejumlah besar parameter tambahan. Arsitektur dari LoRA dapat dilihat pada Gambar \ref{fig:lora}.
+LoRA menggunakan pendekatan bahwa parameter dari model yang dilatih sebenarnya berada pada dimensi instrinsik yang rendah dan masih dapat belajar secara efisien pada dimensi yang lebih rendah tersebut \parencite{lora}. Untuk matriks beban $W_0$ dari sebuah \textit{pre-trained model} dengan dimensi $d\times{k}$, dekomposisi dengan \textit{rank} $r$ (\textit{low-rank decomposition}) dapat direpresentasikan sebagai $W_0 + \Delta{W} = W_0 + BA$, dengan dimensi $B$ adalah $d\times{r}$ dan dimensi $A$ adalah $r\times{k}$, dan \textit{rank} $r << min(d,k)$ \parencite{lora}. Bisa dilihat pada gambar \ref{fig:lora_arch}, LoRA menggunakan matriks dengan rank yang lebih rendah pada matriks $A$ dan matriks $B$. Matriks $A$ diinisialisasi dengan gaussian, sedangkan matriks $B$ diinisialisasi dengan 0. Sehingga, pada awal pelatihan nilai dari $\Delta{W}=BA$ adalah 0. Ketika proses pelatihan, matriks beban $W_0$ dilakukan \textit{freeze}, sedangkan mariks $B$ dan $A$ adalah parameter yang dilatih \parencite{lora}.
 
-Pendekatan LoRA menjadi sangat relevan, terutama saat berhadapan dengan model-model berukuran besar. Model-model seperti ini memiliki jumlah parameter yang sangat besar, sehingga \textit{training} ulang atau menambahkan parameter tambahan bisa menjadi sangat mahal dari segi komputasi. Dengan LoRA, adaptasi model-model besar menjadi lebih praktis dan dapat dilakukan dengan efisiensi yang jauh lebih tinggi, tanpa mengorbankan kinerja. Dengan demikian, LoRA menawarkan pendekatan yang menjanjikan untuk mengadaptasi \textit{pre-trained model} dengan cara yang lebih efisien.
+\begin{table}[ht]
+    \vspace{0.25cm}
+    \centering
+    \caption{Hasil evaluasi LoRA dengan model GPT-3 \parencite{lora}}
+    \label{table:lora_result}
+    \resizebox{ \textwidth }{!}{
+        \begin{tabular}{l|p{2.5cm}|ccccc}
+            \toprule
+            Method & \# Trainable Parameters & WikiSQL & MNLI-m & \multicolumn{3}{c}{SAMSum} \\
+             & & \textbf{Acc. (\%)} & \textbf{Acc. (\%)} & \textbf{R1} & \textbf{R2} & \textbf{RL} \\
+            \midrule
+            FT & 175,255.8M & \textbf{73.8} & 89.5 & 52.0 & 28.0 & 44.5 \\
+            BitFit & 14.2M & 71.3 & 91.0 & 51.3 & 27.4 & 44.5 \\
+            PreEmbed & 3.2M & 63.1 & 88.6 & 48.4 & 24.2 & 40.5 \\
+            PreLayer & 20.2M & 70.1 & 89.5 & 50.8 & 27.3 & 44.5 \\
+            Adapter\textsubscript{H}  & 7.1M & 71.9 & 89.8 & 53.0 & 28.9 & 44.9 \\
+            Adapter\textsubscript{L}  & 40.1M & 73.2 & \textbf{91.5} & 53.2 & 29.0 & 45.1 \\
+            LoRA  & 4.7M & 73.4 & 91.7 & \textbf{53.8} & \textbf{29.8} & \textbf{45.9} \\
+            LoRA  & 37.7M & \textbf{74.0} & 91.6 & 53.4 & 29.2 & 45.1 \\
+            \bottomrule
+        \end{tabular}
+    }
+\end{table}
 
+Hasil evaluasi LoRA pada beberapa tugas evaluasi dapat dilihat pada tabel \ref{table:lora_result}. LoRA mampu menyaingi atau bahkan melampaui kinerja \textit{fine-tuning} pada ketiga tugas evaluasi tersebut. Selain itu, dari dibandingkan metode PEFT yang lain, LoRA menghasilkan skalabilitas dan kinerja yang lebih baik \parencite{lora}.
