@@ -3,43 +3,54 @@
 Dalam proses \textit{training} model, diperlukan metode evaluasi sebagai penilaian kinerja model dengan membandingkan metriks yang dihasilkan oleh model tersebut. Metriks ini digunakan pada model klasifikasi dengan membandingkan hasil prediksi dengan target aslinya. Hasil prediksi ini dapat direpresentasikan sebagai \textit{confusion matrix}. Berdasarkan \citeauthor{metrics}, terdapat beberapa metriks yang dapat dihasilkan berdasarkan \textit{confusion matrix}, yaitu \textit{accuracy}, \textit{precision}, \textit{recall}, dan F1-\textit{Score}.
 
 \begin{table}[ht]
+    \vspace{0.25cm}
     \centering
-        \caption{\textit{Confusion matrix}}
-        \label{table:confusion-matrix}
-        \begin{tabular}{|l|c|c|}
-        \hline
-        \rowcolor{black!10}
-        \multicolumn{1}{|c|}{\textbf{Target}} & \multicolumn{2}{c|}{\textbf{Prediksi}} \\ \cline{2-3} 
-        \rowcolor{black!10}
-        & \textbf{Positif} & \textbf{Negatif} \\ \hline
-        \textbf{Positif} & \textit{True Positive} (TP) & \textit{False Negative} (FN) \\ \hline
-        \textbf{Negatif} & \textit{False Positive} (FP) & \textit{True Negative} (TN) \\ \hline
+    \caption{Tabel \textit{confusion matrix} \parencite{metrics}}
+    \label{table:confusion-matrix}
+    \begin{tabular}{l|c|c}
+        \toprule
+        \multicolumn{1}{c|}{\textbf{Target}} & \multicolumn{2}{c}{\textbf{Prediksi}} \\
+        & \textbf{Positif} & \textbf{Negatif} \\
+        \midrule
+        \textbf{Positif} & \textit{True Positive} (TP) & \textit{False Negative} (FN) \\
+        \textbf{Negatif} & \textit{False Positive} (FP) & \textit{True Negative} (TN) \\
+        \bottomrule
     \end{tabular}
 \end{table}
 
 Berdasarkan tabel \ref{table:confusion-matrix} terdapat empat hasil prediksi. \textit{True Positive} (TP) yang berarti model memprediksi kelas positif yang memang bernilai positif sesuai kelasnya. True Negative (TN) memprediksi kelas negatif dan kelas tersebut memang bernilai negatif. Sedangkan, \textit{False Positive} (FP) me\textit{mprediksi kelas} positif, tetapi kelas tersebut bernilai negatif. Sebaliknya juga untuk \textit{False Negative} (FN) model memprediksi kelas tersebut sebagai negatif, tetapi kelas tersebut bernilai positif.
 
-\subsection{\textit{Accuracy}}
-Nilai \textit{accuracy} dihitung sebagai proporsi hasil prediksi yang benar (baik TP maupun TN) dari total jumlah prediksi. Metriks ini memberikan gambaran keseluruhan tentang keefektifan model. Dengan rumus sebagai berikut.
+\subsection{\textit{Accuracy, Precision}, dan \textit{Recall}}
+Nilai \textit{accuracy} dihitung sebagai proporsi hasil prediksi yang benar (baik TP maupun TN) dari total jumlah prediksi \parencite{metrics}. Metriks ini memberikan gambaran keseluruhan tentang keefektifan model. Rumus untuk menghitung nilai \textit{accuracy} dapat dilihat pada \ref{eq:accuracy}.
 
 \begin{equation}
     Accuracy = \frac{TP + TN}{TP + TN + FP + FN}
+    \label{eq:accuracy}
 \end{equation}
 
-\subsection{\textit{Precision}}
-Nilai \textit{precision} menilai proporsi prediksi positif yang benar-benar positif. Metriks ini memberikan gambaran tentang keakuratan model dalam memprediksi kelas positif. Dengan rumus sebagai berikut.
+Nilai \textit{precision} dihitung sebagai proporsi hasil prediksi kelas positif yang benar dengan jumlah kelas positif yang diprediksi, rumus untuk menghitung nilai ini dapat bisa dilihat pada \ref{eq:precision} \parencite{metrics}. Sedangkan, nilai \textit{recall} dihitung sebagai proporsi antara hasil prediksi kelas positif yang benar dengan jumlah kelas positif aslinya, perhitungannya bisa dilihat pada rumus \ref{eq:recall} \parencite{metrics}.
+
 \begin{equation}
     Precision = \frac{TP}{TP + FP}
+    \label{eq:precision}
 \end{equation}
-
-\subsection{\textit{Recall}}
-Nilai \textit{recall} menilai proporsi kasus positif sebenarnya yang berhasil diidentifikasi oleh model. Metrix Ini berfungsi untuk mengukur kemampuan model dalam mengidentifikasi semua kasus positif. Dengan rumus sebagai berikut.
 \begin{equation}
     Recall = \frac{TP}{TP + FN}
+    \label{eq:recall}
 \end{equation}
 
 \subsection{F1-\textit{Score}}
-Nilai F1-\textit{Score} direpresentasikan sebagai nilai rata-rata harmonis dari nilai \textit{precision} dan \textit{recall}. Metriks ini berfungsi untuk mengukur keseimbangan dari kedua metriks tersebut. Dengan rumus sebagai berikut.
+Nilai F1-\textit{Score} direpresentasikan sebagai nilai rata-rata harmonis dari nilai \textit{precision} dan \textit{recall}, bisa dilihat pada rumus \ref{eq:f1-score}. Metriks ini berfungsi untuk mengukur keseimbangan dari kedua metriks tersebut.
+
 \begin{equation}
     F1-Score = 2 \times \frac{Precision \times Recall}{Precision + Recall}
+    \label{eq:f1-score}
 \end{equation}
+
+Terdapat beberapa jenis perhitungan untuk skor F1, yaitu \textit{micro, macro}, dan \textit{weighted}. \textit{Micro} F1 dihitung dengan nilai masing-masing \textit{precision} dan \textit{recall} secara global. Sedangkan, \textit{macro} F1 dihitung dengan rata-rata dari nilai F1 pada masing-masing kelasnya. Lalu, untuk \textit{weighted} F1 mirip seperti \textit{macro} dengan tambahan perhitungan bobot untuk setiap kelasnya berdasarkan banyak data pada kelas tersebut.
+
+\subsection{ROUGE \textit{Score}}
+
+ROUGE merupakan singkatan dari \textit{Recall-Oriented Understudy for Gisting Evaluation}. ROUGE biasa digunakan untuk tugas seperti \textit{summarization} dan juga translasi teks \parencite{rouge}. Evaluasi manual oleh manusia dengen membandingkan beberapa jenis aspek (koherensi, gramatikal, dan konten) akan memakan waktu yang banyak \parencite{rouge}. Sehingga evaluasi otomotasi terdapat tugas tersebut dibutuhkan, oleh karena itu ROUGE diajukan sebagai metode evaluasi otomatis \parencite{rouge}.
+
+ROUGE mengukur kemampuan dari sebuah model dalam memprediksi kata-kata yang muncul pada target dari hasil prediksi, pada konteks ini adalah hasil ringkasan atau translasi teks. Terdapat beberapa jenis evaluasi ROUGE, salah satunya adalah ROUGE-N dan ROUGE-L. ROUGE-N mengukur banyaknya n-gram kata-kata dibandingkan dengan targetnya \parencite{rouge}. Sedangkan, ROUGE-L menggunakan \textit{Lowest Common Subsequence} (LCS) yang mengidentifikasi urutan kata terpanjang secara berurutan dalam hasil prediksi dibandingkan dengan targetnya \parencite{rouge}.
