@@ -57,6 +57,7 @@ Penggunaan \textit{adapter} tidak hanya dengan menambahkannya pada setiap \texti
 Tabel \ref{table:adapter_houlsby_result} menunjukkan hasil evaluasi dari \textit{Adapter} dengan \textit{baseline} yang menggunakan \textit{fine-tuning} pada kakas evaluasi GLUE. \textit{Adapter} berhasil mendapatkan hasil rata-rata dengan nilai $80.0$, dibandingkan dengan \textit{fine-tuning} yang mendapatkan nilai $80.4$. Selain itu, untuk ukuran dari \textit{adapter} yang tetap yaitu dengan ukuran 64, mendapatkan hasil dengan nilai $79.6$. \textit{Adapter} mampu menyaingi kinerja \textit{fine-tuning} dengan hanya menggunakan $3.6\%$ parameter.
 
 \subsection{\textit{Prefix-Tuning}}
+\label{sec:prefix-tuning}
 
 \textit{Prefix-Tuning} merupakan salah satu metode PEFT yang menjadi alternatif dari metode \textit{fine-tuning} yang menggunakan vektor kontinu (disebut dengan \textit{prefix}) \parencite{prefix_tuning}. Metode ini mengambil inspirasi dari \textit{prompting}, memperbolehkan token-token berikutnya untuk memerhatikan \textit{prefix} tersebut seolah-seolah \textit{prefix} tersebut adalah \textit{virtual token} \parencite{prefix_tuning}. Mirip dengan \textit{Adapter}, \textit{prefix-tuning} hanya perlu menyimpan sedikit parameter tambahan untuk suatu tugas dengan melakukan \textit{freeze} pada parameter asli model dan hanya mengubah parameter dari \textit{prefix} tersebut. \textit{Prefix-Tuning} yang diajukan oleh \citeauthor{prefix_tuning} dibuat untuk tugas \textit{generation}, sehingga pada impelementasi yang dilaukan oleh \citeauthor{adapters} perlu adanya adaptasi untuk tugas evaluasi secara umum. Pada konteks tugas akhir ini, digunakan \textit{Prefix-Tuning} dengan adaptasi dari \citeauthor{adapters} tersebut. 
 
@@ -145,23 +146,21 @@ LoRA menggunakan $rank$ sebagai besar dari matriks dekomposisi yang dibuatnya. P
     \centering
     \caption{Hasil evaluasi LoRA dengan model GPT-3 \parencite{lora}}
     \label{table:lora_result}
-    \resizebox{ \textwidth }{!}{
-        \begin{tabular}{l|p{2.5cm}|ccccc}
-            \toprule
-            Method & \# Trainable Parameters & WikiSQL & MNLI-m & \multicolumn{3}{c}{SAMSum} \\
-             & & \textbf{Acc. (\%)} & \textbf{Acc. (\%)} & \textbf{R1} & \textbf{R2} & \textbf{RL} \\
-            \midrule
-            FT & 175,255.8M & \textbf{73.8} & 89.5 & 52.0 & 28.0 & 44.5 \\
-            BitFit & 14.2M & 71.3 & 91.0 & 51.3 & 27.4 & 44.5 \\
-            PreEmbed & 3.2M & 63.1 & 88.6 & 48.4 & 24.2 & 40.5 \\
-            PreLayer & 20.2M & 70.1 & 89.5 & 50.8 & 27.3 & 44.5 \\
-            Adapter\textsubscript{H}  & 7.1M & 71.9 & 89.8 & 53.0 & 28.9 & 44.9 \\
-            Adapter\textsubscript{L}  & 40.1M & 73.2 & \textbf{91.5} & 53.2 & 29.0 & 45.1 \\
-            LoRA  & 4.7M & 73.4 & 91.7 & \textbf{53.8} & \textbf{29.8} & \textbf{45.9} \\
-            LoRA  & 37.7M & \textbf{74.0} & 91.6 & 53.4 & 29.2 & 45.1 \\
-            \bottomrule
-        \end{tabular}
-    }
+    \begin{tabular}{l|l|ccccc}
+        \toprule
+        \multirow{2}{*}{Method} & \#Trainable & WikiSQL & MNLI-m & \multicolumn{3}{c}{SAMSum} \\
+         & Parameters & \textbf{Acc. (\%)} & \textbf{Acc. (\%)} & \textbf{R1} & \textbf{R2} & \textbf{RL} \\
+        \midrule
+        FT & 175,255.8M & \textbf{73.8} & 89.5 & 52.0 & 28.0 & 44.5 \\
+        BitFit & 14.2M & 71.3 & 91.0 & 51.3 & 27.4 & 44.5 \\
+        PreEmbed & 3.2M & 63.1 & 88.6 & 48.4 & 24.2 & 40.5 \\
+        PreLayer & 20.2M & 70.1 & 89.5 & 50.8 & 27.3 & 44.5 \\
+        Adapter\textsubscript{H}  & 7.1M & 71.9 & 89.8 & 53.0 & 28.9 & 44.9 \\
+        Adapter\textsubscript{L}  & 40.1M & 73.2 & \textbf{91.5} & 53.2 & 29.0 & 45.1 \\
+        LoRA  & 4.7M & 73.4 & 91.7 & \textbf{53.8} & \textbf{29.8} & \textbf{45.9} \\
+        LoRA  & 37.7M & \textbf{74.0} & 91.6 & 53.4 & 29.2 & 45.1 \\
+        \bottomrule
+    \end{tabular}
 \end{table}
 
 Hasil evaluasi LoRA pada beberapa tugas evaluasi dapat dilihat pada tabel \ref{table:lora_result}. LoRA mampu menyaingi atau bahkan melampaui kinerja \textit{fine-tuning} pada ketiga tugas evaluasi tersebut. Selain itu, dari dibandingkan metode PEFT yang lain, LoRA menghasilkan skalabilitas dan kinerja yang lebih baik \parencite{lora}.
@@ -222,3 +221,25 @@ Perhitungan parameter untuk UniPELT merupakan total dari metode sebelumnya. Namu
 \end{table}
 
 Pada tabel \ref{table:unipelt_result} merupakan hasil evaluasi dari UniPELT pada \textit{high-resource}, UniPELT mendapatkan hasil yang terbaik secara umum. Peningkatan yang didapatkan tidak terlalu signifikan dibandingkan dengan eksperimen pada \textit{low-resource}, hal ini sesuai karena metode PEFT mampu menyaingi \textit{fine-tuning} pada \textit{dataset} yang banyak \parencite{unipelt}. Hasil UniPELT tanpa dilakukan \textit{gating mechanism} (-NoGate) tidak menghasilkan kinerja yang baik \parencite{unipelt}. Walaupun dengan kinerja yang baik, \citeauthor{unipelt} menyebutkan bahwa penggunaan UniPELT tidak akan selalu menghasilkan hasil yang lebih baik dibandingkan dengan penggunaan submodulnya secara individual, bahkan bisa memberikan hasil yang lebih buruk \parencite{unipelt}.
+
+\begin{table}[ht]
+    \vspace{0.25cm}
+    \centering
+    \caption{Waktu pelatihan dan inferensi dari setiap metode PEFT \parencite{unipelt}}
+    \label{table:runtime-peft}
+    \begin{tabular}{lrrr}
+        \toprule
+        \textbf{Method} & \textbf{\#Param.} & \textbf{Time$_T$} & \textbf{Time$_I$} \\ 
+        \midrule
+        Fine-tuning & 110M (100\%) & 100\% & 100\% \\ 
+        BitFit & 103K (0.09\%) & 65\% & 102\% \\ 
+        Prefix-tuning & 184K (0.17\%) & 56\% & 114\% \\ 
+        LoRA & 295K (0.27\%) & 53\% & 105\% \\ 
+        Adapter & 895K (0.81\%) & 55\% & 107\% \\ 
+        UNIPELT (AP) & 1.1M (0.99\%) & 55\% & 118\% \\ 
+        UNIPELT (APL) & 1.4M (1.26\%) & 67\% & 127\% \\ 
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+Pada penelitian yang dilakukan oleh \citeauthor{unipelt}, dilakukan juga evaluasi terhadap waktu pelatihan dan waktu inferensi antara masing-masing metode PEFT, seperti yang bisa dilihat \ref{table:runtime-peft}. Waktu pelatihan yang didapatkan dengan metode PEFT lebih cepat dibandingkan dengan \textit{fine-tuning} karena parameter yang digunakan untuk pelatihan juga lebih sedikit \parencite{unipelt}. Untuk waktu inferensi, semuanya menjadi lebih besar dibandingkan dengan \textit{fine-tuning} karena metode PEFT membutuhkan \textit{floating-point operations per second} (FLOPS) yang lebih besar \parencite{unipelt}.
