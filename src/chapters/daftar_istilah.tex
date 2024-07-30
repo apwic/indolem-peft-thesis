@@ -1,17 +1,36 @@
-\newpage
+\clearpage
+\chapter*{DAFTAR ISTILAH DAN SINGKATAN}
+\addcontentsline{toc}{chapter}{DAFTAR ISTILAH DAN SINGKATAN}
 \begin{center}
-    \Large \bfseries{DAFTAR ISTILAH}
-    \bigskip
-
-    \begin{table}[h]
-        \begin{tabularx}{\textwidth}{lcX}
-            \textbf{NLP} & : & \textit{Natural language processing} / pengolahan bahasa alami \\
-            \textbf{NLU} & : & \textit{Natural language understanding} \\
-            \textbf{NLP} & : & \textit{Natural language generation} \\
-            \textbf{GLUE} & : & \textit{General language understanding evaluation} \\
-            \textbf{NER} & : & \textit{Named entity recognition} \\
-            \textbf{PEFT} & : & \textit{Parameter-efficient fine-tuning} \\
-            \textbf{LoRA} & : & \textit{Low rank adaptation} \\
+   \begin{table}[h]
+        \renewcommand{\arraystretch}{1.5}
+        \begin{tabularx}{\textwidth}{lXr}
+            \textbf{Istilah/Singkatan} & \textbf{Keterangan} & \textbf{Halaman} \\
+                                       & & \textbf{kemunculan} \\
+                                       & & \textbf{pertama} \\
+            \textit{Adapter} & Metode PEFT dengan menambahkan modul \textit{adapter} yang berisi matriks proyeksi dan fungsi nonlinear & 2 \\
+            BERT & \textit{Bidirectional Encoder Representations from Transformers} : Model \textit{encoder} dengan arsitektur \textit{Transformers} yang memproses teks secara \textit{bidirectional} & 11 \\
+            IndoLEM & Kakas evaluasi untuk NLU dalam bahasa Indonesia & 1 \\
+            LoRA & \textit{Low Rank Adaptation} : metode PEFT yang menggunakan matriks dimensi rendah pada proses pelatihan model & 2 \\
+            NLP & \textit{Natural Language Processing} : suatu bidang pada AI yang terfokus pada pengolahan bahasa alami & 1 \\
+            NER & \textit{Named Entity Recoginition} : tugas NLP untuk menentukan jenis entitas dari setiap token & 2 \\
+            NLU & \textit{Natural Language Understanding} : pemahaman pada bahasa alami & 1 \\
+            NLG & \textit{Natural Language Generation} : tugas generasi pada NLP & 1 \\
+            PEFT & \textit{Parameter-Efficient Fine-Tuning} : variasi dari metode \textit{fine-tuning} dengan menggunakan parameter yang lebih sedikit (efisien) & 2 \\
+            \textit{Prefix-Tuning} & metode PEFT yang menambahkan \textit{prefix} sebagai konteks tambahan pada proses pelatihan model & 2 \\
+        \end{tabularx}
+    \end{table}
+\end{center}
+\begin{center}
+   \begin{table}[h]
+        \renewcommand{\arraystretch}{1.5}
+        \begin{tabularx}{\textwidth}{lXr}
+            \textbf{Istilah/Singkatan} & \textbf{Keterangan} & \textbf{Halaman} \\
+                                       & & \textbf{kemunculan} \\
+                                       & & \textbf{pertama} \\
+            ROUGE & \textit{Recall-Oriented Understudy for Gisting Evaluation} : Metrik evaluasi dengan mengukur kemampuan model dalam memprediksi kata-kata yang muncul pada target & 29 \\
+            T5 & \textit{Text-to-Text Transfer Transformers} : Model \textit{encoder decoder} dengan arsitektur \textit{Transformers} yang memproses dari teks menjadi teks lagi & 13 \\
+            \textit{Transformers} & Arsitektur \textit{neural network} yang mempunyai mekanisme \textit{attention} untuk dapat fokus terhadap suatu konteks & 9 \\
         \end{tabularx}
     \end{table}
 \end{center}

@@ -64,17 +64,6 @@ Untuk memudahkan pengembangan perlu membuat \textit{virtual environment} untuk m
             WandbArguments,
         ]
     )
-
-    if len(sys.argv) == 2 and sys.argv[1].endswith(".json"):
-        # If we pass only one argument to the script and it's the path to a json file,
-        # let's parse it to get our arguments.
-        model_args, data_args, training_args, adapter_args, wandb_args = (
-            parser.parse_json_file(json_file=os.path.abspath(sys.argv[1]))
-        )
-    else:
-        model_args, data_args, training_args, adapter_args, wandb_args = (
-            parser.parse_args_into_dataclasses()
-        )
     \end{lstlisting}
 \end{table}
 
@@ -89,136 +78,21 @@ Praproses \textit{dataset} diperlukan agar model dapat memproses \textit{dataset
 
 Tugas evaluasi NER merupakan jenis tugas \textit{classification} pada level token yang berarti setiap token  diklasifikasikan dengan label tertentu. Pada kakas IndoLEM, untuk tugas evaluasi NER terdapat dua jenis \textit{dataset}, yaitu NERUI dan NERUGM. Kedua \textit{dataset} tersebut mempunyai label yang berbeda berikut merupakan label pada setiap \textit{dataset}-nya dapat dilihat pada tabel \ref{table:label-ner}.
 
-Label tersebut diperlukan untuk melakukan \textit{mapping} antara id dengan labelnya yang  digunakan pada konfigurasi model. \textit{Padding} juga dilakukan berdasarkan panjang sekuens maksimum yang didefinisikan melaluai argumen \textit{data training}. Selanjutnya, tokenisasi  dilakukan terhadap \textit{dataset} tersebut. Implementasi dari fungsi tokenisasi tersebut dapat dilihat pada tabel \ref{table:tokenisasi-ner}.
-
-\begin{table}[h]
-    \caption{Fungsi tokenisasi NER}
-    \label{table:tokenisasi-ner}
-    \begin{lstlisting}[language=python]
-    def tokenize_and_align_labels(examples):
-        tokenized_inputs = tokenizer(
-            examples[text_column_name],
-            padding=padding,
-            truncation=True,
-            max_length=data_args.max_seq_length,
-            is_split_into_words=True,
-        )
-        labels = []
-
-        for i, label in enumerate(examples[label_column_name]):
-            word_ids = tokenized_inputs.word_ids(batch_index=i)
-            previous_word_idx = None
-            label_ids = []
-            for word_idx in word_ids:
-                if word_idx is None:
-                    label_ids.append(-100)
-                elif word_idx != previous_word_idx:
-                    label_ids.append(label_to_id[label[word_idx]])
-                else:
-                    if data_args.label_all_tokens:
-                        label_ids.append(b_to_i_label[label_to_id[label[word_idx]]])
-                    else:
-                        label_ids.append(-100)
-                previous_word_idx = word_idx
-
-            labels.append(label_ids)
-        tokenized_inputs["labels"] = labels
-        return tokenized_inputs
-    \end{lstlisting}
-\end{table}
-
-Tokenisasi dilakukan dengan menggunakan modul Tokenizer pada pustaka Transformers. Fungsi tokenisasi pada tabel \ref{table:tokenisasi-ner} mengabaikan token spesial [CLS] dan [SEP] yang muncul dari hasil tokenisasi model berbasi BERT. Token spesial tersebut diubah menjadi -100 agar bisa diabaikan dari perhitungan metriks evaluasinya. Sehingga, hanya token yang berkorespondensi terhadap sebuah label saja yang dapat dievaluasi.
+Label tersebut diperlukan untuk melakukan \textit{mapping} antara id dengan labelnya yang  digunakan pada konfigurasi model. \textit{Padding} juga dilakukan berdasarkan panjang sekuens maksimum yang didefinisikan melaluai argumen \textit{data training}. Selanjutnya, tokenisasi  dilakukan terhadap \textit{dataset} tersebut. Tokenisasi dilakukan dengan menggunakan modul Tokenizer pada pustaka Transformers. Fungsi tokenisasi mengabaikan token spesial [CLS] dan [SEP] yang muncul dari hasil tokenisasi model berbasi BERT. Token spesial tersebut diubah menjadi -100 agar bisa diabaikan dari perhitungan metriks evaluasinya. Sehingga, hanya token yang berkorespondensi terhadap sebuah label saja yang dapat dievaluasi.
 
 \subsubsection{Praproses Data \textit{Sentiment Analysis}}
 
 Tugas evaluasi \textit{sentiment analysis} merupakan jenis tugas \textit{classification} sama seperti NER, hanya perbedaannya pada level klasifikasi yang digunakan. Jika pada NER klasifikasi dilakukan pada level token, pada \textit{sentiment analysis} klasifikasi dilakukan pada level teks yang merupakan gabungan dari beberapa token. \textit{Dataset} dari \textit{sentiment analysis} berupa \textit{file} CSV yang berisi dari dua kolom yaitu \textit{sentence} dan \textit{labels}. Kolom \textit{sentence} merupakan teks yang mengandung sentiment tertentu. Sementara kolom \textit{labels} menandakan sentimen dari teks tersebut, dengan nilai 0 berupa sentimen negatif dan  nilai 1 berupa sentiment positif.
 
-\begin{table}[h]
-    \caption{Fungsi tokenisasi \textit{sentiment analysis}}
-    \label{table:tokenisasi-sentiment}
-    \begin{lstlisting}[language=python]
-        def preprocess_function(examples):
-            # Tokenize the texts
-            args = (
-                (examples[sentence1_key],)
-                if sentence2_key is None
-                else (examples[sentence1_key], examples[sentence2_key])
-            )
-            result = tokenizer(
-                *args, padding=padding, max_length=max_seq_length, truncation=True
-            )
-
-            # Map labels to IDs
-            if label_to_id is not None and "labels" in examples:
-                result["labels"] = [
-                    (label_to_id[l] if l != -1 else -1) for l in examples["labels"]
-                ]
-            return result
-    \end{lstlisting}
-\end{table}
-
-Pada tugas evaluasi \textit{sentiment analysis} juga diperlukan \textit{mapping} antara label dengan idnya, sehingga model mampu mengetahui label yang dilatih. Fungsi tokenisasi \textit{sentiment analysis} yang dapat dilihat pada tabel \ref{table:tokenisasi-sentiment} menggunakan modul Tokenizer dari pustaka Transformers. Fungsi tersebut terdapat \textit{sentence1\_key} dan juga \textit{sentence2\_key}, yang berguna apabila terdapat dua kolom teks pada \textit{dataset}, tetapi pada IndoLEM \textit{dataset sentiment analysis} hanya mempunyai satu kolom teks. Sehingga, \textit{sentence2\_key} tidak digunakan. 
+Pada tugas evaluasi \textit{sentiment analysis} juga diperlukan \textit{mapping} antara label dengan idnya, sehingga model mampu mengetahui label yang dilatih. Fungsi tokenisasi \textit{sentiment analysis} menggunakan modul Tokenizer dari pustaka Transformers. Fungsi tersebut terdapat \textit{sentence1\_key} dan juga \textit{sentence2\_key}, yang berguna apabila terdapat dua kolom teks pada \textit{dataset}, tetapi pada IndoLEM \textit{dataset sentiment analysis} hanya mempunyai satu kolom teks. Sehingga, \textit{sentence2\_key} tidak digunakan. 
 
 \subsubsection{Praproses Data \textit{Summarization}}
 
-Tugas evaluasi \textit{summarization} merupakan jenis tugas \textit{generation} yang berbeda dengan jenis tugas \textit{classification}. Tugas \textit{generation} memerlukan generasi teks untuk dapat dilakukan evaluasi, pada konteks ini yaitu membuat ringkasan dari teks. \textit{Dataset} yang digunakan pada IndoLEM untuk tugas evaluasi \textit{summarization} adalah \textit{dataset} IndoSUM. \textit{Dataset} ini berisi \textit{file} dengan format JSONL dengan masing-masing objek dapat dilihat pada tabel \ref{table:data-summarization}.
+Tugas evaluasi \textit{summarization} merupakan jenis tugas \textit{generation} yang berbeda dengan jenis tugas \textit{classification}. Tugas \textit{generation} memerlukan generasi teks untuk dapat dilakukan evaluasi, pada konteks ini yaitu membuat ringkasan dari teks. \textit{Dataset} yang digunakan pada IndoLEM untuk tugas evaluasi \textit{summarization} adalah \textit{dataset} IndoSUM. \textit{Dataset} ini berisi \textit{file} dengan format JSONL dengan masing-masing objek dapat dilihat pada tabel \ref{table:label-summarization}.
 
-\begin{table}[h]
-    \caption{Data \textit{summarization}}
-    \label{table:data-summarization}
-    \begin{center}
-        \begin{tabular}{|l|l|}
-            \hline \rowcolor{black!10}
-            \multicolumn{1}{|c|}{\textbf{Objek}} & \multicolumn{1}{|c|}{\textbf{Deskripsi}} \\ \hline
-            id & nilai unik untuk setiap artikel \\ \hline
-            paragraphs & \textit{list} dari paragraf yang berasal dari artikel \\ \hline
-            summary & ringkasan dari artikel, disimpan sebagai \textit{list} dari kalimat \\ \hline 
-            gold\_labels & label ekstraktif dari setiap kalimat pada artikel \\ \hline
-            category & kategori dari artikel \\ \hline
-            source & sumber artikel \\ \hline
-            source\_url & URL dari artikel \\ \hline
-        \end{tabular}
-    \end{center}
-\end{table}
+Dari data yang dapat dilihat pada tabel \ref{table:label-summarization}, terdapat 7 objek  pada \textit{dataset}. Namun, pada tugas evaluasi ini hanya  digunakan dua objek yaitu \textit{paragraphs} dan \textit{summary} karena tugas \textit{summarization} membutuhkan teks asli sebelum diringkas dan hasil ringkasannya. Objek yang lain selain dua yang digunakan bisa diabaikan saja. \textit{Dataset} ini perlu dipraproses terlebih dahulu menggunakan fungsi tokenisasi.
 
-Dari data yang dapat dilihat pada tabel \ref{table:data-summarization}, terdapat 7 objek  pada \textit{dataset}. Namun, pada tugas evaluasi ini hanya  digunakan dua objek yaitu \textit{paragraphs} dan \textit{summary} karena tugas \textit{summarization} membutuhkan teks asli sebelum diringkas dan hasil ringkasannya. Objek yang lain selain dua yang digunakan bisa diabaikan saja. \textit{Dataset} ini perlu dipraproses terlebih dahulu menggunakan fungsi yang dapat dilihat pada tabel \ref{table:tokensisasi-summ}.
-
-\begin{table}[h]
-    \caption{Fungsi tokenisasi \textit{summarization}}
-    \label{table:tokensisasi-summ}
-    \begin{lstlisting}[language=python]
-    def preprocess_function(examples):
-        if is_indosum:
-            examples[text_column] = paragraph_to_text(examples[text_column])
-            examples[summary_column] = summary_to_text(examples[summary_column])
-
-        inputs = [prefix + inp for inp in inputs]
-        model_inputs = tokenizer(
-            inputs,
-            max_length=data_args.max_source_length,
-            padding=padding,
-            truncation=True,
-        )
-
-        labels = tokenizer(
-            text_target=targets,
-            max_length=max_target_length,
-            padding=padding,
-            truncation=True,
-        )
-
-        if padding == "max_length" and data_args.ignore_pad_token_for_loss:
-            labels["input_ids"] = [
-                [(l if l != tokenizer.pad_token_id else -100) for l in label]
-                for label in labels["input_ids"]
-            ]
-
-        model_inputs["labels"] = labels["input_ids"]
-        return model_inputs
-    \end{lstlisting}
-\end{table}
-
-Berdasarkan tabel \ref{table:tokensisasi-summ}, tokenisasi dilakukan dengan mengolah objek \textit{paragraphs} menjadi \textit{list} dari teks. Setiap paragraf terdiri dari beberapa kalimat, dan setiap kalimat terdiri dari beberapa teks. Untuk \textit{text\_column} yang merupakan objek \textit{paragraphs}  diolah menjadi \textit{list} dari teks. Hal yang sama berlaku juga untuk \textit{summary\_column}, hanya saja objek ini merupakan \textit{summary} yang berisi kalimat. Selain itu, tugas evaluasi \textit{summarization} ini terdapat \textit{prefix} yang berguna pada beberapa model tertentu. Tokenisasi juga menggunakan modul \textit{tokenizer} dari pustaka Transformers.
+Tokenisasi dilakukan dengan mengolah objek \textit{paragraphs} menjadi \textit{list} dari teks. Setiap paragraf terdiri dari beberapa kalimat, dan setiap kalimat terdiri dari beberapa teks. Untuk \textit{text\_column} yang merupakan objek \textit{paragraphs}  diolah menjadi \textit{list} dari teks. Hal yang sama berlaku juga untuk \textit{summary\_column}, hanya saja objek ini merupakan \textit{summary} yang berisi kalimat. Selain itu, tugas evaluasi \textit{summarization} ini terdapat \textit{prefix} yang berguna pada beberapa model tertentu. Tokenisasi juga menggunakan modul \textit{tokenizer} dari pustaka Transformers.
 
 \subsection{Pemuatan Konfigurasi Model}
 

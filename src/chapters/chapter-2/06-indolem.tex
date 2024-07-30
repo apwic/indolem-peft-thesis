@@ -80,7 +80,27 @@ Hasil evaluasi dapat dilihat pada tabel \ref{table:indolem-ner-result}, dengan \
 
 \subsection{\textit{Summarization} pada IndoLEM}
 
-Tugas \textit{summarization} menggunakan \textit{dataset} yang telah tersedia yaitu IndoSUM \parencite{summarization}. IndoSUM berisi sekitar 19.000 dokumen-ringkasan \textit{dataset} \parencite{indolem}, dengan setiap dokumen mempunyai satu \textit{abstractive summary}. \citeauthor{summarization} merilis IndoSUM beserta dengan ORACLE, yaitu sekumpulan \textit{extractive summary} yang dihasilkan secara otomatis dengan memaksimalkan skor ROUGE antar kalimat pada dokumen dengan \textit{abstractive summary}-nya \parencite{indolem}.
+\begin{table}[h]
+    \caption{Data \textit{summarization}}
+    \label{table:label-summarization}
+    \begin{center}
+        \begin{tabular}{l|l}
+            \toprule
+            \textbf{Objek} & \textbf{Deskripsi} \\
+            \midrule
+            id & nilai unik untuk setiap artikel \\
+            paragraphs & \textit{list} dari paragraf yang berasal dari artikel \\
+            summary & ringkasan dari artikel, disimpan sebagai \textit{list} dari kalimat \\ 
+            gold\_labels & label ekstraktif dari setiap kalimat pada artikel \\
+            category & kategori dari artikel \\
+            source & sumber artikel \\
+            source\_url & URL dari artikel \\
+            \bottomrule
+        \end{tabular}
+    \end{center}
+\end{table}
+
+Tugas \textit{summarization} menggunakan \textit{dataset} yang telah tersedia yaitu IndoSUM \parencite{summarization}. IndoSUM berisi sekitar 19.000 dokumen-ringkasan \textit{dataset} \parencite{indolem}, dengan setiap dokumen mempunyai satu \textit{abstractive summary}. \citeauthor{summarization} merilis IndoSUM beserta dengan ORACLE, yaitu sekumpulan \textit{extractive summary} yang dihasilkan secara otomatis dengan memaksimalkan skor ROUGE antar kalimat pada dokumen dengan \textit{abstractive summary}-nya \parencite{indolem}. Label pada \textit{dataset} IndoSUM dapat dilihat pada tabel \ref{table:label-summarization}.
 
 \begin{table}[h]
     \vspace{0.25cm}

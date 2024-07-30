@@ -49,13 +49,15 @@ Terdapat perbedaan pada \textit{hyperparameter} yang digunakan untuk tugas \text
     \centering
     \caption{\textit{Hyperparameter} metode PEFT}
     \label{table:hyperparameter-PEFT}
-    \begin{tabular}{|l|l|c|}
-        \hline \rowcolor{black!10}
-        \multicolumn{1}{|c|}{\textbf{Metode}} & \multicolumn{1}{|c|}{\textbf{Argumen}} & \textbf{Nilai} \\ \hline
-        LoRA & \texttt{rank} & [8, 16] \\ \hline
-        Prefix Tuning & \texttt{prefix\_length} & [5, 50] \\ \hline
-        Adapter & \texttt{reduction\_factor} & [64, 16] \\ \hline
-        UniPELT & \multicolumn{1}{|c|}{-}  & - \\ \hline
+    \begin{tabular}{l|l|c}
+        \toprule
+        \textbf{Metode} & \textbf{Argumen} & \textbf{Nilai} \\
+        \midrule
+        LoRA & \texttt{rank} & [8, 16] \\
+        Prefix Tuning & \texttt{prefix\_length} & [5, 50] \\
+        Adapter & \texttt{reduction\_factor} & [64, 16] \\
+        UniPELT & \multicolumn{1}{c|}{-}  & - \\
+        \bottomrule
     \end{tabular}
 \end{table}
 
