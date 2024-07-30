@@ -6,42 +6,44 @@
     \centering
     \caption{\textit{Hyperparameter} pelatihan}
     \label{appendix:hyperparameter-train}
-    \begin{tabular}{|c|l|c|}
-        \hline \rowcolor{black!10}
-        \textbf{tugas} & \multicolumn{1}{|c|}{\textbf{argumen}} & \textbf{nilai} \\ \hline
-        \multirow{9}{*}{\textit{ner}} & model & "indolem/indobert-base-uncased" \\ \cline{2-3}
-                                      & train batch size & 16 \\ \cline{2-3}
-                                      & eval batch size & 64 \\ \cline{2-3}
-                                      & epochs & 100 \\ \cline{2-3}
-                                      & learning rate & 5e-5 \\ \cline{2-3}
-                                      & max sequence length & 128 \\ \cline{2-3}
-                                      & text column names & "tokens" \\ \cline{2-3}
-                                      & label column names & "ner\_tags" \\ \cline{2-3}
-                                      & return entity level metrics & true \\ \cline{2-3}
-                                      & seed & 42 \\ \hline
-        \multirow{7}{*}{\textit{sentiment analysis}} & model & "indolem/indobert-base-uncased" \\ \cline{2-3}
-                                                     & batch size & 30 \\ \cline{2-3}
-                                                     & epochs & 20 \\ \cline{2-3}
-                                                     & learning rate & 5e-5 \\ \cline{2-3}
-                                                     & max sequence length & 200 \\ \cline{2-3}
-                                                     & seed & 42 \\ \cline{2-3}
-                                                     & label names & "labels" \\ \hline
-        \multirow{14}{*}{\textit{summarization}} & model & "lazarusnlp/indonanot5-base" \\ \cline{2-3}
-                                                & train batch size & 4 \\ \cline{2-3}
-                                                & eval batch size & 8 \\ \cline{2-3}
-                                                & epochs & 5 \\ \cline{2-3}
-                                                & learning rate & 1e-5 \\ \cline{2-3}
-                                                & max source length & 512 \\ \cline{2-3}
-                                                & max target length & 512 \\ \cline{2-3}
-                                                & num beams & 5 \\ \cline{2-3}
-                                                & weight decay & 0.01 \\ \cline{2-3}
-                                                & patience & 5 \\ \cline{2-3}
-                                                & seed & 42 \\ \cline{2-3}
-                                                & text column & paragraphs \\ \cline{2-3}
-                                                & summary column & summary \\ \cline{2-3}
-                                                & source prefix & "summarize: " \\ \cline{2-3}
-                                                & pad to max length & true \\ \cline{2-3}
-                                                & predict with generate & true \\ \cline{2-3}
-                                                & bf16 & true \\ \hline
-    \end{tabular}
+    \resizebox{\textwidth}{!}{
+        \begin{tabular}{|c|l|c|}
+            \hline 
+            \textbf{Tugas} & \multicolumn{1}{|c|}{\textbf{Argumen}} & \textbf{Nilai} \\ \hline
+            \multirow{9}{*}{\textit{NER}} & \texttt{model} & "indolem/indobert-base-uncased" \\ \cline{2-3}
+                                          & \texttt{train\_batch\_size} & 16 \\ \cline{2-3}
+                                          & \texttt{eval\_batch\_size} & 64 \\ \cline{2-3}
+                                          & \texttt{epochs} & 100 \\ \cline{2-3}
+                                          & \texttt{learning\_rate} & 5e-5 \\ \cline{2-3}
+                                          & \texttt{max\_sequence\_length} & 128 \\ \cline{2-3}
+                                          & \texttt{text\_column\_names} & "tokens" \\ \cline{2-3}
+                                          & \texttt{label\_column\_names} & "ner\_tags" \\ \cline{2-3}
+                                          & \texttt{return\_entity\_level\_metrics} & true \\ \cline{2-3}
+                                          & \texttt{seed} & 42 \\ \hline
+            \multirow{7}{*}{\textit{Sentiment Analysis}} & \texttt{model} & "indolem/indobert-base-uncased" \\ \cline{2-3}
+                                                         & \texttt{batch\_size} & 30 \\ \cline{2-3}
+                                                         & \texttt{epochs} & 20 \\ \cline{2-3}
+                                                         & \texttt{learning\_rate} & 5e-5 \\ \cline{2-3}
+                                                         & \texttt{max\_sequence\_length} & 200 \\ \cline{2-3}
+                                                         & \texttt{seed} & 42 \\ \cline{2-3}
+                                                         & \texttt{label\_names} & "labels" \\ \hline
+            \multirow{14}{*}{\textit{Summarization}} & \texttt{model} & "lazarusnlp/indonanot5-base" \\ \cline{2-3}
+                                                    & \texttt{train\_batch\_size} & 4 \\ \cline{2-3}
+                                                    & \texttt{eval\_batch\_size} & 8 \\ \cline{2-3}
+                                                    & \texttt{epochs} & 5 \\ \cline{2-3}
+                                                    & \texttt{learning\_rate} & 1e-5 \\ \cline{2-3}
+                                                    & \texttt{max\_source\_length} & 512 \\ \cline{2-3}
+                                                    & \texttt{max\_target\_length} & 512 \\ \cline{2-3}
+                                                    & \texttt{num\_beams} & 5 \\ \cline{2-3}
+                                                    & \texttt{weight\_decay} & 0.01 \\ \cline{2-3}
+                                                    & \texttt{patience} & 5 \\ \cline{2-3}
+                                                    & \texttt{seed} & 42 \\ \cline{2-3}
+                                                    & \texttt{text\_column} & paragraphs \\ \cline{2-3}
+                                                    & \texttt{summary\_column} & summary \\ \cline{2-3}
+                                                    & \texttt{source\_prefix} & "summarize: " \\ \cline{2-3}
+                                                    & \texttt{pad\_to\_max\_length} & true \\ \cline{2-3}
+                                                    & \texttt{predict\_with\_generate} & true \\ \cline{2-3}
+                                                    & \texttt{bf16} & true \\ \hline
+        \end{tabular}
+    }
 \end{table}

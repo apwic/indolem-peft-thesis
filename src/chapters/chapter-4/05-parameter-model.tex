@@ -1,6 +1,6 @@
 \section{Evaluasi Parameter Model}
 
-Perhitungan parameter pelatihan sudah dijelaskan sebelumnya pada subbab \ref{sec:peft}. Pada subbab ini akan dijelaskan lebih lanjut terkait perhitungan pada model telah dilakukan pelatihan. Hasil dari setiap parameter pelatihan untuk setiap model dapat dilihat pada \ref{table:param-model} yang didapatkan dari pustaka Adapters. Model yang digunakan adalah IndoBERT dan IndoT5, yang berarti kedua model tersebut berbasis BERT dan T5 pada masing-masing model terkait. BERT merupakan model \textit{encoder} dengan spesifikasi $d_{hidden} = 768$ dan $intermediate_{size} = 512$. Sedangkan, T5 merupakan model \textit{encoder decoder} dengan spesifikasi yang sama dengan BERT, namun $block$ pada model T5 karena arsitekturnya yang mempunyai $encoder$ dan juga $decoder$. Pada subbab berikutnya, dilakukan perhitungan paramater pelatihan dan dibandignkan dengan hasil yang didapatkan pada tabel \ref{table:param-model}.
+Perhitungan parameter pelatihan sudah dijelaskan sebelumnya pada subbab \ref{sec:peft}. Pada subbab ini akan dijelaskan lebih lanjut terkait perhitungan pada model telah dilakukan pelatihan. Hasil dari setiap parameter pelatihan untuk setiap model dapat dilihat pada \ref{table:param-model} yang didapatkan dari pustaka Adapters. Model yang digunakan adalah IndoBERT dan IndoT5, yang berarti kedua model tersebut berbasis BERT dan T5 pada masing-masing model terkait. BERT merupakan model \textit{encoder} dengan spesifikasi $d_{hidden} = 768$ dan $intermediate_{size} = 512$. Sedangkan, T5 merupakan model \textit{encoder decoder} dengan spesifikasi yang sama dengan BERT, namun $block$ pada model T5 karena arsitekturnya yang mempunyai $encoder$ dan juga $decoder$. Pada subbab berikutnya, dilakukan perhitungan parameter pelatihan dan dibandingkan dengan hasil yang didapatkan pada tabel \ref{table:param-model}.
 
 \begin{table}[h]
     \centering
@@ -38,7 +38,7 @@ Berdasarkan \textit{hyperparameter} untuk metode PEFT pada tabel \ref{table:hype
     \label{eq:calc-param-adapter-bert}
 \end{equation}
 
-Pada rumus \ref{eq:calc-param-adapter-bert}, didapatkan bahwa paramater dari model IndoBERT dengan metode \textit{Adapter} dengan $rf=16$ adalah 894.528 yang sesuai dengan tabel \ref{table:param-model}. Lalu, perhitungan yang sama dilakukan terhadap \textit{Adapter} dengan $rf=64$. Sehingga, didapatkan hasil untuk model IndoBERT pada $rf=16$ adalah 230.544 yang juga sesuai dengan \ref{table:param-model}. 
+Pada rumus \ref{eq:calc-param-adapter-bert}, didapatkan bahwa parameter dari model IndoBERT dengan metode \textit{Adapter} dengan $rf=16$ adalah 894.528 yang sesuai dengan tabel \ref{table:param-model}. Lalu, perhitungan yang sama dilakukan terhadap \textit{Adapter} dengan $rf=64$. Sehingga, didapatkan hasil untuk model IndoBERT pada $rf=16$ adalah 230.544 yang juga sesuai dengan \ref{table:param-model}. 
 
 \begin{equation}
     \begin{aligned}
@@ -52,7 +52,7 @@ Pada rumus \ref{eq:calc-param-adapter-bert}, didapatkan bahwa paramater dari mod
     \label{eq:calc-param-adapter-t5}
 \end{equation}
 
-Dari Rumus \ref{eq:calc-param-adapter-t5} didapatkan bahwa parameter dari model IndoT5 dengan metode \textit{Adapter} dengan $rf=64$ adalah 1.789.056 yang konsisten dengan tabel \ref{table:param-model}. Nilai $attention\_head$ pada model IndoT5 adalah 2 yang merupakan 2 kali dari $attention\_head$ pada IndoBERT karena IndoT5 merupakan \textit{encoder decoder}. \textit{adapter} ditambahkan setelah \textit{feed-forward}, dengan \textit{encoder decoder}, berarti terdapat 2 kali \textit{feed-forward} pada setiap \textit{layer}. Untuk $rf=64$ didapatkan hasil 461.088 yang juga konsisten. Semua hasil parameter konsisten jauh lebih kecil dibanding dengan \textit{fine-tuning} dengan hanya menggunakan sekitar 0.2\% sampai 0.8\%.
+Dari rumus \ref{eq:calc-param-adapter-t5} didapatkan bahwa parameter dari model IndoT5 dengan metode \textit{Adapter} dengan $rf=64$ adalah 1.789.056 yang konsisten dengan tabel \ref{table:param-model}. Nilai $attention\_head$ pada model IndoT5 adalah 2 yang merupakan 2 kali dari $attention\_head$ pada IndoBERT karena IndoT5 merupakan \textit{encoder decoder}. \textit{Adapter} ditambahkan setelah \textit{feed-forward}, dengan \textit{encoder decoder}, sehingga terdapat 2 kali \textit{feed-forward} pada setiap \textit{layer}. Untuk $rf=64$ didapatkan hasil 461.088 yang juga konsisten. Semua hasil parameter konsisten jauh lebih kecil dibanding dengan \textit{fine-tuning} dengan hanya menggunakan sekitar 0.2\% sampai 0.8\%.
 
 \subsection{Perbandingan Parameter Model untuk Metode \textit{Prefix-Tuning}}
 
@@ -125,7 +125,7 @@ Didapatkan hasil dari rumus \ref{eq:calc-param-lora-t5} untuk model IndoT5 denga
 
 \subsection{Perbandingan Parameter Model untuk Metode UniPELT}
 
-Metode UniPELT tidak mempunyai konfigurasi yang bisa dimodifikasi. Konfigurasi untuk setiap metode PEFT pada UniPELT adalah \textit{Adapter} $rf=16$, \textit{Prefix-Tuning} $pl=10$, dan LoRA $r=8$. Semua metode PEFT tersebut sudah didapatkan perhitungannya pada subbab sebelumnya, kecuali untuk \textit{Prefix-Tuning} $pl=10$. Sehingga, dilakukan perhitungan dengan rumus \ref{eq:parameter-prefix-tuning} yang mengasilkan rumus \ref{eq:cacl-param-pt-pl10}.
+Metode UniPELT tidak mempunyai konfigurasi yang bisa dimodifikasi. Konfigurasi untuk setiap metode PEFT pada UniPELT adalah \textit{Adapter} $rf=16$, \textit{Prefix-Tuning} $pl=10$, dan LoRA $r=8$. Semua metode PEFT tersebut sudah didapatkan perhitungannya pada subbab sebelumnya, kecuali untuk \textit{Prefix-Tuning} $pl=10$. Sehingga, dilakukan perhitungan dengan rumus \ref{eq:parameter-prefix-tuning} yang menghasilkan rumus \ref{eq:cacl-param-pt-pl10}.
 
 \begin{equation}
     \begin{aligned}
@@ -152,7 +152,7 @@ Selanjutnya, dilakukan perhitungan pada model IndoBET dan IndoT5 untuk metode Un
     \label{eq:cacl-param-unipelt-bert}
 \end{equation}
 
-Perhitungan juga dilakukan untuk model IndoT5. Model T5 mempunyai 3 $attention\_head$ dan 2 $forward\_head$ yang berasal dari arsitektur \textit{encoder decoder}. Dari rumus \ref{eq:cacl-param-unipelt-t5}, didapatkan hasil parameter pelatihan yaitu 32.346.372 yang sesuai dengan tabel \ref{table:param-model}. Hasil parameter pelatihan model pada UniPELT konsisten dengan semua metode PEFT sebelumnya. Selain itu, jika dibandingkan dengan \textit{fine-tuning}, metode UniPELT konsisten dengan parameter yang lebih kecil dengan sekitar 10\% samapi 15\% parameter.
+Perhitungan juga dilakukan untuk model IndoT5. Model T5 mempunyai 3 $attention\_head$ dan 2 $forward\_head$ yang berasal dari arsitektur \textit{encoder decoder}. Dari rumus \ref{eq:cacl-param-unipelt-t5}, didapatkan hasil parameter pelatihan yaitu 32.346.372 yang sesuai dengan tabel \ref{table:param-model}. Hasil parameter pelatihan model pada UniPELT konsisten dengan semua metode PEFT sebelumnya. Selain itu, jika dibandingkan dengan \textit{fine-tuning}, metode UniPELT konsisten dengan parameter yang lebih kecil dengan sekitar 10\% sampai 15\% parameter.
 
 \begin{equation}
     \begin{aligned}

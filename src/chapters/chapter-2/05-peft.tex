@@ -1,11 +1,11 @@
 \section{\textit{Parameter-Efficient Fine-Tuning}}
 \label{sec:peft}
 
-\textit{Fine-tuning} dari \textit{pre-trained model} terbukti efektif untuk berbagai tugas NLP \parencite{fine_tuning}. Namun, melakukan \textit{fine-tuning} pada seluruh model termasuk tidak efektif secara parameter karena akan menghasilkan model baru untuk setiap tugas yang dilatih. Apalagi dengan jumlah parameter yang mencapai jutaan bahkan miliaran, model yang dihasilkan dari \textit{fine-tuning} akan sangat tidak efisisen. Banyak penelitian yang mengajukan teknik \textit{fine-tuning} yang efisien secara parameter, yaitu \PEFT dengan hanya melakukan \textit{tuning} pada sebagian dari parameter model.
+\textit{Fine-tuning} dari \textit{pre-trained model} terbukti efektif untuk berbagai tugas NLP \parencite{fine_tuning}. Namun, melakukan \textit{fine-tuning} pada seluruh model termasuk tidak efektif secara parameter karena akan menghasilkan model baru untuk setiap tugas yang dilatih. Apalagi dengan jumlah parameter yang mencapai jutaan bahkan miliaran, model yang dihasilkan dari \textit{fine-tuning} akan sangat tidak efisien. Banyak penelitian mengajukan teknik \textit{fine-tuning} yang efisien secara parameter, yaitu \PEFT dengan hanya melakukan \textit{tuning} pada sebagian dari parameter model.
 
 \subsection{\textit{Adapter}}
 
-\textit{Bottleneck adapter} merupakan modul \textit{adapter} dengan menggunakan arsitektur \textit{bottleneck} \parencite{adapter_houlsby}. Konsep \textit{bottleneck adapter} diajukan sebagai alternatif dari \textit{fine-tuning}, dengan tiga properti utama, yaitu kinerja yang baik, pelatihan yang sekuensial (tidak perlu akses secara simultan terhadap keseluruhan \textit{dataset}), dan hanya menambahkan sebagain kecil parameter untuk setiap tugas \parencite{adapter_houlsby}. Strategi \textit{fine-tuning} dengan \textit{adapter} dilakukan dengan memasukkan \textit{layer} tambahan pada arsitektur \textit{Transformers} seperti yang bisa dilihat pada gambar \ref{fig:adapters_houlsby_arch}. Seperti yang telah dibahas pada subbab \ref{sec:transformer}, setiap \textit{layer} pada \textit{Transformers} mempunyai dua \textit{sub-layer}, yaitu \textit{multi-head attention} dan \textit{feed-forward}. Metode \textit{bottleneck adapter} ini akan menambahkan modul \textit{adapter} ke setiap \textit{sub-layer} pada \textit{Transformers} tersebut \parencite{adapter_houlsby}.
+\textit{Bottleneck adapter} merupakan modul \textit{adapter} dengan menggunakan arsitektur \textit{bottleneck} \parencite{adapter_houlsby}. Konsep \textit{bottleneck adapter} diajukan sebagai alternatif dari \textit{fine-tuning}, dengan tiga properti utama, yaitu kinerja yang baik, pelatihan yang sekuensial (tidak perlu akses secara simultan terhadap keseluruhan \textit{dataset}), dan hanya menambahkan sebagian kecil parameter untuk setiap tugas \parencite{adapter_houlsby}. Strategi \textit{fine-tuning} dengan \textit{adapter} dilakukan dengan memasukkan \textit{layer} tambahan pada arsitektur \textit{Transformer} seperti yang bisa dilihat pada gambar \ref{fig:adapters_houlsby_arch}. Seperti yang telah dibahas pada subbab \ref{sec:transformer}, setiap \textit{layer} pada \textit{Transformer} mempunyai dua \textit{sub-layer}, yaitu \textit{multi-head attention} dan \textit{feed-forward}. Metode \textit{bottleneck adapter} ini akan menambahkan modul \textit{adapter} ke setiap \textit{sub-layer} pada \textit{Transformer} tersebut \parencite{adapter_houlsby}.
 
 \begin{figure}[h]
     \vspace{0.25cm}
@@ -15,7 +15,7 @@
     \label{fig:adapters_houlsby_arch}
 \end{figure}
 
-Arsitektur \textit{bottleneck} dari modul \textit{adapter} diajukan untuk membatasi jumlah dari parameter \parencite{adapter_houlsby}. Berdasarkan gambar \ref{fig:adapters_houlsby_arch}, \textit{adapter} melakukan proyeksi dari dimensi asli $d$ ke dimensi yang lebih kecil $m$, lalu dilanjutkan dengan fungsi nonlinear, dan dilakukan proyeksi kembali dari dimensi $m$ ke dimensi asli $d$. Sehingga, total parameter yang ditambahkan untuk setiap \textit{layer} adalah $2md$ yang berasal dari bobot pada kedua proyeksi ditambah dengan $m+d$ yang merupakan biasnya. Pada penggunaannya, dengan memakai nilai $m << d$, parameter yang digunakan adalah sekitar $0.5-8\%$ dari parameter asli model \parencite{adapter_houlsby}.
+Arsitektur \textit{bottleneck} dari modul \textit{adapter} diajukan untuk membatasi jumlah dari parameter \parencite{adapter_houlsby}. Berdasarkan gambar \ref{fig:adapters_houlsby_arch}, \textit{adapter} melakukan proyeksi dari dimensi asli $d$ ke dimensi yang lebih kecil $m$, lalu dilanjutkan dengan fungsi nonlinear, dan dilakukan proyeksi kembali dari dimensi $m$ ke dimensi asli $d$. Sehingga, total parameter yang ditambahkan untuk setiap \textit{layer} adalah $2md$ yang berasal dari bobot pada kedua proyeksi ditambah dengan $m+d$ yang merupakan biasnya. Pada penggunaannya, dengan memakai nilai $m << d$, parameter yang digunakan adalah sekitar $0,5-8\%$ dari parameter asli model \parencite{adapter_houlsby}.
 
 \begin{equation}
     reduction\_factor = \frac{d_{hidden}}{d_{bottleneck}}
@@ -24,7 +24,7 @@ Arsitektur \textit{bottleneck} dari modul \textit{adapter} diajukan untuk membat
 
 Parameter yang digunakan dibatasi dengan menggunakan $reduction\_factor$ \parencite{adapterhub}. Nilai dari $reduction\_factor$ tersebut didapat dari rasio antara dimensi asli dengan dimensi yang lebih kecil bisa dilihat pada rumus \ref{eq:reduction_factor} \parencite{adapterhub}. Nilai $d_{hidden}$ merupakan nilai dari dimensi asli $d$. Sedangkan, nilai $d_{bottleneck}$ merupakan dimensi dari \textit{bottleneck} yang lebih kecil dari dimensi aslinya.
 
-Untuk menghitung parameter yang bisa dilatih pada metode \textit{adapter}, perlu ditentukan dimensi dari \textit{bottleneck} dari rumus \ref{eq:reduction_factor}. Nilai dari dimensi $d_{bottleneck}$ akan digunakan untuk menghitung proyeksi matriks. Sehingga, perhitungan untuk parameter pelatihan dapat dilihat pada rumus \ref{eq:parameter-adapter}. Nilai $\psi$ merupakan nilai parameter pelatihan pada metode PEFT mengikuti konvensi dari \citeauthor{adapter_houlsby} yang disimplifikasi. Nilai matriks dari proyeksi tersebut adalah perkalian dari dimensinya. Lalu, pengali $block$ pada rumus \ref{eq:parameter-adapter} berasal dari banyaknya \textit{layer}. Untuk model berbasis BERT, nilai dari $block$ adalah 12 yang berasal dari jumlah \textit{feed-forward layer} pada \textit{encoder}. Sedangkan, untuk model berbasis T5, nilai dari $block$ adalah 24 karena model \textit{encoder decoder}.
+Untuk menghitung parameter yang bisa dilatih pada metode \textit{adapter}, perlu ditentukan dimensi dari \textit{bottleneck} dari rumus \ref{eq:reduction_factor}. Nilai dari dimensi $d_{bottleneck}$ akan digunakan untuk menghitung proyeksi matriks. Perhitungan untuk parameter pelatihan dapat dilihat pada rumus \ref{eq:parameter-adapter}. Nilai $\psi$ merupakan nilai parameter pelatihan pada metode PEFT mengikuti konvensi dari \citeauthor{adapter_houlsby} yang disimplifikasi. Nilai matriks dari proyeksi tersebut adalah perkalian dari dimensinya. Lalu, pengali $block$ pada rumus \ref{eq:parameter-adapter} berasal dari banyaknya \textit{layer}. Untuk model berbasis BERT, nilai dari $block$ adalah 12 yang berasal dari jumlah \textit{feed-forward layer} pada \textit{encoder}. Sedangkan, untuk model berbasis T5, nilai dari $block$ adalah 24 karena model \textit{encoder decoder}.
 
 \begin{equation}
     \begin{aligned}
@@ -35,7 +35,7 @@ Untuk menghitung parameter yang bisa dilatih pada metode \textit{adapter}, perlu
     \label{eq:parameter-adapter}
 \end{equation}
 
-Penggunaan \textit{adapter} tidak hanya dengan menambahkannya pada setiap \textit{sub-layer Transformers}. Terdapat beberapa konfigurasi yang bisa digunakan. Salah satunya adalah seperti pada gambar \ref{fig:adapters_houlsby_arch} oleh \parencite{adapter_houlsby} dengan menambahkan modul \textit{adapter} pada kedua \textit{sub-layer} (\textit{multi-head attention} dan \textit{feed-forward}). \citeauthor{adapter_pfeiffer} menggunakan \textit{adapter} hanya pada \textit{sub-layer feed-forward}. Sedangkan, \citeauthor{uvpl} menggunakan \textit{adapter} secara paralel pada \textit{layer Transformers}.
+Penggunaan \textit{adapter} tidak hanya dengan menambahkannya pada setiap \textit{sub-layer Transformer}. Terdapat beberapa konfigurasi yang bisa digunakan. Salah satunya adalah seperti pada gambar \ref{fig:adapters_houlsby_arch} oleh \parencite{adapter_houlsby} dengan menambahkan modul \textit{adapter} pada kedua \textit{sub-layer} (\textit{multi-head attention} dan \textit{feed-forward}). \citeauthor{adapter_pfeiffer} menggunakan \textit{adapter} hanya pada \textit{sub-layer feed-forward}. Sedangkan, \citeauthor{uvpl} menggunakan \textit{adapter} secara paralel pada \textit{layer Transformer}.
 
 \begin{table}[h]
     \vspace{0.25cm}
@@ -47,19 +47,19 @@ Penggunaan \textit{adapter} tidak hanya dengan menambahkannya pada setiap \texti
         \toprule
         & Total num params & Trained params / task & CoLA & SST & MRPC & STS-B & QQP & MNLI$_m$ & MNLI$_{mm}$ & QNLI & RTE & Total \\
         \midrule
-        BERT$_{LARGE}$ & $9.0\times$ & $100\%$ & $60.5$ & $94.9$ & $89.3$ & $87.6$ & $72.1$ & $86.7$ & $85.9$ & $91.1$ & $70.1$ & $80.4$ \\
-        Adapters (8-256) & $1.3\times$ & $3.6\%$ & $59.5$ & $94.0$ & $89.5$ & $86.9$ & $71.8$ & $84.9$ & $85.1$ & $90.7$ & $71.5$ & $80.0$ \\
-        Adapters (64) & $1.2\times$ & $2.1\%$ & $56.9$ & $94.2$ & $89.6$ & $87.3$ & $71.8$ & $85.3$ & $84.6$ & $91.4$ & $68.8$ & $79.6$ \\
+        BERT$_{LARGE}$ & $9,0\times$ & $100\%$ & $60,5$ & $94,9$ & $89,3$ & $87,6$ & $72,1$ & $86,7$ & $85,9$ & $91,1$ & $70,1$ & $80,4$ \\
+        Adapters (8-256) & $1,3\times$ & $3,6\%$ & $59,5$ & $94,0$ & $89,5$ & $86,9$ & $71,8$ & $84,9$ & $85,1$ & $90,7$ & $71,5$ & $80,0$ \\
+        Adapters (64) & $1,2\times$ & $2,1\%$ & $56,9$ & $94,2$ & $89,6$ & $87,3$ & $71,8$ & $85,3$ & $84,6$ & $91,4$ & $68,8$ & $79,6$ \\
         \bottomrule
     \end{tabular}}
 \end{table}
 
-Tabel \ref{table:adapter_houlsby_result} menunjukkan hasil evaluasi dari \textit{Adapter} dengan \textit{baseline} yang menggunakan \textit{fine-tuning} pada kakas evaluasi GLUE. \textit{Adapter} berhasil mendapatkan hasil rata-rata dengan nilai $80.0$, dibandingkan dengan \textit{fine-tuning} yang mendapatkan nilai $80.4$. Selain itu, untuk ukuran dari \textit{adapter} yang tetap yaitu dengan ukuran 64, mendapatkan hasil dengan nilai $79.6$. \textit{Adapter} mampu menyaingi kinerja \textit{fine-tuning} dengan hanya menggunakan $3.6\%$ parameter.
+Tabel \ref{table:adapter_houlsby_result} menunjukkan hasil evaluasi dari \textit{Adapter} dengan \textit{baseline} yang menggunakan \textit{fine-tuning} pada kakas evaluasi GLUE. \textit{Adapter} berhasil mendapatkan hasil rata-rata dengan nilai $80,0$, dibandingkan dengan \textit{fine-tuning} yang mendapatkan nilai $80,4$. Selain itu, untuk ukuran dari \textit{adapter} yang tetap yaitu dengan ukuran 64, didapatkan hasil dengan nilai $79,6$. Berdasarkan paparan tersebut, didapatkan bahwa \textit{Adapter} mampu menyaingi kinerja \textit{fine-tuning} dengan hanya menggunakan $3,6\%$ parameter. 
 
 \subsection{\textit{Prefix-Tuning}}
 \label{sec:prefix-tuning}
 
-\textit{Prefix-Tuning} merupakan salah satu metode PEFT yang menjadi alternatif dari metode \textit{fine-tuning} yang menggunakan vektor kontinu (disebut dengan \textit{prefix}) \parencite{prefix_tuning}. Metode ini mengambil inspirasi dari \textit{prompting}, memperbolehkan token-token berikutnya untuk memperhatikan \textit{prefix} tersebut seolah-seolah \textit{prefix} tersebut adalah \textit{virtual token} \parencite{prefix_tuning}. Mirip dengan \textit{Adapter}, \textit{prefix-tuning} hanya perlu menyimpan sedikit parameter tambahan untuk suatu tugas dengan melakukan \textit{freeze} pada parameter asli model dan hanya mengubah parameter dari \textit{prefix} tersebut. \textit{Prefix-Tuning} yang diajukan oleh \citeauthor{prefix_tuning} dibuat untuk tugas \textit{generation}, sehingga pada impelementasi yang dilaukan oleh \citeauthor{adapters} perlu adanya adaptasi untuk tugas evaluasi secara umum. Pada konteks tugas akhir ini, digunakan \textit{Prefix-Tuning} dengan adaptasi dari \citeauthor{adapters} tersebut. 
+\textit{Prefix-Tuning} merupakan salah satu metode PEFT yang menjadi alternatif dari metode \textit{fine-tuning} yang menggunakan vektor kontinu (disebut dengan \textit{prefix}) \parencite{prefix_tuning}. Metode ini mengambil inspirasi dari \textit{prompting}, memperbolehkan token-token berikutnya untuk memperhatikan \textit{prefix} tersebut seolah-olah \textit{prefix} tersebut adalah \textit{virtual token} \parencite{prefix_tuning}. Mirip dengan \textit{Adapter}, \textit{prefix-tuning} hanya perlu menyimpan sedikit parameter tambahan untuk suatu tugas dengan melakukan \textit{freeze} pada parameter asli model dan hanya mengubah parameter dari \textit{prefix} tersebut. \textit{Prefix-Tuning} yang diajukan oleh \citeauthor{prefix_tuning} dibuat untuk tugas \textit{generation}, sehingga pada implementasi yang dilakukan oleh \citeauthor{adapters}, diperlukan adanya adaptasi untuk tugas evaluasi secara umum. Pada konteks tugas akhir ini, digunakan \textit{Prefix-Tuning} dengan adaptasi dari \citeauthor{adapters} tersebut. 
 
 \begin{figure}[h]
     \vspace{0.25cm}
@@ -69,7 +69,7 @@ Tabel \ref{table:adapter_houlsby_result} menunjukkan hasil evaluasi dari \textit
     \label{fig:prefix_tuning_example}
 \end{figure}
 
-Dengan intuisi yang didapatkan dari penggunaan \textit{prompting}, penambahan konteks dapat mengarahkan model tanpa mengubah parameter \parencite{prefix_tuning}. \textit{Prefix-Tuning} menambahkan \textit{prefix} pada kedua \textit{encoder} dan \textit{decoder} untuk mendapatkan $z = [PREFIX;x;PREFIX';y]$ seperti yang bisa dilihat pada gambar \ref{fig:prefix_tuning_example}. $P_{idx}$ merupakan indeks dari \textit{prefix} tersebut. Matriks yang bisa dilatih, diinisialisasi sebagai matriks $P_\theta$ dengan $\theta$ sebagai parameternya. Dimensi dari matriks $P_\theta$ adalah panjang dari $P_{idx}$ dikalikan dengan besar dimensi \textit{activation layer}-nya yaitu $h$. Secara langsung melakukan optimisasi terhadap $P_\theta$ itu tidak stabil dan menghasilkan penurunan terhadap kinerja \parencite{prefix_tuning}. Sehingga, matriks $P_\theta$ diperamaterisasi sebagai $P_\theta = MLP_\theta(P'_\theta)$ dengan matriks dimensi lebih kecil ($P'_\theta$) dimasukkan ke dalam \textit{feed forward} ($MLP_\theta$).
+Dengan intuisi yang didapatkan dari penggunaan \textit{prompting}, penambahan konteks dapat mengarahkan model tanpa mengubah parameter \parencite{prefix_tuning}. \textit{Prefix-Tuning} menambahkan \textit{prefix} pada kedua \textit{encoder} dan \textit{decoder} untuk mendapatkan $z = [PREFIX;x;PREFIX';y]$ seperti yang bisa dilihat pada gambar \ref{fig:prefix_tuning_example}. $P_{idx}$ merupakan indeks dari \textit{prefix} tersebut. Matriks yang bisa dilatih, diinisialisasi sebagai matriks $P_\theta$ dengan $\theta$ sebagai parameternya. Dimensi dari matriks $P_\theta$ adalah panjang dari $P_{idx}$ dikalikan dengan besar dimensi \textit{activation layer}-nya yaitu $h$. Secara langsung melakukan optimasi terhadap $P_\theta$ itu tidak stabil dan menghasilkan penurunan terhadap kinerja \parencite{prefix_tuning}. Sehingga, matriks $P_\theta$ diparameterisasi sebagai $P_\theta = MLP_\theta(P'_\theta)$ dengan matriks dimensi lebih kecil ($P'_\theta$) dimasukkan ke dalam \textit{feed forward} ($MLP_\theta$).
 
 \begin{figure}[h]
     \vspace{0.25cm}
@@ -79,9 +79,9 @@ Dengan intuisi yang didapatkan dari penggunaan \textit{prompting}, penambahan ko
     \label{fig:prefix_tuning_arch}
 \end{figure}
 
-Pada gambar \ref{fig:prefix_tuning_arch} ditunjukkan arsitektur dari \textit{Prefix-Tuning} dengan menambahkan \textit{prefix} pada \textit{multi-headattention layer}. \textit{Prefix} ditambahkan pada bagian \textit{key} dan \textit{value} pada \textit{attention head}, menjadi $P^K$ dan $P^V$. Sehingga, rumus \ref{eq:attention} akan menggunakan $[P^K, K]$ dan $[P^V, V]$ menjadi $Attention(Q, [P^K, K], [P^V, V])$ \parencite{adapterhub}. Selain itu, panjang dari \textit{prefix} dapat divariasikan berdasarkan pada nilai $prefix\_length$-nya. 
+Pada gambar \ref{fig:prefix_tuning_arch} ditunjukkan arsitektur dari \textit{Prefix-Tuning} dengan menambahkan \textit{prefix} pada \textit{multi-head attention layer}. \textit{Prefix} ditambahkan pada bagian \textit{key} dan \textit{value} pada \textit{attention head}, menjadi $P^K$ dan $P^V$. Sehingga, rumus \ref{eq:attention} akan menggunakan $[P^K, K]$ dan $[P^V, V]$ menjadi $Attention(Q, [P^K, K], [P^V, V])$ \parencite{adapterhub}. Selain itu, panjang dari \textit{prefix} dapat divariasikan berdasarkan pada nilai $prefix\_length$-nya. 
 
-Parameter pelatihan pada metode \textit{Prefix-Tuning} bergantung pada nilai $prefix\_length$. Untuk menghitung total dari parameter pelatihan, metode \textit{Prefix-Tuning} dibagi menjadi dua komponen, yaitu bagian \textit{embedding} dan \textit{control trans}-nya \parencite{adapters}. Bagian \textit{embedding} ini berisi perkalian antara $prefix\_length$ dengan $d_{hidden}$. Sedangkan, bagian \textit{control trans} berisi pemrosesan dari \textit{prefix} dengan \textit{feed-forward}. Perhitungannya bisa dilihat pada rumus \ref{eq:parameter-prefix-tuning}. Rumus untuk $Linear1$ tidak dikalikan dengan $block$ karena digunakan untuk memproses luaran dari bagian \textit{embedding}. Sedangkan, $Linear2$ dikalikan dengan $2\times{block}$ karena \textit{prefix} terdapat pada bagian \textit{key} dan \textit{value} dari \textit{transformers}. Di akhir, nilai total dari setiap komponen dikalikan sebanyak \textit{attention head} pada model.
+Parameter pelatihan pada metode \textit{Prefix-Tuning} bergantung pada nilai $prefix\_length$. Untuk menghitung total dari parameter pelatihan, metode \textit{Prefix-Tuning} dibagi menjadi dua komponen, yaitu bagian \textit{embedding} dan \textit{control trans}-nya \parencite{adapters}. Bagian \textit{embedding} ini berisi perkalian antara $prefix\_length$ dengan $d_{hidden}$. Sedangkan, bagian \textit{control trans} berisi pemrosesan dari \textit{prefix} dengan \textit{feed-forward}. Perhitungannya bisa dilihat pada rumus \ref{eq:parameter-prefix-tuning}. Rumus untuk $Linear1$ tidak dikalikan dengan $block$ karena digunakan untuk memproses luaran dari bagian \textit{embedding}. Sedangkan, $Linear2$ dikalikan dengan $2\times{block}$ karena \textit{prefix} terdapat pada bagian \textit{key} dan \textit{value} dari \textit{Transformer}. Di akhir, nilai total dari setiap komponen dikalikan sebanyak \textit{attention head} pada model.
 
 \begin{equation}
     \begin{aligned}
@@ -102,18 +102,18 @@ Parameter pelatihan pada metode \textit{Prefix-Tuning} bergantung pada nilai $pr
         \toprule
         Method & R-1 & R-2 & R-L \\
         \midrule
-        FINE-TUNE & $45.14$ & $22.27$ & $37.25$ \\
-        PREFIX($2\%$) & $43.80$ & $20.93$ & $36.05$ \\
-        PREFIX($0.1\%$) & $42.92$ & $20.03$ & $35.05$ \\
+        FINE-TUNE & $45,14$ & $22,27$ & $37,25$ \\
+        PREFIX($2\%$) & $43,80$ & $20,93$ & $36,05$ \\
+        PREFIX($0,1\%$) & $42,92$ & $20,03$ & $35,05$ \\
         \bottomrule
     \end{tabular}
 \end{table}
 
-Pada penelitian yang dilakukan oleh \citeauthor{prefix_tuning}, terdapat dua tugas yang dievaluasi yaitu \textit{table-to-text generation} dan \textit{summarization}. Seperti yang bisa dilihat pada tabel \ref{table:prefix_tuning_result}, dengan hanya $2\%$ parameter dibanding parameter aslinya, \textit{Prefix-Tuning} berhasil mendapatkan kinerja yang sedikit lebih buruk dibanding \textit{fine-tuning} ($36.05$ dibanding $37.25$ pada R-L) \parencite{prefix_tuning}. Hasil ini sedikit berbeda dibanding pada tugas \textit{table-to-text generation} yang mendapatkan hasil yang menyaingi \textit{fine-tuning}. Perbedaan antara kedua tugas tersebut adalah bahwa masukan dari artikel pada XSUM lebih banyak sekitar 17 kali dibanding pada \textit{dataset table-to-text}, serta tugas \textit{summarization} lebih kompleks dibanding \textit{table-to-text generation} karena perlu pemahaman terhadap tulisandan mengidentifikasi topik penting dari sebuah artikel \parencite{prefix_tuning}.
+Pada penelitian yang dilakukan oleh \citeauthor{prefix_tuning}, terdapat dua tugas yang dievaluasi yaitu \textit{table-to-text generation} dan \textit{summarization}. Seperti yang bisa dilihat pada tabel \ref{table:prefix_tuning_result}, dengan hanya $2\%$ parameter dibanding parameter aslinya, \textit{Prefix-Tuning} berhasil mendapatkan kinerja yang sedikit lebih buruk dibanding \textit{fine-tuning} ($36,05$ dibanding $37,25$ pada R-L) \parencite{prefix_tuning}. Hasil ini sedikit berbeda dibanding pada tugas \textit{table-to-text generation} yang mendapatkan hasil yang menyaingi \textit{fine-tuning}. Perbedaan antara kedua tugas tersebut adalah bahwa masukan dari artikel pada XSUM lebih banyak sekitar 17 kali dibanding pada \textit{dataset table-to-text}, serta tugas \textit{summarization} lebih kompleks dibanding \textit{table-to-text generation} karena perlu pemahaman terhadap tulisan dan mengidentifikasi topik penting dari sebuah artikel \parencite{prefix_tuning}.
 
 \subsection{\textit{Low Rank Adaptation} (LoRA)}
 
-\textit{Low Rank Adaptation} atau biasa disebut sebagai LoRA merupakan salah satu metode PEFT. Berbeda dengan metode PEFT yang dibahas sebelumnya pada subbab sebelumnya, penambahan \textit{adapter} seperti yang dilakukan oleh \citeauthor{adapter_houlsby} akan menambahkan waktu inferensi \parencite{lora}. Selain itu, melakukan optimisasi pada input dengan menggunakan "\textit{prompt}" seperti yang dilakukan oleh \citeauthor{prefix_tuning} itu sulit untuk dioptimasi dan kinerjanya tidak selalu meningkat \parencite{lora}. Dengan menambahkan panjang dari sekuens masukan akan mengurangi sekuens yang seharusnya bisa digunakan untuk suatu tugas \parencite{lora}. Sehingga, metode tersebut sering kali gagal dalam menyaingi kinerja dari \textit{fine-tuning}, bahkan memerlukan adanya \textit{tradeoff} antara kinerja dengan efisiensi \parencite{lora}.
+\textit{Low Rank Adaptation} atau biasa disebut sebagai LoRA merupakan salah satu metode PEFT. Berbeda dengan metode PEFT yang dibahas pada subbab sebelumnya, penambahan \textit{adapter} seperti yang dilakukan oleh \citeauthor{adapter_houlsby} akan menambahkan waktu inferensi \parencite{lora}. Selain itu, melakukan optimasi pada masukan dengan menggunakan "\textit{prompt}" seperti yang dilakukan oleh \citeauthor{prefix_tuning} membuatnya sulit untuk dioptimasi dan kinerjanya juga tidak selalu meningkat \parencite{lora}. Penambahan panjang dari sekuens masukan akan mengurangi sekuens yang seharusnya bisa digunakan untuk suatu tugas \parencite{lora}. Sehingga, metode tersebut sering kali gagal dalam menyaingi kinerja dari \textit{fine-tuning}, bahkan memerlukan adanya \textit{trade off} antara kinerja dengan efisiensi \parencite{lora}.
 
 \begin{figure}[h]
     \vspace{0.25cm}
@@ -123,7 +123,7 @@ Pada penelitian yang dilakukan oleh \citeauthor{prefix_tuning}, terdapat dua tug
     \label{fig:lora_arch}
 \end{figure}
 
-LoRA menggunakan pendekatan bahwa parameter dari model yang dilatih sebenarnya berada pada dimensi instrinsik yang rendah dan masih dapat belajar secara efisien pada dimensi yang lebih rendah tersebut \parencite{lora}. Untuk matriks beban $W_0$ dari sebuah \textit{pre-trained model} dengan dimensi $d\times{k}$, dekomposisi dengan \textit{rank} $r$ (\textit{low-rank decomposition}) dapat direpresentasikan sebagai $W_0 + \Delta{W} = W_0 + BA$, dengan dimensi $B$ adalah $d\times{r}$ dan dimensi $A$ adalah $r\times{k}$, dan \textit{rank} $r << min(d,k)$ \parencite{lora}. Nilai dari $\Delta(W)$ disesuaikan dengan $\frac{\alpha}{r}$, dengan nilai $\alpha$ adalah konstanta \parencite{lora}. Sehingga, rumus untuk melakukan perhitungan pada \textit{hidden layer} dapat dilihat pada rumus \ref{eq:lora-pass}.
+LoRA menggunakan pendekatan bahwa parameter dari model yang dilatih sebenarnya berada pada dimensi intrinsik yang rendah dan masih dapat belajar secara efisien pada dimensi yang lebih rendah tersebut \parencite{lora}. Untuk matriks beban $W_0$ dari sebuah \textit{pre-trained model} dengan dimensi $d\times{k}$, dekomposisi dengan \textit{rank} $r$ (\textit{low-rank decomposition}) dapat direpresentasikan sebagai $W_0 + \Delta{W} = W_0 + BA$, dengan dimensi $B$ adalah $d\times{r}$ dan dimensi $A$ adalah $r\times{k}$, dan \textit{rank} $r << min(d,k)$ \parencite{lora}. Nilai dari $\Delta(W)$ disesuaikan dengan $\frac{\alpha}{r}$, dengan nilai $\alpha$ adalah konstanta \parencite{lora}. Sehingga, rumus untuk melakukan perhitungan pada \textit{hidden layer} dapat dilihat pada rumus \ref{eq:lora-pass}.
 
 \begin{equation}
     h = W_{0}x + \frac{\alpha}{r}\Delta{W_x} = W_{0}x + \frac{\alpha}{r}BAx
@@ -132,7 +132,7 @@ LoRA menggunakan pendekatan bahwa parameter dari model yang dilatih sebenarnya b
 
 Bisa dilihat pada gambar \ref{fig:lora_arch}, LoRA menggunakan matriks dengan rank yang lebih rendah pada matriks $A$ dan matriks $B$. Matriks $A$ diinisialisasi dengan gaussian, sedangkan matriks $B$ diinisialisasi dengan 0. Sehingga, pada awal pelatihan nilai dari $\Delta{W}=BA$ adalah 0. Ketika proses pelatihan, matriks beban $W_0$ dilakukan \textit{freeze}, sedangkan mariks $B$ dan $A$ adalah parameter yang dilatih \parencite{lora}.
 
-LoRA menggunakan $rank$ sebagai besar dari matriks dekomposisi yang dibuatnya. Perhitungan untuk parameter pelatihan untuk LoRA tergantung dari $d_{hidden}$ dan $rank$-nya. Bisa dilihat pada rumus \ref{eq:parameter-lora}, Digunakan pengali $2 \times block$ karena LoRA ditambahkan pada bagian \textit{query} dan \textit{value} berdasarkan implementasi dari \citeauthor{adapters}.
+LoRA menggunakan $rank$ sebagai besar dari matriks dekomposisi yang dibuatnya. Perhitungan untuk parameter pelatihan untuk LoRA tergantung dari $d_{hidden}$ dan $rank$-nya. Bisa dilihat pada rumus \ref{eq:parameter-lora}, digunakan pengali $2 \times block$ karena LoRA ditambahkan pada bagian \textit{query} dan \textit{value} berdasarkan implementasi dari \citeauthor{adapters}.
 
 \begin{equation}
     \begin{aligned}
@@ -151,14 +151,14 @@ LoRA menggunakan $rank$ sebagai besar dari matriks dekomposisi yang dibuatnya. P
         \multirow{2}{*}{Method} & \#Trainable & WikiSQL & MNLI-m & \multicolumn{3}{c}{SAMSum} \\
          & Parameters & \textbf{Acc. (\%)} & \textbf{Acc. (\%)} & \textbf{R1} & \textbf{R2} & \textbf{RL} \\
         \midrule
-        FT & 175,255.8M & \textbf{73.8} & 89.5 & 52.0 & 28.0 & 44.5 \\
-        BitFit & 14.2M & 71.3 & 91.0 & 51.3 & 27.4 & 44.5 \\
-        PreEmbed & 3.2M & 63.1 & 88.6 & 48.4 & 24.2 & 40.5 \\
-        PreLayer & 20.2M & 70.1 & 89.5 & 50.8 & 27.3 & 44.5 \\
-        Adapter\textsubscript{H}  & 7.1M & 71.9 & 89.8 & 53.0 & 28.9 & 44.9 \\
-        Adapter\textsubscript{L}  & 40.1M & 73.2 & \textbf{91.5} & 53.2 & 29.0 & 45.1 \\
-        LoRA  & 4.7M & 73.4 & 91.7 & \textbf{53.8} & \textbf{29.8} & \textbf{45.9} \\
-        LoRA  & 37.7M & \textbf{74.0} & 91.6 & 53.4 & 29.2 & 45.1 \\
+        FT & 175.255,8M & \textbf{73,8} & 89,5 & 52,0 & 28,0 & 44,5 \\
+        BitFit & 14,2M & 71,3 & 91,0 & 51,3 & 27,4 & 44,5 \\
+        PreEmbed & 3,2M & 63,1 & 88,6 & 48,4 & 24,2 & 40,5 \\
+        PreLayer & 20,2M & 70,1 & 89,5 & 50,8 & 27,3 & 44,5 \\
+        Adapter\textsubscript{H}  & 7,1M & 71,9 & 89,8 & 53,0 & 28,9 & 44,9 \\
+        Adapter\textsubscript{L}  & 40,1M & 73,2 & \textbf{91,5} & 53,2 & 29,0 & 45,1 \\
+        LoRA  & 4,7M & 73,4 & 91,7 & \textbf{53,8} & \textbf{29,8} & \textbf{45,9} \\
+        LoRA  & 37,7M & \textbf{74,0} & 91,6 & 53,4 & 29,2 & 45,1 \\
         \bottomrule
     \end{tabular}
 \end{table}
@@ -207,14 +207,14 @@ Perhitungan parameter untuk UniPELT merupakan total dari metode sebelumnya. Namu
             \toprule
             Method & SST-2 & MRPC & CoLA & RTE & QNLI & STS-B & MNLI & QQP & Avg. \\
             \midrule
-            Fine-tuning & 91.63 & 90.94 & 62.08 & 66.43 & 89.95 & \textbf{89.76} & 83.23 & \textbf{87.35} & 82.67 \\
-            Adapter & \textbf{91.86} & 89.86 & 61.51 & 71.84 & 90.55 & 88.63 & 83.14 & 86.78 & 83.02 \\
-            Prefix-tuning & 90.94 & \textbf{91.29} & 55.37 & \textbf{76.90} & 90.39 & 87.19 & 81.83 & 82.30 & 82.07 \\
-            LoRA & 91.51 & 90.03 & 60.47 & 71.48 & 90.73 & 85.65 & 85.61 & 85.98 & 82.20 \\
+            Fine-tuning & 91,63 & 90,94 & 62,08 & 66,43 & 89,95 & \textbf{89,76} & 83,23 & \textbf{87,35} & 82,67 \\
+            Adapter & \textbf{91,86} & 89,86 & 61,51 & 71,84 & 90,55 & 88,63 & 83,14 & 86,78 & 83,02 \\
+            Prefix-tuning & 90,94 & \textbf{91,29} & 55,37 & \textbf{76,90} & 90,39 & 87,19 & 81,83 & 82,30 & 82,07 \\
+            LoRA & 91,51 & 90,03 & 60,47 & 71,48 & 90,73 & 85,65 & 85,61 & 85,98 & 82,20 \\
             \midrule
-            UNIPELT (AP) & \textbf{91.86} & 90.28 & 61.51 & 71.84 & \textbf{90.77} & \textbf{88.76} & 83.12 & 86.78 & 83.02 \\
-            -NoGate & 91.74 & 90.18 & 58.63 & 71.12 & 90.38 & 88.76 & 81.54 & 85.83 & 82.23 \\
-            UNIPELT (APL) & 91.51 & 90.94 & 61.53 & 73.65 & 90.50 & 88.93 & \textbf{83.89} & 87.12 & \textbf{83.50} \\
+            UNIPELT (AP) & \textbf{91,86} & 90,28 & 61,51 & 71,84 & \textbf{90,77} & \textbf{88,76} & 83,12 & 86,78 & 83,02 \\
+            -NoGate & 91,74 & 90,18 & 58,63 & 71,12 & 90,38 & 88,76 & 81,54 & 85,83 & 82,23 \\
+            UNIPELT (APL) & 91,51 & 90,94 & 61,53 & 73,65 & 90,50 & 88,93 & \textbf{83,89} & 87,12 & \textbf{83,50} \\
             \bottomrule
         \end{tabular}
     }
@@ -232,14 +232,14 @@ Pada tabel \ref{table:unipelt_result} merupakan hasil evaluasi dari UniPELT pada
         \textbf{Method} & \textbf{\#Param.} & \textbf{Time$_T$} & \textbf{Time$_I$} \\ 
         \midrule
         Fine-tuning & 110M (100\%) & 100\% & 100\% \\ 
-        BitFit & 103K (0.09\%) & 65\% & 102\% \\ 
-        Prefix-tuning & 184K (0.17\%) & 56\% & 114\% \\ 
-        LoRA & 295K (0.27\%) & 53\% & 105\% \\ 
-        Adapter & 895K (0.81\%) & 55\% & 107\% \\ 
-        UNIPELT (AP) & 1.1M (0.99\%) & 55\% & 118\% \\ 
-        UNIPELT (APL) & 1.4M (1.26\%) & 67\% & 127\% \\ 
+        BitFit & 103K (0,09\%) & 65\% & 102\% \\ 
+        Prefix-tuning & 184K (0,17\%) & 56\% & 114\% \\ 
+        LoRA & 295K (0,27\%) & 53\% & 105\% \\ 
+        Adapter & 895K (0,81\%) & 55\% & 107\% \\ 
+        UNIPELT (AP) & 1,1M (0,99\%) & 55\% & 118\% \\ 
+        UNIPELT (APL) & 1,4M (1,26\%) & 67\% & 127\% \\ 
         \bottomrule
     \end{tabular}
 \end{table}
 
-Pada penelitian yang dilakukan oleh \citeauthor{unipelt}, dilakukan juga evaluasi terhadap waktu pelatihan dan waktu inferensi antara masing-masing metode PEFT, seperti yang bisa dilihat \ref{table:runtime-peft}. Waktu pelatihan yang didapatkan dengan metode PEFT lebih cepat dibandingkan dengan \textit{fine-tuning} karena parameter yang digunakan untuk pelatihan juga lebih sedikit \parencite{unipelt}. Untuk waktu inferensi, semuanya menjadi lebih besar dibandingkan dengan \textit{fine-tuning} karena metode PEFT membutuhkan \textit{floating-point operations per second} (FLOPS) yang lebih besar \parencite{unipelt}.
+Pada penelitian yang dilakukan oleh \citeauthor{unipelt}, dilakukan juga evaluasi terhadap waktu pelatihan dan waktu inferensi antara masing-masing metode PEFT, seperti yang bisa dilihat pada tabel \ref{table:runtime-peft}. Waktu pelatihan yang didapatkan dengan metode PEFT lebih cepat dibandingkan dengan \textit{fine-tuning} karena parameter yang digunakan untuk pelatihan juga lebih sedikit \parencite{unipelt}. Untuk waktu inferensi, semuanya menjadi lebih besar dibandingkan dengan \textit{fine-tuning} karena metode PEFT membutuhkan \textit{floating-point operations per second} (FLOPS) yang lebih besar \parencite{unipelt}.
