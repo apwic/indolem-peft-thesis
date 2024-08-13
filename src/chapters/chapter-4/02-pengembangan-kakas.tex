@@ -1,7 +1,7 @@
 \section{Pengembangan Ulang Kakas IndoLEM}
 \label{sec:pengembangan-kakas}
 
-Pengembangan ulang kakas IndoLEM ini diperlukan untuk memperbarui dan memperbaiki infrastruktur dari kakas tersebut. Pengembangan ini dilakukan pada lingkungan lokal pribadi. Sedangkan, untuk keperluan eksperimen, dilakukan pada lingkungan \textit{cloud} seperti yang sudah disebutkan pada subbab \ref{sec:lingkungan-eksperimen}.
+Pengembangan ulang IndoLEM ini diperlukan untuk memperbarui dan memperbaiki infrastruktur dari kakas tersebut. Pengembangan ini dilakukan pada lingkungan lokal pribadi. Sedangkan, untuk keperluan eksperimen, dilakukan pada lingkungan \textit{cloud} seperti yang sudah disebutkan pada subbab \ref{sec:lingkungan-eksperimen}.
 
 \subsection{Persiapan Lingkungan Pengembangan}
 
@@ -76,7 +76,7 @@ Praproses \textit{dataset} diperlukan agar model dapat memproses \textit{dataset
 
 \subsubsection{Praproses Data NER}
 
-Tugas evaluasi NER merupakan jenis tugas \textit{classification} pada level token yang berarti setiap token  diklasifikasikan dengan label tertentu. Pada kakas IndoLEM, untuk tugas evaluasi NER terdapat dua jenis \textit{dataset}, yaitu NERUI dan NERUGM. Kedua \textit{dataset} tersebut mempunyai label yang berbeda berikut merupakan label pada setiap \textit{dataset}-nya dapat dilihat pada tabel \ref{table:label-ner}.
+Tugas evaluasi NER merupakan jenis tugas \textit{classification} pada level token yang berarti setiap token  diklasifikasikan dengan label tertentu. Pada IndoLEM, untuk tugas evaluasi NER terdapat dua jenis \textit{dataset}, yaitu NERUI dan NERUGM. Kedua \textit{dataset} tersebut mempunyai label yang berbeda berikut merupakan label pada setiap \textit{dataset}-nya dapat dilihat pada tabel \ref{table:label-ner}.
 
 Label tersebut diperlukan untuk melakukan \textit{mapping} antara id dengan labelnya yang  digunakan pada konfigurasi model. \textit{Padding} juga dilakukan berdasarkan panjang sekuens maksimum yang didefinisikan melaluai argumen \textit{data training}. Selanjutnya, tokenisasi  dilakukan terhadap \textit{dataset} tersebut. Tokenisasi dilakukan dengan menggunakan modul Tokenizer pada pustaka Transformers. Fungsi tokenisasi mengabaikan token spesial [CLS] dan [SEP] yang muncul dari hasil tokenisasi model berbasi BERT. Token spesial tersebut diubah menjadi -100 agar bisa diabaikan dari perhitungan metrik evaluasinya. Sehingga, hanya token yang berkorespondensi terhadap sebuah label saja yang dapat dievaluasi.
 

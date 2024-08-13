@@ -9,7 +9,7 @@ Evaluasi dilakukan untuk model IndoBERT dengan melakukan 8 eksperimen (\textit{f
 
 \begin{table}[h]
     \centering
-    \caption{Waktu pelatihan tugas NER}
+    \caption{Waktu pelatihan rata-rata tugas NER}
     \label{table:runtime-ner}
     \begin{tabular}{l|r|r}
         \toprule
@@ -64,11 +64,11 @@ Hasil yang didapatkan dengan menggunakan konfigurasi metode PEFT terbaik dan diu
 \subsection{Hasil Evaluasi \textit{Sentiment Analysis}}
 \label{sec:sentiment-evaluation}
 
-Evaluasi dilakukan untuk model IndoBERT dengan melakukan 8 eksperimen (\textit{fine-tuning} dan PEFT beserta variasinya) pada 5-\textit{fold dataset} untuk tugas \textit{sentiment analysis}. Berbeda dengan tugas NER yang dibahas pada subbab \ref{sec:ner-evaluation}, tugas \textit{sentiment analysis} hanya mempunyai satu \textit{dataset} yang tersedia pada kakas evaluasi IndoLEM. Hasil evaluasi yang didapatkan merupakan waktu pelatihan dan juga skor F1 dari data evaluasi, hasil tersebut bisa dilihat pada tabel \ref{table:runtime-sentiment} dan gambar \ref{fig:ner-result}. Sama seperti subbab \ref{sec:ner-evaluation}, skor F1 dan waktu pelatihan merupakan hasil dari rata-rata pada seluruh 5-\textit{fold}.
+Evaluasi dilakukan untuk model IndoBERT dengan melakukan 8 eksperimen (\textit{fine-tuning} dan PEFT beserta variasinya) pada 5-\textit{fold dataset} untuk tugas \textit{sentiment analysis}. Berbeda dengan tugas NER yang dibahas pada subbab \ref{sec:ner-evaluation}, tugas \textit{sentiment analysis} hanya mempunyai satu \textit{dataset} yang tersedia pada tugas evaluasi IndoLEM. Hasil evaluasi yang didapatkan merupakan waktu pelatihan dan juga skor F1 dari data evaluasi, hasil tersebut bisa dilihat pada tabel \ref{table:runtime-sentiment} dan gambar \ref{fig:ner-result}. Sama seperti subbab \ref{sec:ner-evaluation}, skor F1 dan waktu pelatihan merupakan hasil dari rata-rata pada seluruh 5-\textit{fold}.
 
 \begin{table}[h]
     \centering
-    \caption{Waktu pelatihan tugas \textit{sentiment analysis}}
+    \caption{Waktu pelatihan rata-rata tugas \textit{sentiment analysis}}
     \label{table:runtime-sentiment}
     \begin{tabular}{l|rr}
         \toprule
@@ -120,11 +120,11 @@ Tabel \ref{table:sentiment-result-desc} menunjukkan skor F1 yang terurut secara 
 
 \subsection{Hasil Evaluasi \textit{Summarization}}
 
-Evaluasi dilakukan untuk model IndoT5 dengan melakukan 8 eksperimen (\textit{fine-tuning} dan PEFT beserta variasinya) pada \textit{dataset} IndoSum yang tersedia pada kakas IndoLEM. Meskipun \textit{dataset} untuk tugas \textit{summarization} menggunakan 5-\text{fold cross validation}, tetapi pada eksperimen ini tidak dilakukan untuk 5\textit{-fold}, hanya dilakukan pada \textit{fold} pertama saja karena keterbatasan sumber daya. Hasil evaluasi yang didapatkan berupa waktu pelatihan dan skor ROUGE (R1, R2, dan RL) dari data evaluasi, hasil tersebut bisa dilihat pada tabel \ref{table:runtime-summarization-indosum} dan gambar \ref{fig:summarization-result-indosum}.
+Evaluasi dilakukan untuk model IndoT5 dengan melakukan 8 eksperimen (\textit{fine-tuning} dan PEFT beserta variasinya) pada \textit{dataset} IndoSum yang tersedia pada IndoLEM. Meskipun \textit{dataset} untuk tugas \textit{summarization} menggunakan 5-\text{fold cross validation}, tetapi pada eksperimen ini tidak dilakukan untuk 5\textit{-fold}, hanya dilakukan pada \textit{fold} pertama saja karena keterbatasan sumber daya. Hasil evaluasi yang didapatkan berupa waktu pelatihan dan skor ROUGE (R1, R2, dan RL) dari data evaluasi, hasil tersebut bisa dilihat pada tabel \ref{table:runtime-summarization-indosum} dan gambar \ref{fig:summarization-result-indosum}.
 
 \begin{table}[h]
     \centering
-    \caption{Waktu pelatihan tugas \textit{summarization} IndoSum}
+    \caption{Waktu pelatihan rata-rata tugas \textit{summarization} IndoSum}
     \label{table:runtime-summarization-indosum}
     \begin{tabular}{l|r}
         \toprule
@@ -148,7 +148,7 @@ Untuk memastikan perilaku ini konsisten terhadap tugas \textit{summarization}, d
 
 \begin{table}[h]
     \centering
-    \caption{Waktu pelatihan tugas \textit{summarization} Liputan6}
+    \caption{Waktu pelatihan rata-rata tugas \textit{summarization} Liputan6}
     \label{table:runtime-summarization-liputan6}
     \begin{tabular}{l|r|r}
         \toprule

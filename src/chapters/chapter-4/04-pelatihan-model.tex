@@ -39,7 +39,7 @@ Pelatihan model dilakukan pada lingkungan eksperimen yang telah disebutkan pada 
     \end{forest}
 \end{figure}
 
-Pada gambar \ref{fig:file-eksperimen}, dengan melakukan pemanggilan pada {\ttfamily run\_sentiment.sh}  menjalankan semua eksperimen yang ada pada folder {\ttfamily script}. Setiap \textit{script}  menjalankan eksperimen sesuai dari konfigurasi yang telah ditentukan pada \textit{script} tersebut. Konfigurasi yang ditentukan tersebut  diterima sebagai argumen pada kakas IndoLEM. Untuk setiap \textit{hyperparameter} yang digunakan untuk pelatihan dapat dilihat pada lampiran \ref{appendix:hyperparameter-train}.
+Pada gambar \ref{fig:file-eksperimen}, dengan melakukan pemanggilan pada {\ttfamily run\_sentiment.sh}  menjalankan semua eksperimen yang ada pada folder {\ttfamily script}. Setiap \textit{script}  menjalankan eksperimen sesuai dari konfigurasi yang telah ditentukan pada \textit{script} tersebut. Konfigurasi yang ditentukan tersebut  diterima sebagai argumen pada IndoLEM. Untuk setiap \textit{hyperparameter} yang digunakan untuk pelatihan dapat dilihat pada lampiran \ref{appendix:hyperparameter-train}.
 
 Untuk pelatihan model NER, terdapat dua \textit{dataset} yang digunakan yaitu, NERUGM dan NERUI. Sedangkan, untuk tugas \textit{sentiment analysis} dan \textit{summarization}, digunakan satu \textit{dataset}. Selain itu, untuk tugas NER terdapat argumen "return entity level metrics" dengan nilai "true" yang berarti penilaian metrik evaluasinya dinilai pada level entitas. Ini mengikuti eksperimen yang sebelumnya sudah dilakukan pada IndoLEM.
 
