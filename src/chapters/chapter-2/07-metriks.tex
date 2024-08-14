@@ -21,7 +21,7 @@ Dalam proses \textit{training} model, diperlukan metode evaluasi sebagai penilai
 Berdasarkan tabel \ref{table:confusion-matrix} terdapat empat hasil prediksi. \textit{True Positive} (TP) yang berarti model memprediksi kelas positif yang memang bernilai positif sesuai kelasnya. True Negative (TN) memprediksi kelas negatif dan kelas tersebut memang bernilai negatif. Sedangkan, \textit{False Positive} (FP) me\textit{mprediksi kelas} positif, tetapi kelas tersebut bernilai negatif. Sebaliknya juga untuk \textit{False Negative} (FN), model memprediksi kelas tersebut sebagai negatif, tetapi kelas tersebut bernilai positif.
 
 \subsection{\textit{Accuracy, Precision}, dan \textit{Recall}}
-Nilai \textit{accuracy} dihitung sebagai proporsi hasil prediksi yang benar (baik TP maupun TN) dari total jumlah prediksi \parencite{metrics}. Metrik ini memberikan gambaran keseluruhan tentang keefektifan model. Rumus untuk menghitung nilai \textit{accuracy} dapat dilihat pada rumus \ref{eq:accuracy}.
+Nilai \textit{accuracy} dihitung sebagai proporsi hasil prediksi yang benar (baik TP maupun TN) dari total jumlah prediksi \parencite{metrics}. Metrik ini memberikan gambaran keseluruhan tentang keefektifan model. Rumus untuk menghitung nilai \textit{accuracy} dapat dilihat pada rumus \ref{eq:accuracy} \parencite{metrics}.
 
 \begin{equation}
     Accuracy = \frac{TP + TN}{TP + TN + FP + FN}
@@ -40,7 +40,7 @@ Nilai \textit{precision} dihitung sebagai proporsi hasil prediksi kelas positif 
 \end{equation}
 
 \subsection{F1-\textit{Score}}
-Nilai F1-\textit{Score} direpresentasikan sebagai nilai rata-rata harmonis dari nilai \textit{precision} dan \textit{recall}, bisa dilihat pada rumus \ref{eq:f1-score}. Metrik ini berfungsi untuk mengukur keseimbangan dari kedua metrik tersebut.
+Nilai F1-\textit{Score} direpresentasikan sebagai nilai rata-rata harmonis dari nilai \textit{precision} dan \textit{recall}, bisa dilihat pada rumus \ref{eq:f1-score} \parencite{metrics}. Metrik ini berfungsi untuk mengukur keseimbangan dari kedua metrik tersebut.
 
 \begin{equation}
     F1-Score = 2 \times \frac{Precision \times Recall}{Precision + Recall}
@@ -53,4 +53,4 @@ Terdapat beberapa jenis perhitungan untuk skor F1, yaitu \textit{micro, macro}, 
 
 ROUGE merupakan singkatan dari \textit{Recall-Oriented Understudy for Gisting Evaluation}. ROUGE biasa digunakan untuk tugas seperti \textit{summarization} dan juga translasi teks \parencite{rouge}. Evaluasi manual oleh manusia dengan membandingkan beberapa jenis aspek (koherensi, gramatikal, dan konten) akan memakan waktu yang banyak \parencite{rouge}. Sehingga, evaluasi secara otomatis terdapat tugas tersebut dibutuhkan, oleh karena itu ROUGE diajukan sebagai metode evaluasi otomatis \parencite{rouge}.
 
-ROUGE mengukur kemampuan dari sebuah model dalam memprediksi kata-kata yang muncul pada target dari hasil prediksi, pada konteks ini adalah hasil ringkasan atau translasi teks. Terdapat beberapa jenis evaluasi ROUGE, salah satunya adalah ROUGE-N dan ROUGE-L. ROUGE-N mengukur banyaknya n-\textit{gram} kata-kata dibandingkan dengan targetnya \parencite{rouge}. Sedangkan, ROUGE-L menggunakan \textit{Lowest Common Subsequence} (LCS) yang mengidentifikasi urutan kata terpanjang secara berurutan dalam hasil prediksi dibandingkan dengan targetnya \parencite{rouge}.
+ROUGE mengukur kemampuan dari sebuah model dalam memprediksi kata-kata yang muncul pada target dari hasil prediksi, pada konteks ini adalah hasil ringkasan atau translasi teks. Terdapat beberapa jenis evaluasi ROUGE, salah satunya adalah ROUGE-N dan ROUGE-L. ROUGE-N mengukur banyaknya n-\textit{gram} kata-kata dibandingkan dengan targetnya, sebagai contoh ROUGE-1 berarti mengukur banyaknya 1 kata \parencite{rouge}. Sedangkan, ROUGE-L menggunakan \textit{Lowest Common Subsequence} (LCS) yang mengidentifikasi urutan kata terpanjang secara berurutan dalam hasil prediksi dibandingkan dengan targetnya \parencite{rouge}.

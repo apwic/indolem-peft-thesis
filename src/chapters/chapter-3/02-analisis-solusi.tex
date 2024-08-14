@@ -2,7 +2,7 @@
 
 Berdasarkan analisis masalah, terdapat beberapa solusi yang dapat langsung menjawab permasalahan yang diuraikan pada Bab \ref{sec:analisis-persoalan}. Diajukan solusi-solusi yang dijabarkan pada analisis solusi berikut. Setiap bagian dari analisis solusi ini  menjawab setiap bagian pada analisis persoalan.
 
-\subsection{Keterbatasan pada Kakas IndoLEM}
+\subsection{Keterbatasan pada IndoLEM}
 
 Untuk menjawab persoalan ini, diperlukan pengembangan ulang untuk memperbarui dan memperbaiki infrastruktur dari IndoLEM. Selain itu, proses ini juga diperlukan untuk mengembangkan metode PEFT karena metode tersebut memerlukan versi yang lebih baru pada pustaka yang digunakan. Untuk melakukan pengembangan ulang, terdapat beberapa langkah yang diperlukan, yaitu memperbarui versi dari perangkat lunak yang digunakan, penyederhanaan dan standardisasi proses, serta dokumentasi.
 
@@ -12,9 +12,9 @@ Peningkatan versi perangkat lunak yaitu Python ke versi lebih baru yang kompatib
 
 Dokumentasi pada IndoLEM saat ini cukup terbatas, terutama untuk kebutuhan pada versi Python dan pustaka yang digunakannya. Dengan menambahkan \textit{requirement} yang dibutuhkan untuk menjalankan proses pelatihan dan evaluasi, persalahan ini dapat terjawab.
 
-\subsection{Implementasi Metode PEFT pada Kakas IndoLEM}
+\subsection{Pemanfaatan Metode PEFT pada IndoLEM}
 
-Metode PEFT yaitu \methodPEFT perlu diimplementasikan pada IndoLEM. Implementasi dari setiap metode PEFT ini terdapat pada penelitian terkaitnya. Tetapi, sudah banyak kakas yang memungkinkan untuk menggunakan metode ini dengan mengintegrasikannya pada model. Hal ini dilakukan dengan menggunakan pustaka dari metode PEFT tersebut.
+Metode PEFT yaitu \methodPEFT perlu dimanfaatkan pada IndoLEM. Implementasi dari setiap metode PEFT sudah terdapat pada penelitian terkaitnya. Namun, sudah banyak kakas yang memungkinkan untuk menggunakan metode tanpa perlu diimplementasikan dari awal, melainkan dengan mengintegrasikannya pada model. Hal ini dilakukan dengan menggunakan pustaka dari metode PEFT tersebut.
 
 Terdapat beberapa pustaka yang sudah mengimplementasikan metode PEFT, ada yang hanya mengimplementasikan satu, beberapa, atau bahkan menggabungkan beberapa metode PEFT tersebut. Salah satunya adalah pustaka PEFT, OpenDelta, dan Adapters. Setiap pustaka tersebut mempunyai metode PEFT yang berbeda. Pustaka PEFT hanya mengimplementasikan metodenya saja tanpa ada fungsionalitas untuk menggabungkan beberapa metode PEFT. Sedangkan, OpenDelta dan Adapters mampu untuk melakukan penggabungan metode PEFT. Hanya saja, metode PEFT yang bisa digunakan pada pustaka OpenDelta dan Adapters lebih sedikit dibandingkan dengan pustaka PEFT.
 
@@ -30,7 +30,7 @@ Tugas evaluasi \textit{summarization} pada IndoLEM menggunakan model IndoBERT ya
 
 Terdapat beberapa komponen dalam pelatihan dan evaluasi model, yaitu \textit{dataset} (latih, evaluasi dan uji), \textit{hyperparameter} yang digunakan, dan lingkungan pelatihan. Pada IndoLEM, untuk tugas evaluasi \nlptask sudah terdapat \textit{dataset} yang tersedia. \textit{Dataset} yang telah tersedia ini tetap digunakan, \textit{dataset} tersebut sudah terbagi dalam 5-\textit{fold}. Perubahan dilakukan untuk menyesuaikan format dan nama kolom  lebih sesuai.
 
-\textit{Hyperparameter} yang digunakan ada dua, yaitu \textit{hyperparameter} pelatihan seperti \textit{learning rate}, dan \textit{hyperparameter} metode PEFT seperti \textit{rank} pada LoRA. Kedua \textit{hyperparameter} ini perlu ditentukan agar eksperimen konsisten. Untuk \textit{hyperaparemeter} pelatihan sudah ditentukan pada IndoLEM. \textit{Hyperparameter} pelatihan ini digunakan kembali dengan \textit{hyperparameter} metode PEFT. Untuk \textit{hyperparameter} metode PEFT, perlu dilakukan \textit{hyperparameter tuning} untuk menentukan \textit{hyperparameter} mana yang paling baik.
+\textit{Hyperparameter} yang digunakan ada dua, yaitu \textit{hyperparameter} pelatihan seperti \textit{learning rate}, dan \textit{hyperparameter} metode PEFT seperti \textit{rank} pada LoRA. Kedua \textit{hyperparameter} ini perlu ditentukan agar eksperimen konsisten. Untuk \textit{hyperparameter} pelatihan sudah ditentukan pada IndoLEM. \textit{Hyperparameter} pelatihan ini digunakan kembali dengan \textit{hyperparameter} metode PEFT. Untuk \textit{hyperparameter} metode PEFT, perlu dilakukan \textit{hyperparameter tuning} untuk menentukan \textit{hyperparameter} mana yang paling baik.
 
 Terakhir, lingkungan pelatihan dibutuhkan untuk menjalankan proses pelatihan dan evaluasi. Lingkungan pelatihan membutuhkan GPU sehingga bisa memanfaatkan CUDA untuk mempercepat proses pelatihan. GPU yang khusus dibuat untuk pelatihan model merupakan pilihan yang paling tepat karena bisa menghemat waktu pelatihan. Terdapat banyak pilihan GPU untuk pelatihan berbasis \textit{cloud}, seperti Vast.AI dan Google Cloud Provider (GCP). Vast.AI mampu memberikan GPU sesuai permintaan setiap saat, mempunyai pilihan GPU yang banyak, dan harga yang cukup terjangkau dibandingkan \textit{cloud provider} yang lain. Vast.AI menjadi pilihan yang tepat sebagai lingkungan pelatihan.
 
