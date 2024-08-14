@@ -15,7 +15,7 @@ Evaluasi dilakukan untuk model IndoBERT dengan melakukan 8 eksperimen (\textit{f
         \toprule
         \textbf{Metode} & \textbf{Waktu(s) NER UI} & \textbf{Waktu(s) NER UGM} \\
         \midrule
-        \textit{Fine-tuning} & 884 (100\%) & 974 (100\%) \\
+        \textit{Fine-tuning} & \textbf{884 (100\%)} & \textbf{974 (100\%)} \\
         LoRA ($r$=8) & 528 (60\%) & 580 (60\%) \\
         LoRA ($r$=16) & 515 (58\%) & 588 (60\%) \\
         Prefix Tuning ($pl$=5) & \textcolor{Green}{494 (56\%)} & \textcolor{Green}{562 (58\%)} \\
@@ -28,6 +28,8 @@ Evaluasi dilakukan untuk model IndoBERT dengan melakukan 8 eksperimen (\textit{f
 \end{table}
 
 Berdasarkan waktu pelatihan yang bisa dilihat pada tabel \ref{table:runtime-ner}, didapatkan bahwa terdapat peningkatan (lebih cepat) dibandingkan dengan metode \textit{fine-tuning}. Dengan waktu pelatihan yang paling cepat adalah untuk metode \textit{Prefix-Tuning} $pl=5$ untuk kedua \textit{dataset} dengan waktu pelatihan selama 494 detik dibandingkan 884 detik (\textit{fine-tuning}) yang menggunakan 56\% waktu pelatihan untuk NER UI dan 58\% untuk NER UGM. Sedangkan, pada UniPELT didapatkan hasil yang lebih buruk bahkan ketika dibandingkan dengan \textit{fine-tuning} dengan waktu 928 detik. Ketika dibandingkan dengan \textit{fine-tuning}, hasilnya memburuk menjadi 102\% waktu pelatihan. Selain itu, untuk metode PEFT yang lainnya mempunyai hasil yang konsisten jika dibandingkan dari penelitian yang dilakukan oleh \citeauthor{unipelt}, dengan setiap banyak menggunakan sekitar 56\% sampai 64\%, terkecuali pada UniPELT.
+
+Waktu pelatihan pada tabel \ref{table:runtime-ner} untuk UniPELT lebih buruk dibandingan dengan \textit{fine-tuning}. Perbedaannya sekitar 2-5\% lebih lambat, namun ini menjadi hal berbeda dengan penelitian aslinya. UniPELT seharusnya mempunyai waktu pelatihan yang lebih cepat dibandingkan dengan \textit{fine-tuning} karena jumlah parameter pelatihan yang lebih sedikit juga. Hal ini bisa disebabkan oleh mekanisme \textit{gating} dan juga implementasi gabungan dari setiap metode PEFT-nya pada pustaka Adapters. Implementasi pada pustaka Adapters dapat menyebabkan metode UniPELT menjadi lebih lambat dibandingkan dengan yang seharusnya seperti pada penilitan aslinya.
 
 \begin{figure}[h]
     \centering
@@ -50,7 +52,7 @@ Ditinjau dari konfigurasi model PEFT yang digunakan, pada hal ini adalah $rank$ 
         \toprule
         \textbf{Metode} & \textbf{F1 NER UI $\downarrow$} & \textbf{Metode} & \textbf{F1 NER UGM $\downarrow$} \\
         \midrule
-        \textit{Fine-tuning} & 0,952 & \textit{Fine-tuning} & 0,859 \\
+        \textit{Fine-tuning} & \textbf{0,952} & \textit{Fine-tuning} & \textbf{0,859} \\
         \textit{Prefix-Tuning} & 0,944 & UniPELT & 0,84 \\
         \textit{UniPELT} & 0,94 & \textit{Prefix-Tuning} & 0,838 \\
         \textit{Adapter} & 0,939 & \textit{Adapter} & 0,824 \\
@@ -74,14 +76,14 @@ Evaluasi dilakukan untuk model IndoBERT dengan melakukan 8 eksperimen (\textit{f
         \toprule
         \textbf{Metode} & \textbf{Waktu(s) \%} \\
         \midrule
-        \textit{Fine-tuning} & \textcolor{Red}{866 (100\%)} \\
+        \textit{Fine-tuning} & \textbf{866 (100\%)} \\
         LoRA ($r$=8) & 627 (72\%) \\
         LoRA ($r$=16) & 627 (72\%) \\
         Prefix Tuning ($pl$=5) & 619 (72\%) \\
         Prefix Tuning ($pl$=50) & 652 (75\%) \\
         Adapter ($rf$=64) & \textcolor{Green}{613 (71\%)} \\
         Adapter ($rf$=16) & 617 (71\%) \\
-        UniPELT & 746 (86\%) \\
+        UniPELT & \textcolor{Red}{746 (86\%)} \\
         \bottomrule
     \end{tabular}
 \end{table}
@@ -107,7 +109,7 @@ Pada tugas evaluasi ini, konfigurasi untuk metode PEFT konsisten lebih baik untu
         \toprule
         \textbf{Metode} & \textbf{F1 $\downarrow$} \\
         \midrule
-        \textit{Fine-tuning} & 0,876 \\
+        \textit{Fine-tuning} & \textbf{0,876} \\
         \textit{Prefix-tuning} & 0,867 \\
         \textit{UniPELT} & 0,862 \\
         \textit{LoRA} & 0,856 \\
@@ -120,7 +122,7 @@ Tabel \ref{table:sentiment-result-desc} menunjukkan skor F1 yang terurut secara 
 
 \subsection{Hasil Evaluasi \textit{Summarization}}
 
-Evaluasi dilakukan untuk model IndoT5 dengan melakukan 8 eksperimen (\textit{fine-tuning} dan PEFT beserta variasinya) pada \textit{dataset} IndoSum yang tersedia pada IndoLEM. Meskipun \textit{dataset} untuk tugas \textit{summarization} menggunakan 5-\text{fold cross validation}, tetapi pada eksperimen ini tidak dilakukan untuk 5\textit{-fold}, hanya dilakukan pada \textit{fold} pertama saja karena keterbatasan sumber daya. Hasil evaluasi yang didapatkan berupa waktu pelatihan dan skor ROUGE (R1, R2, dan RL) dari data evaluasi, hasil tersebut bisa dilihat pada tabel \ref{table:runtime-summarization-indosum} dan gambar \ref{fig:summarization-result-indosum}.
+Evaluasi dilakukan untuk model IndoT5 dengan melakukan 8 eksperimen (\textit{fine-tuning} dan PEFT beserta variasinya) pada \textit{dataset} IndoSum yang tersedia pada IndoLEM. Meskipun \textit{dataset} untuk tugas \textit{summarization} menggunakan 5-\textit{fold cross validation}, tetapi pada eksperimen ini tidak dilakukan untuk 5\textit{-fold}, hanya dilakukan pada \textit{fold} pertama saja karena keterbatasan sumber daya. Hasil evaluasi yang didapatkan berupa waktu pelatihan dan skor ROUGE (R1, R2, dan RL) dari data evaluasi, hasil tersebut bisa dilihat pada tabel \ref{table:runtime-summarization-indosum} dan gambar \ref{fig:summarization-result-indosum}.
 
 \begin{table}[h]
     \centering
@@ -130,7 +132,7 @@ Evaluasi dilakukan untuk model IndoT5 dengan melakukan 8 eksperimen (\textit{fin
         \toprule
         \textbf{Metode} & \textbf{Waktu(s) \%} \\
         \midrule
-        \textit{Fine-tuning} & 5026 (100\%) \\
+        \textit{Fine-tuning} & \textbf{5026 (100\%)} \\
         LoRA ($r$=8) & 4841 (96\%) \\
         LoRA ($r$=16) & 4900 (97\%) \\
         Prefix Tuning ($pl$=5) & 6618 (132\%) \\
@@ -155,7 +157,7 @@ Untuk memastikan perilaku ini konsisten terhadap tugas \textit{summarization}, d
         \multirow{2}{*}{\textbf{Metode}} & \textbf{Waktu(s)}  & \textbf{Waktu(s)}  \\
                                          & \textbf{\textit{Abstractive}} & \textbf{\textit{Extractive}} \\
         \midrule
-        \textit{Fine-tuning} & 1412 (100\%) & 1485 (100\%) \\
+        \textit{Fine-tuning} & \textbf{1412 (100\%)} & \textbf{1485 (100\%)} \\
         LoRA ($r=8$) & 1410 (100\%) & 2125 (143\%) \\
         LoRA ($r=16$) & 1512 (107\%) & 2138 (144\%) \\
         \textit{Prefix-Tuning} ($pl=5$) & 1435 (102\%) & 1610 (108\%) \\
@@ -169,6 +171,8 @@ Untuk memastikan perilaku ini konsisten terhadap tugas \textit{summarization}, d
 
 Hasil yang sama juga didapatkan dengan \textit{dataset} yang berbeda, seperti yang bisa dilihat pada tabel \ref{table:runtime-summarization-liputan6}. Metode \textit{Prefix-Tuning} perlu menggunakan waktu paling lama, bahkan pada Liputan6 secara \textit{extractive} waktu pelatihan sampai 4 kali lipatnya. Untuk tugas \textit{summarization}, tidak didapatkan hasil yang konsisten antara perbandingan parameter dengan waktu pelatihannya, terutama pada metode \textit{Prefix-Tuning}. Metode LoRA dan \textit{Adapter} cukup konsisten dibandingkan dengan tugas evaluasi sebelumnya, sedangkan UniPELT terkena dampak dari gagalnya metode \textit{Prefix-Tuning}.
 
+Pada tugas evaluasi NER didapatkan waktu pelatihan UniPELT lebih lambat dibandingkan \textit{fine-tuning}, namun \textit{Prefix-Tuning} tetap lebih cepat, bahkan mendapatkan waktu pelatihan yang paling baik. Tetapi, pada tugas \textit{summarization} seperti yang bisa dilihat pada tabel \ref{table:runtime-summarization-indosum}, metode \textit{Prefix-Tuning} mendapatkan waktu pelatihan yang paling buruk. Waktu pelatihan ini bisa disebabkan oleh implementasi yang berbeda pada metode \textit{Prefix-Tuning} khususnya untuk tugas \textit{generation}. Metode \textit{Prefix-Tuning} pada penelitiannya secara khusus digunakan untuk tugas \textit{generation}, namun pada pustaka Adapters diadaptasi agar dapat digunakan untuk tugas evaluasi secara umum. Sehingga, hal tersebut bisa menyebabkan waktu pelatihan yang lambat untuk \textit{Prefix-Tuning} dan juga UniPELT.
+
 \begin{figure}[h]
     \centering
     \centerline{\includegraphics[width=1.4\textwidth]{chapter-4/summarization_result.png}}
@@ -177,6 +181,27 @@ Hasil yang sama juga didapatkan dengan \textit{dataset} yang berbeda, seperti ya
 \end{figure}
 
 Hasil skor ROUGE untuk \textit{dataset} IndoSum dapat dilihat pada gambar \ref{fig:summarization-result-indosum}. Terdapat tiga skor ROUGE yang digunakan yaitu R1, R2, dan RL. Secara umum, nilai dari R1 adalah yang paling tinggi untuk setiap metode, disusul oleh RL, lalu R2. Hal ini konsisten dengan perhitungan ROUGE yang menggunakan n-\textit{gram} kecocokan, sehingga R1 yang mencocokan 1-gram kata secara natural akan lebih baik dibanding 2-gram dan L-gram (LCS). Skor ROUGE (ketiganya) yang paling tinggi adalah LoRA $r=8$, ini berbeda dengan tugas evaluasi sebelumnya, yang selalu didahului oleh \textit{fine-tuning}. Sedangkan, untuk nilai yang paling rendah adalah UniPELT dengan skor yang sangat buruk.
+
+Hasil ringkasan yang didapatkan dari metode UniPELT jauh berbeda dibandingkan dengan \textit{Fine-Tuning} yang bisa dilihat pada tabel \ref{table:predict-result-unipelt}. Metode UniPELT memberikan hasil ringkasan yang kebanyakan berisi angka dan simbol, dengan hanya sedikit kata-kata yang berkaitan. Sehingga, hasil yang didapatkan pada skor ROUGE evaluasinya hanya berkisar di sekitar 6,5 untuk ROUGE-L.
+
+\begin{table}[h]
+    \vspace{0.25cm}
+    \caption{Hasil Prediksi antara \textit{Fine-Tuning} dengan UniPELT}
+    \label{table:predict-result-unipelt}
+    \begin{center}
+        \begin{tabularx}{\textwidth}{X}
+            \toprule
+            \textbf{\textit{Fine-Tuning}} \\
+            \midrule
+            seorang warga mesir yang dipercaya sebagai wanita terberat di dunia masuk sebuah rumah sakit di abu dhabi kamis ( 5 / 5 ), dimana ia akan melanjutkan perawatan setelah menjalankan operasi menurunkan badan di india. eman ahmed abd el aty memiliki berat badan mencapai 500 kilogram sebelum menjalankan operasi di mumbai maret lalu dimana ia mengurangi seperlima dari berat badannya. \\
+            \toprule
+            \textbf{UniPELT} \\
+            \midrule
+            dilansir p, elp, mesir kepass, 2 - 2 - 2 2, 2, 2, - 2 - 2 - 2 2, 2, 2 - - 2 - 2, 2 ( / 20 / 2 / 2017 / ), (, ( 17,,, ( 2,, 17 ( ( \\
+            \bottomrule
+        \end{tabularx}
+    \end{center}
+\end{table}
 
 Selisih yang paling signifikan adalah UniPELT dengan selisih sebesar 90\% dibandingkan dengan \textit{fine-tuning}. Namun, untuk LoRA terdapat peningkatan dengan selisih sebesar +1,25\% (simbol + menandakan peningkatan dari metode \textit{fine-tuning}). Dari selish tersebut, didapatkan rentang kinerja antara metode PEFT dengan \textit{fine-tuning} yaitu dari -90\% sampai +1,25\%. Untuk membandingkan antara metode PEFT secara setara akan dipilih variasi dari setiap PEFT dengan hasil terbaik, hasil perbandingan dapat dilihat pada tabel \ref{table:summarization-result-indosum-desc}.
 
@@ -190,7 +215,7 @@ Selisih yang paling signifikan adalah UniPELT dengan selisih sebesar 90\% diband
         \midrule
         \textit{LoRA} & 73,52 & 66,54 & 70,59 \\
         \textit{Adapter} & 73,29 & 66,37 & 70,3 \\
-        \textit{Fine-tuning} & 72,7 & 65,52 & 69,72 \\
+        \textit{Fine-tuning} & \textbf{72,7} & \textbf{65,52} & \textbf{69,72} \\
         \textit{Prefix-Tuning} & 66,87 & 56,74 & 63,63 \\
         \textit{UniPELT} & 7,17 & 1,7 & 6,55 \\
         \bottomrule
