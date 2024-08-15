@@ -35,7 +35,7 @@ Untuk menghitung parameter yang bisa dilatih pada metode \textit{adapter}, perlu
     \label{eq:parameter-adapter}
 \end{equation}
 
-Penggunaan \textit{adapter} tidak hanya dengan menambahkannya pada setiap \textit{sub-layer Transformer}. Terdapat beberapa konfigurasi yang bisa digunakan. Salah satunya adalah seperti pada gambar \ref{fig:adapters_houlsby_arch} oleh \parencite{adapter_houlsby} dengan menambahkan modul \textit{adapter} pada kedua \textit{sub-layer} (\textit{multi-head attention} dan \textit{feed-forward}). \citeauthor{adapter_pfeiffer} menggunakan \textit{adapter} hanya pada \textit{sub-layer feed-forward}. Sedangkan, \citeauthor{uvpl} menggunakan \textit{adapter} secara paralel pada \textit{layer Transformer}.
+Penggunaan \textit{adapter} tidak hanya dengan menambahkannya pada setiap \textit{sub-layer Transformer}. Terdapat beberapa konfigurasi yang bisa digunakan. Salah satunya adalah seperti pada gambar \ref{fig:adapters_houlsby_arch} oleh \parencite{adapter_houlsby} dengan menambahkan modul \textit{adapter} pada kedua \textit{sub-layer} (\textit{multi-head attention} dan \textit{feed-forward}). \citeauthor{adapter_pfeiffer} menggunakan \textit{adapter} hanya pada \textit{sub-layer feed-forward}. Sedangkan, \citeauthor{uvpl} menggunakan \textit{adapter} secara paralel pada \textit{layer Transformer}. Pada tugas akhir ini, difokuskan terkait penggunaan \textit{Adapter} konfigurasi Pfeiffer, yaitu dengan menambahkan \textit{adapter} pada \textit{sub-layer feed forward} yang berpengaruh terhadap perhitungan parameter pada rumus \ref{eq:parameter-adapter}, perhitunga tersebut tergantung dari banyaknya $forward\_head$.
 
 \begin{table}[h]
     \vspace{0.25cm}
