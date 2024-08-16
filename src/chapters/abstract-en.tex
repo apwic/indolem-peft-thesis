@@ -1,11 +1,11 @@
 \clearpage
 \chapter*{ABSTRACT}
-\addcontentsline{toc}{chapter}{Abstract}
+\addcontentsline{toc}{chapter}{ABSTRACT}
 
 \begin{center}
     \center
     \begin{singlespace}
-        \large\bfseries\MakeUppercase{}
+        \large\bfseries\MakeUppercase{\titleen}
     
         \normalfont\normalsize
         By:
@@ -14,10 +14,11 @@
     \end{singlespace}
 \end{center} 
 
+\begin{singlespace}
+    The fine-tuning method is employed as a training approach for evaluating various NLU tasks. IndoLEM, which is a pioneer in the evaluation of Indonesian-language NLU, uses fine-tuning as its training method. Fine-tuning involves training the model by modifying all of its parameters, which can be challenging in terms of memory and training time. There exists a method called PEFT that can train models with performance comparable to fine-tuning. In this thesis, various PEFT methods, namely \methodPEFT, are utilized in the evaluation tasks of IndoLEM. The aim of this thesis is to leverage PEFT methods in IndoLEM, including the incorporating of PEFT methods, performance comparisons for each PEFT method, and analysis of parameter usage and training time.
+    This thesis successfully leverages PEFT methods on IndoLEM. Through refactoring of IndoLEM, PEFT methods were successfully incorporated. Subsequently, experiments were conducted by training models using both fine-tuning and PEFT methods. Testing was carried out on three evaluation tasks, namely \nlptask. The experimental results indicate that PEFT only uses approximately 0.2\% to 15\% of the model's training parameters, with faster training times. The performance achieved for the NER and sentiment analysis tasks ranged from -0.8\% to -6.2\%. This indicates a trade-off between the use of training parameters and the resulting performance. However, the Prefix-Tuning and UniPELT methods failed to provide consistent results on the summarization task.
 
-% \begin{singlespace}
-    
-% \end{singlespace}
-\clearpage
+    \textit{\textbf{Keywords: Fine-tuning, Parameter-efficient, IndoLEM, NER, Sentiment Analysis, Summarization}}
+\end{singlespace}
 
 \clearpage

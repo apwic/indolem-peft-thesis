@@ -1,0 +1,46 @@
+%--------------------------------------------------------------------%
+%
+% Berkas utama templat LaTeX.
+%
+% author Petra Barus, Peb Ruswono Aryan, Faris Rizki Ekananda
+%
+%--------------------------------------------------------------------%
+%
+% Berkas ini berisi struktur utama dokumen LaTeX yang akan dibuat.
+%
+%--------------------------------------------------------------------%
+
+\documentclass[bahasa, 12pt, a4paper, onecolumn, oneside, final]{report}
+
+\input{config/if-itb-thesis.sty}
+
+\makeatletter
+
+\makeatother
+
+
+\begin{document}
+
+%Basic configuration
+\title{Pemanfaatan Metode \textit{Parameter-Efficient Fine-Tuning} pada Tugas Evaluasi IndoLEM}
+\author{
+    Adiyansa Prasetya Wicaksana \\
+    NIM: 13520044
+}
+\newcommand\titleen{Incorporating Parameter-Efficient Fine-Tuning into IndoLEM Evaluation Task}
+\newcommand\tanggalpengesahan{16 Agustus 2024}
+\newcommand{\PEFT}{\textit{parameter-efficient fine-tuning}\xspace}
+\newcommand{\methodPEFT}{LoRA, \textit{Prefix-Tuning}, \textit{Adapter}, dan UniPELT\xspace}
+\newcommand{\nlptask}{\textit{named entity recognition} (NER), \textit{sentiment analysis}, dan \textit{summarization}\xspace}
+
+\pagenumbering{gobble}
+
+\input{chapters/cover}
+\input{chapters/approval-1}
+
+\pagestyle{plain}
+
+\input{chapters/abstract-id}
+\input{chapters/abstract-en}
+
+\end{document}
